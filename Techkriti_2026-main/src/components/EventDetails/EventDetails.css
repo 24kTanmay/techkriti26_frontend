@@ -1,0 +1,453 @@
+/* Event Details Page Scoped Styles */
+
+/* Container */
+/* Page Layout */
+.event-details-section {
+  min-height: 100vh;
+  padding-top: 90px; /* Ensure content clears the fixed navbar */
+  padding-bottom: 2.5rem;
+}
+
+.event-details-container {
+  max-width: 56rem; /* max-w-4xl */
+  margin: 0 auto;
+  padding: 2.5rem 1rem;
+}
+
+/* Tabs */
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid hsl(var(--color-primary) / 0.2);
+}
+
+@media (min-width: 640px) {
+  .tabs-container {
+    gap: 2rem;
+  }
+}
+
+.tab-button {
+  background: transparent;
+  border: none;
+  font-family: var(--font-sans); /* font-title */
+  font-size: clamp(
+    0.7rem,
+    2.5vw,
+    1rem
+  ); /* Dynamic sizing to fit small screens */
+  white-space: nowrap;
+  padding-bottom: 0.75rem;
+  color: hsl(var(--color-text-muted)); /* text-foreground/60 */
+  cursor: pointer;
+  transition: color 0.3s;
+  border-bottom: 2px solid transparent;
+}
+
+@media (max-width: 400px) {
+  .tabs-container {
+    gap: 0.5rem;
+  }
+}
+
+.tab-button:hover {
+  color: hsl(var(--color-secondary));
+}
+
+.tab-button.active {
+  color: hsl(var(--color-primary));
+  border-bottom-color: hsl(var(--color-primary));
+}
+
+@media (min-width: 640px) {
+  .tab-button {
+    font-size: 1.125rem; /* text-lg */
+  }
+}
+
+@media (min-width: 768px) {
+  .tab-button {
+    font-size: 1.25rem; /* text-xl */
+  }
+}
+
+/* Content Container similar to .bg-foreground/5 */
+.details-content-box {
+  background: hsl(var(--color-text-main) / 0.05);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid hsl(var(--color-primary) / 0.1);
+}
+
+@media (min-width: 640px) {
+  .details-content-box {
+    padding: 2rem;
+  }
+}
+
+/* Headings */
+.details-title {
+  font-family: var(--font-sans);
+  font-size: 1.875rem; /* text-3xl */
+  color: hsl(var(--color-primary));
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid hsl(var(--color-primary) / 0.2);
+  padding-bottom: 1rem;
+}
+
+.details-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.875rem; /* text-3xl */
+  color: hsl(var(--color-secondary));
+  margin-bottom: 1rem;
+}
+
+/* Prose / Markdown Content */
+.details-prose {
+  color: hsl(var(--color-text-main) / 0.8);
+  font-size: 1.125rem; /* prose-lg */
+  line-height: 1.75;
+}
+
+.details-prose p {
+  margin-bottom: 1.25em;
+}
+
+.details-prose a {
+  color: hsl(var(--color-primary));
+  text-decoration: underline;
+}
+
+.details-prose a:hover {
+  color: hsl(var(--color-secondary));
+}
+
+.details-prose strong {
+  color: hsl(var(--color-text-main));
+  font-weight: 700;
+}
+
+.details-prose h1,
+.details-prose h2,
+.details-prose h3 {
+  color: hsl(var(--color-secondary));
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+.details-prose ul {
+  list-style-type: disc;
+  padding-left: 1.625em;
+}
+
+.details-prose li {
+  margin-bottom: 0.5em; /* prose spacing */
+}
+
+/* Contacts Specific Responsiveness */
+.contacts-prose {
+  font-size: clamp(
+    0.875rem,
+    2.5vw,
+    1.125rem
+  ); /* Dynamic sizing between 14px and 18px */
+  word-break: break-word; /* Prevent overflow of long emails/links */
+}
+
+/* Competitions List (Overview) */
+.comp-list {
+  list-style: none;
+  padding: 0 1.75rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.comp-list-btn {
+  background: transparent;
+  border: none;
+  font-weight: 700;
+  font-size: 1.125rem; /* text-lg */
+  color: hsl(var(--color-secondary));
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s;
+  padding: 0;
+}
+
+.comp-list-btn:hover {
+  color: hsl(var(--color-primary));
+}
+
+/* Guidelines Custom List */
+.guidelines-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.guidelines-item {
+  position: relative;
+  padding-left: 2rem;
+  display: flex;
+  align-items: flex-start;
+}
+
+.guidelines-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: hsl(var(--color-secondary));
+  border-radius: 50%;
+}
+
+/* Accordion (Competitions) */
+.accordion-item {
+  border-bottom: 1px solid hsl(var(--color-primary) / 0.1);
+  padding: 1.5rem 0;
+}
+
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: flex-start; /* Align to top so icon stays put if title wraps */
+  justify-content: space-between;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding-right: 0;
+  gap: 0.75rem;
+}
+
+.accordion-header-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  flex: 1;
+  min-width: 0; /* CRITICAL: Enables truncation/wrapping in flex container */
+  padding-right: 0.5rem;
+}
+
+.accordion-title {
+  font-family: var(--font-sans);
+  font-size: 1.25rem; /* Slightly reduced base size for better fit */
+  color: hsl(var(--color-secondary));
+  margin: 0;
+  line-height: 1.3;
+  overflow-wrap: break-word; /* Prevent long words from overflowing */
+  word-break: break-word;
+}
+
+@media (min-width: 640px) {
+  .accordion-title {
+    font-size: 1.5rem;
+  }
+}
+
+.prize-tag {
+  font-family: var(--font-sans);
+  font-size: 0.875rem; /* Smaller prize tag on mobile */
+  font-weight: 600;
+  color: hsl(var(--color-primary));
+  background: hsl(var(--color-primary) / 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid hsl(var(--color-primary) / 0.3);
+  white-space: normal; /* Allow text wrapping inside tag */
+  text-align: center;
+  max-width: 100%; /* Prevent tag from overflowing */
+}
+
+@media (min-width: 640px) {
+  .prize-tag {
+    font-size: 1rem;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap; /* Keep single line on desktop */
+  }
+}
+
+.prize-label {
+  font-size: 0.8em;
+  color: hsl(var(--color-text-muted));
+  margin-right: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.accordion-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px; /* Fixed width container */
+  height: 32px;
+  flex-shrink: 0; /* CRITICAL: Prevent shrinking */
+}
+
+.accordion-icon {
+  color: hsl(var(--color-primary));
+  font-size: 1.25rem;
+  /* flex-shrink is handled by parent box now */
+}
+
+.accordion-content {
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.accordion-inner {
+  margin-top: 1rem;
+}
+
+/* Competition Layout - Side by Side */
+.comp-content-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Image Container Wrapper */
+.comp-image-wrapper {
+  flex-shrink: 0;
+}
+
+/* The actual stylistic container for the photo */
+.comp-image-container {
+  width: 100%;
+  max-width: 400px; /* Limit width on mobile */
+  /* Allow height to be determined by content (image ratio) */
+  height: auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+
+  /* Premium Card Look */
+  background: hsl(var(--color-bg-card));
+  border: 1px solid hsl(var(--color-primary) / 0.3);
+  box-shadow:
+    0 10px 30px -10px rgba(0, 0, 0, 0.5),
+    0 0 20px hsl(var(--color-primary) / 0.1);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.comp-image-container:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 15px 40px -10px rgba(0, 0, 0, 0.6),
+    0 0 30px hsl(var(--color-primary) / 0.2);
+  border-color: hsl(var(--color-primary));
+}
+
+.comp-image {
+  width: 100%;
+  height: auto; /* Maintain natural aspect ratio */
+  display: block; /* Remove bottom whitespace */
+  object-fit: contain;
+}
+
+/* Description text area */
+.comp-description {
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .comp-content-layout.has-image {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .comp-image-wrapper {
+    width: 35%; /* Takes ~1/3 of width */
+    max-width: 350px;
+    min-width: 250px;
+  }
+
+  .comp-image-container {
+    width: 100%; /* Fill the wrapper */
+    /* Remove manual max-width since parent controls it */
+  }
+}
+
+/* NEW COMPETITION PAGE STYLES */
+.comp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  padding: 0 1rem;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 1rem;
+}
+
+.comp-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0 !important; /* Override H1 margin */
+  background: none; /* Override H1 gradient if needed */
+  -webkit-text-fill-color: initial;
+  color: hsl(var(--color-secondary)); /* Cyan color as in image */
+}
+
+.comp-prize-pill {
+  background-color: rgba(20, 20, 50, 0.6); /* Dark blueish background */
+  border: 1px solid hsl(var(--color-primary) / 0.5);
+  border-radius: 9999px; /* Pill shape */
+  padding: 0.5rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.comp-prize-pill .prize-label {
+  color: hsl(var(--color-text-muted));
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 0; /* Reset margin */
+}
+
+.comp-prize-pill .prize-amount {
+  color: hsl(var(--color-primary));
+  font-weight: bold;
+  font-size: 1.125rem;
+}
+
+.comp-dates {
+  margin-top: 2rem;
+  font-size: 1.125rem;
+  color: hsl(var(--color-text-main));
+}
+
+.comp-dates strong {
+  color: hsl(var(--color-text-main)); /* Or secondary if desired */
+  font-weight: bold;
+}
+
+@media (max-width: 640px) {
+  .comp-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .comp-title {
+    font-size: 2rem;
+  }
+}

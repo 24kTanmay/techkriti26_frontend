@@ -1,0 +1,218 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap");
+
+:root {
+  /* -- Config -- */
+  --background-color: #140f24;
+  --cylinder-radius: 850px;
+  --card-width: 400px;
+  --card-height: 600px;
+  --anim-duration: 50s;
+
+  /* -- Edge Blur Parameters -- */
+  --blur-width: 15%; /* How far into the screen the fade reaches (0% to 50%) */
+  --blur-strength: 4px; /* The intensity of the gaussian blur */
+}
+
+.past-events-section {
+  position: relative;
+  width: 100%;
+  min-height: 700px;
+  /* background-color: var(--background-color); */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  font-family: "Orbitron", "Inter", sans-serif;
+}
+
+.section-title {
+  position: relative;
+  z-index: 20;
+  color: #eeeeee;
+  font-size: 2rem;
+  letter-spacing: 6px;
+  margin-bottom: 3rem;
+}
+
+/* Container to hold the split views in the flex flow */
+.scene-container {
+  position: relative;
+  width: 100%;
+  height: 600px;
+}
+
+/* --- Split View Structure --- */
+.split-view {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.left-split {
+  left: 0;
+  perspective-origin: 100% 50%;
+}
+
+.right-split {
+  left: 50%;
+  perspective-origin: 0% 50%;
+}
+
+/* 3D Scene Wrapper - Instantiated in both splits */
+.carousel-scene {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.left-split .carousel-scene {
+  right: 0;
+}
+
+.right-split .carousel-scene {
+  left: 0;
+}
+
+/* The Rotating Cylinder Ring */
+.cylinder {
+  position: relative;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  animation: spin var(--anim-duration) linear infinite;
+}
+
+/* Individual Cards */
+.carousel-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--card-width);
+  height: var(--card-height);
+
+  margin-left: calc(var(--card-width) / -2);
+  margin-top: calc(var(--card-height) / -2);
+
+  transform: rotateY(var(--angle)) translateZ(calc(var(--cylinder-radius) * -1));
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+
+  border-radius: 20px;
+  background: #1a1a2e;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+}
+
+.event-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Apply filter only to items in the left split cylinder */
+.cylinder.grayscale-filter .event-img {
+  filter: grayscale(100%) brightness(0.7);
+}
+
+/* --- Edge Blur & Fade Overlays --- */
+.edge-overlays {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10; /* Above cards, below center line */
+}
+
+/* 1. The Gaussian Blur (affects cards underneath) */
+.edge-overlays::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(var(--blur-strength));
+  -webkit-backdrop-filter: blur(var(--blur-strength));
+
+  /* Mask ensures blur only applies to the edges */
+  mask-image: linear-gradient(
+    to right,
+    black 0%,
+    transparent var(--blur-width),
+    transparent calc(100% - var(--blur-width)),
+    black 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    black 0%,
+    transparent var(--blur-width),
+    transparent calc(100% - var(--blur-width)),
+    black 100%
+  );
+}
+
+/* 2. The Color Fade (seamlessly blends into background) */
+.edge-overlays::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    var(--background-color) 0%,
+    transparent var(--blur-width),
+    transparent calc(100% - var(--blur-width)),
+    var(--background-color) 100%
+  );
+}
+
+/* Center Beam */
+.center-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2px;
+  height: 70%;
+
+  background: white;
+  box-shadow:
+    0 0 10px 2px #00f2ff,
+    0 0 20px 5px rgba(0, 242, 255, 0.4);
+
+  z-index: 15;
+  pointer-events: none;
+}
+
+.center-line::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -20px;
+  width: 44px;
+  height: 120%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 242, 255, 0.1),
+    transparent
+  );
+  filter: blur(5px);
+}
+
+@keyframes spin {
+  from {
+    transform: rotateY(360deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}

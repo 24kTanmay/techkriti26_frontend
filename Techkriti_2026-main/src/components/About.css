@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap");
+
+.about-section {
+  position: relative;
+  min-height: 120vh; /* Reduced height since there's less text */
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 2rem;
+}
+
+.about-content-wrapper {
+  position: sticky;
+  top: 10%; /* Stick near top so we can scroll "through" it */
+  max-width: 1000px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.about-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+.about-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.5); /* Base color is dimmed */
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.3em;
+  transition:
+    filter 0.3s ease,
+    color 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.word.blurred {
+  filter: blur(5px);
+  opacity: 0.3;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.word.visible {
+  filter: blur(0);
+  opacity: 1;
+  color: #ffffff;
+}

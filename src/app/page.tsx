@@ -14,8 +14,8 @@ if (typeof window !== 'undefined') {
 }
 
 const HeroHead = dynamic(() => import('@/components/canvas/Scene'), { ssr: false })
-const Space = dynamic(() => import('@/components/canvas/Space'), { ssr: false })
-const Dna = dynamic(() => import('@/components/canvas/Dna'), { ssr: false })
+// const Space = dynamic(() => import('@/components/canvas/Space'), { ssr: false })
+// const Dna = dynamic(() => import('@/components/canvas/Dna'), { ssr: false })
 
 export default function Home() {
   const [phase, setPhase] = useState(0)
@@ -45,13 +45,16 @@ export default function Home() {
       onUpdate: (self) => {
       const p = self.progress;
       
-      // ✅ MANUAL PHASE THRESHOLDS
-      if (p < 0.20) {
-        setPhase(0); // 0% to 20% is Head
-      } else if (p < 0.35) {
-        setPhase(1); // 20% to 35% is DNA / Singularity
+      // ✅ MANUAL PHASE THRESHOLDS (Updated for DNA evolution)
+      // Phase 0: Head → Scatter → Singularity → DNA Helix (0% to 45%)
+      // Phase 1: DNA overlay / transition (45% to 55%)
+      // Phase 2: Space (55%+)
+      if (p < 0.45) {
+        setPhase(0);
+      } else if (p < 0.55) {
+        setPhase(1);
       } else {
-        setPhase(2); // 35% to 100% is SPACE
+        setPhase(2);
       }
     }
     });
@@ -74,32 +77,30 @@ export default function Home() {
            Logic: Visible in Phase 0 (Head) AND Phase 1 (DNA). 
            This allows particles to "Scatter and Concentrate" while DNA is fading in.
         */}
-        <div className={`transition-opacity duration-1000 absolute inset-0 ${phase <= 1 ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`transition-opacity duration-1000 absolute inset-0 ${phase <= 2 ? 'opacity-100' : 'opacity-0'}`}>
           <HeroHead />
         </div>
 
         {/* 
-           ✅ DNA 
-           Logic: Fades in during Phase 1. 
-           (The Head particles will be imploding *inside* this scene)
+           Old DNA component disabled — DNA is now handled 
+           by HumanDna particles inside the Scene component.
         */}
-        <div className={`transition-opacity duration-1000 absolute inset-0 ${phase === 1 ? 'opacity-100' : 'opacity-0'}`} style={{ filter: 'brightness(1.2)' }}>
-          <Dna />
-        </div>
 
         {/* 
            ✅ SPACE 
            Logic: Phase 2 only
+           Disabled for now
         */}
-        <div className={`transition-opacity duration-1000 absolute inset-0 ${phase === 2 ? 'opacity-100' : 'opacity-0'}`}>
+        {/* <div className={`transition-opacity duration-1000 absolute inset-0 ${phase === 2 ? 'opacity-100' : 'opacity-0'}`}>
           <Space />
-        </div>
+        </div> */}
       </div>
 
       {/* Scroll Triggers */}
       <div id="scroll-trigger" className="relative w-full z-10 pointer-events-none">
         <section className="h-[200vh]" data-label="Zoom Phase" />
         <section className="h-[200vh]" data-label="Scatter/DNA Phase" />
+        <section className="h-[200vh]" data-label="Space Phase" />
         <section className="h-[200vh]" data-label="Space Phase" />
       </div>
 

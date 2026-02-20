@@ -1,0 +1,75 @@
+.event-card {
+  width: 100%;
+  max-width: 420px;
+  height: 420px;
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-color: rgba(2, 6, 23, 0.88); /* Fallback */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: flex;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.event-card:hover {
+  transform: translateY(-8px);
+  border-color: hsl(var(--color-primary));
+  box-shadow: 0 20px 60px -15px hsl(var(--color-primary) / 0.3);
+}
+
+.event-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(2, 6, 23, 0.3),
+    rgba(2, 6, 23, 0.95)
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Text at bottom */
+  padding: 2.5rem;
+  transition: background 0.3s ease;
+}
+
+.event-card:hover .event-card-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(2, 6, 23, 0.1),
+    rgba(2, 6, 23, 0.9)
+  );
+}
+
+.event-card-content {
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.event-card-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.75rem;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.event-card-desc {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  text-align: center;
+  opacity: 0.9;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

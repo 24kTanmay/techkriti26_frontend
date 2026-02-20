@@ -1,0 +1,444 @@
+:root {
+    --bg-base-iarc: #010103;
+    --text-main-iarc: #ffffff;
+    --text-muted-iarc: #8b8b99;
+    --accent-blue-iarc: #2563eb;
+    --accent-glow-iarc: rgba(37, 99, 235, 0.5);
+
+    --panel-bg-iarc: rgba(15, 15, 20, 0.4);
+    --panel-border-iarc: rgba(255, 255, 255, 0.06);
+
+    --font-ui-iarc: 'Space Grotesk', sans-serif;
+    --font-body-iarc: 'Inter', sans-serif;
+    --font-display-iarc: 'Playfair Display', serif;
+    --font-mono-iarc: 'JetBrains Mono', monospace;
+
+    --ease-out-expo-iarc: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-iarc: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.iarc-terminal-page {
+    background-color: var(--bg-base-iarc);
+    color: var(--text-main-iarc);
+    font-family: var(--font-body-iarc);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- BACKGROUND FX --- */
+#star-canvas-iarc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.noise-iarc {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.ambient-core-iarc {
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 60vh;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(0, 0, 0, 0) 60%);
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(80px);
+}
+
+/* --- MAIN TERMINAL LAYOUT ADJUSTMENTS --- */
+
+/* --- MAIN TERMINAL LAYOUT --- */
+.iarc-main-container {
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 8rem 2rem 6rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.header-section-iarc {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeDownIarc 1s var(--ease-out-expo-iarc) forwards;
+}
+
+.breadcrumb-iarc {
+    font-family: var(--font-mono-iarc);
+    font-size: 0.75rem;
+    color: var(--accent-blue-iarc);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.page-title-iarc {
+    font-family: var(--font-ui-iarc);
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.page-title-iarc span {
+    background: linear-gradient(180deg, #fff 0%, #888 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+@keyframes fadeDownIarc {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* The Glass Panel */
+.terminal-panel {
+    width: 100%;
+    background: var(--panel-bg-iarc);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--panel-border-iarc);
+    border-radius: 24px;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    animation: scaleUpIarc 1.2s var(--ease-out-expo-iarc) forwards;
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+@keyframes scaleUpIarc {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Left Side: Cinematic Image */
+.panel-image-iarc {
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid var(--panel-border-iarc);
+}
+
+.image-bg-iarc {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    animation: breatheIarc 10s infinite alternate ease-in-out;
+}
+
+@keyframes breatheIarc {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.05);
+    }
+}
+
+.image-overlay-iarc {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, rgba(15, 15, 20, 0.8));
+}
+
+/* Right Side: Data Interface */
+.panel-content-iarc {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- TAB SYSTEM --- */
+.tabs-wrapper-iarc {
+    position: relative;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    margin-bottom: 3rem;
+    display: inline-flex;
+    align-self: center;
+}
+
+.tabs-list-iarc {
+    display: flex;
+    gap: 0.25rem;
+    position: static;
+    z-index: 2;
+}
+
+.tab-btn-iarc {
+    background: none;
+    border: none;
+    color: var(--text-muted-iarc);
+    font-family: var(--font-ui-iarc);
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0.6rem 2.4rem;
+    transition: all 0.4s var(--ease-out-expo-iarc);
+    z-index: 2;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+.tab-btn-iarc:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.tab-btn-iarc.active {
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* The Sliding Physical Pill */
+.tab-indicator-iarc {
+    position: absolute;
+    top: 4px;
+    left: 0;
+    height: calc(100% - 8px);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 1;
+    transition: all 0.5s var(--ease-out-expo-iarc);
+    pointer-events: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- TAB CONTENT PANES --- */
+.panes-container-iarc {
+    position: relative;
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+.tab-pane-iarc {
+    grid-area: 1 / 1;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(15px);
+    transition: all 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tab-pane-iarc.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+    transition-delay: 0.1s;
+}
+
+.pane-text-iarc {
+    color: #a1a1aa;
+    line-height: 1.7;
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+}
+
+.pane-highlight-iarc {
+    font-family: var(--font-mono-iarc);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+}
+
+.meta-data-iarc {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.meta-label-iarc {
+    font-family: var(--font-ui-iarc);
+    font-size: 0.8rem;
+    color: var(--text-muted-iarc);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.meta-value-iarc {
+    font-family: var(--font-mono-iarc);
+    font-size: 1rem;
+    color: var(--accent-blue-iarc);
+    margin-top: 0.3rem;
+}
+
+.action-group-iarc {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-action-iarc {
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--panel-border-iarc);
+    color: #fff;
+    font-family: var(--font-ui-iarc);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.8rem 2.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-action-iarc.primary {
+    background: var(--accent-blue-iarc);
+    border-color: var(--accent-blue-iarc);
+}
+
+.btn-action-iarc::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: skewX(-20deg);
+    transition: 0s;
+}
+
+.btn-action-iarc:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+.btn-action-iarc:hover::before {
+    left: 150%;
+    transition: left 0.6s var(--ease-out-expo-iarc);
+}
+
+.download-card-iarc {
+    background: rgba(37, 99, 235, 0.05);
+    border: 1px dashed rgba(37, 99, 235, 0.3);
+    border-radius: 12px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.download-card-iarc:hover {
+    background: rgba(37, 99, 235, 0.1);
+    border-color: var(--accent-blue-iarc);
+}
+
+.down-text-iarc h4 {
+    font-family: var(--font-ui-iarc);
+    color: #fff;
+    margin-bottom: 0.3rem;
+}
+
+.down-text-iarc p {
+    font-size: 0.85rem;
+    color: var(--text-muted-iarc);
+}
+
+.down-icon-iarc {
+    font-size: 1.5rem;
+    color: var(--accent-blue-iarc);
+}
+
+.contacts-grid-iarc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.contact-card-iarc {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--panel-border-iarc);
+    padding: 1.2rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
+
+.contact-card-iarc:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.c-name-iarc {
+    font-family: var(--font-ui-iarc);
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.c-number-iarc {
+    font-family: var(--font-mono-iarc);
+    color: var(--text-muted-iarc);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+    .terminal-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-image-iarc {
+        height: 250px;
+        border-right: none;
+        border-bottom: 1px solid var(--panel-border-iarc);
+    }
+
+    .image-overlay-iarc {
+        background: linear-gradient(to bottom, transparent, rgba(15, 15, 20, 0.8));
+    }
+}

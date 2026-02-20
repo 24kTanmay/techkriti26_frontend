@@ -6,7 +6,11 @@ import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import '../materials/ParticleMaterial' 
+import '../materials/ParticleMaterial'
+import { useScrollProgress } from './Scene'
+
+// ─── Hoisted constants — computed once at module load, not every frame
+const START_ROTATION_Y = (22 * Math.PI) / 180
 
 /**
  * Head Component: The hero 3D scene containing the Glass Head and the Neural Particles.
@@ -64,6 +68,9 @@ function createGlowTexture() {
 const PARTICLE_COUNT = 6000
 
 export function Head() {
+  const progressRef = useScrollProgress()
+  // ─── Optimization: devicePixelRatio never changes at runtime — read once
+  const dprRef = useRef(Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2))
   const { scene } = useGLTF('/models/human-head.glb')
   const glowTexture = useMemo(() => createGlowTexture(), [])
 
@@ -106,7 +113,6 @@ export function Head() {
   }, [])
 
   const groupRef = useRef<THREE.Group>(null!)
-  const scrollProgress = useRef(0)
   const particleMatRef = useRef<any>(null!)
   const lightRef = useRef<THREE.PointLight>(null!)
 
@@ -163,7 +169,7 @@ export function Head() {
         spreadPos[i3+2] = vz * scatterRadius
 
         // SET SCENE 3: Singularity (Concentrated Orb)
-        const coreRadius = 0.005
+        const coreRadius = 0.0001
         endPos[i3] = vx * coreRadius
         endPos[i3+1] = vy * coreRadius + brainYOffset
         endPos[i3+2] = vz * coreRadius
@@ -186,63 +192,25 @@ export function Head() {
     return geo
   }, [])
 
-  // Sync scroll with GSAP
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: '#scroll-trigger',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1.5,
-        onUpdate: (self) => { scrollProgress.current = self.progress },
-      })
-    })
-    return () => ctx.revert()
-  }, [])
-
-  // RENDER LOOP (Animates based on scrollProgress)
+  // RENDER LOOP
   useFrame((state) => {
-    const p = scrollProgress.current
+    const p = progressRef.current
     const t = state.clock.elapsedTime
 
-    // Timing Constants
-    const zoomEndAt = 0.15;      // When the camera zoom stops
-    const rotationEndAt = 0.1;   // When the head turn stops
-    const headVanishAt = 0.15;   // When the glass head fades out
-
-    const zoomP = Math.min(p / zoomEndAt, 1)
-    const rotationP = Math.min(p / rotationEndAt, 1)
-
-    if (groupRef.current) {
-        const baseScale = scaleFactor
-        // ZOOM: Scale the master group
-        const zoom = 0.8 + zoomP * 2.5 
-        groupRef.current.scale.setScalar(baseScale * zoom)
-        // ROTATION: Neutralize the model's tilt as we zoom in
-        const startRotation = (22 * Math.PI) / 180
-        groupRef.current.rotation.y = startRotation * (1 - rotationP)
-        // POSITION: Adjust Y offset to keep the 'Face' centered during zoom
-        groupRef.current.position.x = -center.x * baseScale * zoom 
-        groupRef.current.position.y = -center.y * baseScale * zoom - (zoomP * 2) - 0.2
-        groupRef.current.position.z = -center.z * baseScale * zoom 
-    }
-
     // Toggle Glass Head visibility
-    scene.visible = p < headVanishAt
+    if (scene) scene.visible = p < 0.15
 
-    // Pass time and scroll state to the ParticleMaterial shader
     if (particleMatRef.current) {
-        particleMatRef.current.uTime = t
-        particleMatRef.current.uScrollProgress = p
-        particleMatRef.current.uPixelRatio = Math.min(window.devicePixelRatio, 2)
+      particleMatRef.current.uTime = t
+      particleMatRef.current.uScrollProgress = p
+      // ─── Optimization: use cached DPR — never changes at runtime
+      particleMatRef.current.uPixelRatio = dprRef.current
     }
 
-    // Internal PointLight: Intensifies during explosion, fades out by 20%
     if (lightRef.current) {
-        const lightIntensity = 5 + (p * p) * 100.0
-        const fadeOut = 1.0 - THREE.MathUtils.smoothstep(p, 0.17, 0.20)
-        lightRef.current.intensity = lightIntensity * fadeOut
+      const lightIntensity = 5 + (p * p) * 100.0
+      const fadeOut = 1.0 - THREE.MathUtils.smoothstep(p, 0.17, 0.20)
+      lightRef.current.intensity = lightIntensity * fadeOut
     }
   })
 
@@ -262,7 +230,7 @@ export function Head() {
 
   return (
     <group ref={groupRef}>
-      <group>
+      <group scale={scaleFactor} position={[-center.x * scaleFactor, -center.y * scaleFactor, -center.z * scaleFactor]}>
         <primitive object={scene} />
         
         <pointLight 

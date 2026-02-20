@@ -1,0 +1,116 @@
+/* PAGE BASE */
+.entre-page {
+  /* background removed to use global theme */
+  color: white;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+/* HERO */
+.entre-hero {
+  padding-top: 140px;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.entre-main-title {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.entre-main-title span {
+  color: #38bdf8;
+}
+
+.entre-tagline {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  text-transform: lowercase;
+  opacity: 0.85;
+}
+
+.entre-events {
+  padding: 1rem 2rem 6rem;
+
+  display: flex;
+  flex-direction: row; /* SIDE BY SIDE */
+  flex-wrap: wrap; /* Allow wrapping for grid */
+  justify-content: center; /* center horizontally */
+  align-items: center; /* center vertically */
+
+  gap: 4rem;
+}
+
+/* Card styles moved to EventCard.css */
+/* Modal styles removed */
+
+/* ENTREPRENEURIAL NAVBAR */
+.entre-navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+  background: rgba(2, 6, 23, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+
+.entre-nav-logo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.entre-nav-logo span {
+  color: #38bdf8;
+}
+
+.entre-nav-links {
+  display: flex;
+  gap: 2.5rem;
+}
+
+.entre-nav-links span {
+  cursor: pointer;
+  opacity: 0.7;
+  letter-spacing: 0.12em;
+  transition: opacity 0.2s;
+}
+
+.entre-nav-links span:hover {
+  opacity: 1;
+}
+
+.entre-nav-links .active {
+  opacity: 1;
+  color: #38bdf8;
+}
+
+@media (max-width: 768px) {
+  .entre-events {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .entre-main-title {
+    font-size: clamp(1.5rem, 8vw, 3rem); /* Dynamic sizing */
+    letter-spacing: 0.1em;
+    width: 100%;
+    word-wrap: break-word;
+  }
+
+  .entre-tagline {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}

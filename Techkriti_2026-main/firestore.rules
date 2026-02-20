@@ -1,0 +1,104 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    // --- HELPER FUNCTIONS ---
+    function isAdmin() {
+      // Check email AND ensure it's verified
+      return request.auth != null 
+             && request.auth.token.email in ["shilpirastogi952@gmail.com", "shreyanshrastogi2006@gmail.com", "pknanda2003@gmail.com", "nitinntpc01@gmail.com", "prabalp618@gmail.com", "jalanaabha@gmail.com", "khushbookri.rai@gmail.com"]
+             && request.auth.token.email_verified == true;
+    }
+
+    // Helper to check if the current user is the leader of the team 
+    // referenced in a request document
+    function isLeaderOfTargetTeam(teamId) {
+       // "get" costs 1 read, but it's worth it for security
+       let teamData = get(/databases/$(database)/documents/teams/$(teamId)).data;
+       return teamData.leaderId == request.auth.uid;
+    }
+    
+    // --- APP COLLECTIONS ---
+
+    // 1. Events
+    match /events/{eventId} {
+      allow read: if true; 
+      allow write: if isAdmin();
+    }
+
+    // 2. Users
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+      allow read, write: if isAdmin();
+    }
+
+    // 3. Registrations
+    match /registrations/{regId} {
+      // Create: User is claiming this registration for themselves OR Leader is creating for a member
+      allow create: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid ||
+        isLeaderOfTargetTeam(request.resource.data.teamId)
+      );
+      
+      // Update: User owns it AND is not trying to steal it (change the userId) OR Leader is updating it
+      allow update: if request.auth != null 
+                    && (
+                      (resource.data.userId == request.auth.uid && request.resource.data.userId == request.auth.uid) ||
+                      isLeaderOfTargetTeam(request.resource.data.teamId)
+                    ); 
+      
+      // Delete/Read: User owns it
+      allow delete, read: if request.auth != null && resource.data.userId == request.auth.uid;
+      
+      // Admin Superpowers
+      allow read, write: if isAdmin();
+    }
+    
+    // 4. Teams
+    match /teams/{teamId} {
+       allow create: if request.auth != null;
+       
+       // Update: Only Leader can update team details (e.g. name, member list)
+       allow update: if request.auth != null && resource.data.leaderId == request.auth.uid;
+       
+       // Read: Members, Leader, or Admin
+       // Read (Get): Allow specific document reads for ID checks during creation
+       allow get: if request.auth != null;
+       
+       // Read (List): Keep listing restricted to members/leaders
+       allow list: if request.auth != null && (
+           request.auth.uid in resource.data.members || resource.data.leaderId == request.auth.uid
+       );
+       
+       allow read, write: if isAdmin();
+    }
+    
+    // 5. Team Requests (FIXED)
+    match /teamRequests/{requestId} {
+      // Create: User asking to join
+      allow create: if request.auth != null && request.resource.data.userId == request.auth.uid;
+      
+      // Read: The Requester OR The Team Leader can read the request
+      allow read: if request.auth != null && (
+          resource.data.userId == request.auth.uid || 
+          isLeaderOfTargetTeam(resource.data.teamId)
+      );
+      
+      // Update: 
+      // 1. Leader can update (to Accept/Reject)
+      // 2. Requester can update (to Cancel/Withdraw only)
+      allow update: if request.auth != null && (
+          isLeaderOfTargetTeam(resource.data.teamId) || 
+          resource.data.userId == request.auth.uid
+      );
+      
+      allow read, write: if isAdmin(); 
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

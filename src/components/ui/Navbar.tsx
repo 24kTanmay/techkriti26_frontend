@@ -2,8 +2,19 @@
 
 import Link from 'next/link'
 import React from 'react'
+import { usePathname } from 'next/navigation'
+import PortalButton from './PortalButton'
 
 export default function Navbar() {
+  const pathname = usePathname()
+
+  const navItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Competitions', href: '/competitions' },
+    { name: 'Archives', href: '/archives' },
+    { name: 'Team', href: '/team' },
+  ]
+
   return (
     <header 
       style={{
@@ -15,7 +26,7 @@ export default function Navbar() {
         position: 'fixed',
         top: 0,
         left: 0,
-        zIndex: 1000, // Ensuring it's above everything
+        zIndex: 1000,
         pointerEvents: 'none',
         boxSizing: 'border-box',
         fontFamily: "'Inter', sans-serif"
@@ -23,7 +34,7 @@ export default function Navbar() {
     >
       {/* Left: Logo */}
       <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start', pointerEvents: 'auto' }}>
-        <div className="flex items-center gap-4">
+        <Link href="/" className="flex items-center gap-4" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div style={{
             width: '40px',
             height: '40px',
@@ -42,10 +53,10 @@ export default function Navbar() {
             TK
           </div>
           <div style={{ textAlign: 'left' }}>
-            <p style={{ fontSize: '10px', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2px' }}>TechKriti</p>
+            <p style={{ fontSize: '10px', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2px', color: 'white' }}>TechKriti</p>
             <p style={{ fontSize: '8px', color: '#666', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>IIT Kanpur</p>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* Center: Navigation Pill */}
@@ -66,30 +77,39 @@ export default function Navbar() {
             boxShadow: '0 20px 40px rgba(0, 0, 0, 0.2)'
           }}
         >
-          {['Home', 'Technical', 'Entrepreneurial', 'Miscellaneous'].map((item) => (
-            <li key={item}>
+          {navItems.map((item) => (
+            <li key={item.name}>
               <Link 
-                href={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                href={item.href}
+                onClick={(e: React.MouseEvent) => {
+                  if (item.name === 'Home' && pathname === '/') {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
                 style={{
                   textDecoration: 'none',
-                  color: '#888',
+                  color: (item.href === pathname || (item.name === 'About' && pathname === '/')) ? '#ffffff' : '#888',
                   fontSize: '11px',
                   fontWeight: 500,
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
                   transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                  fontFamily: 'monospace'
+                  fontFamily: 'monospace',
+                  textShadow: (item.href === pathname || (item.name === 'About' && pathname === '/')) ? '0 0 15px rgba(255,255,255,0.5)' : 'none'
                 }}
-                onMouseOver={(e) => {
+                onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
                   e.currentTarget.style.color = '#ffffff';
                   e.currentTarget.style.textShadow = '0 0 15px rgba(255,255,255,0.5)';
                 }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.color = '#888';
-                  e.currentTarget.style.textShadow = 'none';
+                onMouseOut={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                  if (!(item.href === pathname || (item.name === 'About' && pathname === '/'))) {
+                    e.currentTarget.style.color = '#888';
+                    e.currentTarget.style.textShadow = 'none';
+                  }
                 }}
               >
-                {item}
+                {item.name}
               </Link>
             </li>
           ))}
@@ -98,54 +118,7 @@ export default function Navbar() {
 
       {/* Right: CTA Button */}
       <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', pointerEvents: 'auto' }}>
-        <Link 
-          href="/signin" 
-          className="group"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            background: 'rgba(255, 255, 255, 0.02)',
-            backdropFilter: 'blur(40px)',
-            WebkitBackdropFilter: 'blur(40px)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
-            padding: '5px 5px 5px 24px',
-            borderRadius: '100px',
-            textDecoration: 'none',
-            color: 'white',
-            fontSize: '11px',
-            fontWeight: 500,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-          }}
-        >
-          <span style={{ marginRight: '16px' }}>Portal</span>
-          <div 
-            style={{
-              backgroundColor: '#fff',
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-            }}
-          >
-            <svg style={{ width: '12px', height: '12px' }} viewBox="0 0 24 24">
-              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="#000" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-            </svg>
-          </div>
-        </Link>
+        <PortalButton />
       </div>
     </header>
   )

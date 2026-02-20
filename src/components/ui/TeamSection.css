@@ -1,0 +1,246 @@
+:root {
+    --team-bg: #050507;
+    --team-accent: #cba381;
+    /* Copper Transcendence */
+    --team-font-ui: 'Space Grotesk', sans-serif;
+    --team-font-display: 'Playfair Display', serif;
+    --team-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.team-container {
+    background: var(--team-bg);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+/* --- CINEMATIC BG --- */
+#bg-canvas-team {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.noise-team {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* --- HEADER --- */
+.section-header-team {
+    padding: 8rem 6rem 2rem;
+    position: relative;
+    z-index: 10;
+}
+
+.tagline-team {
+    font-family: var(--team-font-ui);
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--team-accent);
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.title-team {
+    font-family: var(--team-font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    color: #fff;
+}
+
+.title-team i {
+    font-style: italic;
+    font-weight: 300;
+    opacity: 0.6;
+}
+
+/* --- HORIZONTAL SPATIAL GALLERY --- */
+.gallery-viewport-team {
+    width: 100%;
+    height: 75vh;
+    overflow: hidden;
+    position: relative;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.gallery-viewport-team:active {
+    cursor: grabbing;
+}
+
+.gallery-track-team {
+    display: flex;
+    gap: 4rem;
+    padding: 0 10vw;
+    will-change: transform;
+}
+
+/* TEAM CARD (The Node) */
+.team-node {
+    position: relative;
+    flex: 0 0 400px;
+    height: 550px;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #000;
+    transition: border-color 0.5s var(--team-ease);
+}
+
+.image-container-team {
+    position: absolute;
+    inset: 0;
+    filter: grayscale(1) brightness(0.6);
+    transition: all 0.8s var(--team-ease);
+    transform: scale(1.1);
+}
+
+.team-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Info Overlay */
+.node-info-team {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 3rem;
+    z-index: 20;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.6s var(--team-ease);
+}
+
+.role-team {
+    font-family: var(--team-font-ui);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--team-accent);
+    letter-spacing: 2.5px;
+    margin-bottom: 0.8rem;
+    display: block;
+}
+
+.name-team {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+
+.bio-team {
+    font-size: 0.9rem;
+    color: #aaa;
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 280px;
+}
+
+/* Scanning Line */
+.scan-line-team {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--team-accent);
+    opacity: 0;
+    z-index: 30;
+    box-shadow: 0 0 15px var(--team-accent);
+}
+
+/* HOVER STATES */
+.team-node:hover {
+    border-color: var(--team-accent);
+}
+
+.team-node:hover .image-container-team {
+    filter: grayscale(0) brightness(1);
+    transform: scale(1);
+}
+
+.team-node:hover .node-info-team {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.team-node:hover .scan-line-team {
+    animation: scanDownTeam 2.5s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes scanDownTeam {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+/* Scroll Hint */
+.scroll-hint-team {
+    position: absolute;
+    bottom: 4rem;
+    right: 6rem;
+    font-family: var(--team-font-ui);
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    z-index: 100;
+}
+
+.hint-bar-team {
+    width: 120px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.hint-progress-team {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--team-accent);
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--team-accent);
+}
+
+@media (max-width: 768px) {
+    .section-header-team {
+        padding: 6rem 2rem 2rem;
+    }
+
+    .team-node {
+        flex: 0 0 300px;
+        height: 450px;
+    }
+
+    .name-team {
+        font-size: 1.5rem;
+    }
+}

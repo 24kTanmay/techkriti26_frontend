@@ -89,7 +89,7 @@ export default function AboutSection() {
   };
 
   return (
-    <div ref={containerRef} className="fixed inset-0 z-[60] pointer-events-none overflow-hidden lg:block hidden">
+    <div id="about" ref={containerRef} className="fixed inset-0 z-[60] pointer-events-none overflow-hidden lg:block hidden">
       <div className="relative w-full h-full flex items-center">
         
         {/* Subtle glow for background depth */}

@@ -1,0 +1,910 @@
+{
+  "fintech": {
+    "title": "Fintech",
+    "category": "Entrepreneurial",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Fintech"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "Buy. Sell. Hold. Repeat—smarter every time.\nStep into the world of markets where instincts meet analysis and timing makes all the difference. Experience stock trading through realistic simulations and rapid-fire decision challenges that test how well you read trends, evaluate data, and act under pressure—without risking real capital. From virtual market play to trading calls, this is where financial curiosity turns into strategy and every choice shapes the outcome."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Beat the Market"
+        },
+        "desc": {
+          "content": "Think you can outsmart the market? **Beat the Market** tests your trading acumen and financial analysis skills. Analyze market trends, manage a virtual portfolio, and maximize your returns in this high-stakes simulation game."
+        },
+        "image": "/BeatTheMarket.jpeg",
+        "prizeMoney": "INR 35,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Trade Quest"
+        },
+        "desc": {
+          "content": "Master the art of trading with **Trade Quest**. This competition involves high-frequency trading simulations and strategy development for various asset classes."
+        },
+        "image": "/TradeQuest.jpeg",
+        "prizeMoney": "INR 35,000"
+      },
+
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Yash Prajapati:** +91 95286 71514\n\n**Khushboo:** +91 93529 41607"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "business": {
+    "title": "Business Events",
+    "category": "Entrepreneurial",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Business Events"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "Think fast. Plan smart. Build for impact.\nPut your business instincts to the test by crafting long-term strategies, scaling brands, and designing products for tomorrow’s markets. Tackle challenges that mirror real startup and corporate decision-making—balancing growth, innovation, finances, and execution.\nFrom shaping AI-driven ventures and creating high-impact marketing strategies to reimagining quick commerce products, this is where ideas turn into action and strategic thinking meets real-world business impact."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Strategy Sprint"
+        },
+        "desc": {
+          "content": "**Strategy Sprint** at Techkriti’26 challenges participants to develop a five-year strategic roadmap for an Indian AI startup. Focused on sustainable growth, participants must address challenges like scaling, technology innovation, funding, and talent acquisition. Teams will design actionable strategies backed by research, creativity, and clear success metrics"
+        },
+        "image": "/StrategySprint.png",
+        "prizeMoney": "INR 25,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Product Showdown"
+        },
+        "desc": {
+          "content": "Step into the future of global retail with Quick-Com Evolution, the ultimate challenge to re-engineer the next generation of hyper-local commerce. This competition dares you to dive into the heart of the industry, identifying emerging market trends to architect scalable solutions—from hyper-personalized user experiences to revolutionary logistics roadmaps. Your mission is to turn visionary ideas into practical, high-impact innovations that solve complex delivery puzzles and redefine consumer convenience. Gear up to outpace the competition and leave a permanent mark on the evolution of digital trade!"
+        },
+        "image": "/ProductShowdown.png",
+        "prizeMoney": "INR 25,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Pitch Premier"
+        },
+        "image": "/PitchPremier.png",
+        "prizeMoney": "INR 30,000",
+        "desc": {
+          "content": "**Pitch Premier** provides UG and PG students a platform to transform innovations, like summer projects or research, into entrepreneurial ventures. It evaluates market analysis, customer needs, product usability, intellectual property strategies, and plans for future growth, empowering participants to turn ideas into impactful, sustainable businesses."
+        }
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Nitin:** +91 99589 49055"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "robogames": {
+    "title": "Robogames",
+    "category": "Technical",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Robogames"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "Robogames is Techkriti’s flagship robotics basket, bringing together innovation, engineering, and adrenaline-fueled competition. From intense robot combat and precision-based teamwork challenges to autonomous navigation and high-speed racing, Robogames tests robots across power, control, intelligence, and speed.\nParticipants design, build, and optimize machines to perform under real-world constraints, competing in dynamic arenas that demand strategy, robustness, and creativity. Featuring events like Robowars, Manoeuvre, IARC, and the Techkriti Grand Prix, Robogames is where ideas turn into machines—and machines battle for glory on one of India’s biggest technical stages."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "IARC"
+        },
+        "desc": {
+          "content": "Join IARC, the ultimate autonomous robotics challenge at Techkriti' 25! Design and build bots to solve intricate mazes, decode nodes, and tackle speed and angle tasks with precision. Showcase your innovation, engineering, and coding skills. Compete with top teams globally and achieve robotic glory."
+        },
+        "image": "/iarc.png"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Robowars"
+        },
+        "desc": {
+          "content": "Techkriti's flagship event, **Robowars**, is a thrilling battleground of engineering brilliance, strategy, and innovation. Robots in 8 kg, 15 kg, and 30 kg categories engage in intense one-on-one combat, showcasing powerful weapons and robust designs. Compete to claim glory, pride, and the ultimate title in this electrifying robotic showdown!"
+        },
+        "image": "/robowar.jpeg",
+        "prizeMoney": "INR 4,25,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Manoeuvre"
+        },
+        "desc": {
+          "content": "Participants must build a four-wheeled gripper robot within specified dimensions, capable of navigating diverse terrains and performing tasks like grabbing and moving objects. Gameplay involves two robots working together to transport, arrange, and stack blocks or special objects in patterns, earning points through coordination and precision in task execution."
+        },
+        "image": "/manoeuvre.jpeg",
+        "prizeMoney": "INR 65,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Techriti Grand Prix"
+        },
+        "desc": {
+          "content": "Gear up for **Techkriti Grand Prix**, the ultimate RC car showdown! Design and race custom-built IC enginepowered RC cars on dynamic tracks. Showcase innovation, engineering, and precision to outshine competitors. Compete in thrilling rounds, tackle challenging terrains, and aim for glory"
+        },
+        "image": "/tgp.png",
+        "prizeMoney": "INR 75,000"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Karan:** +91 97984 76475\n\n**Lavish:** +91 91667 27679\n\n**Waqar:** +91 94331 75993\n\n**Rahul:** +91 62024 30255"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "takeoff": {
+    "title": "Takeoff",
+    "category": "Technical",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Takeoff"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "This arena celebrates flight, control, and futuristic mobility, uniting aeromodelling aircraft, multirotors, and hovercrafts in a high-energy technical showcase. Participants push the limits of precision, stability, and performance through challenging flying manoeuvres, autonomous control tasks, and fast-paced racing, where innovation, engineering skill, and real-time decision-making come together on one of India’s biggest technical stages."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "IDRL"
+        },
+        "desc": {
+          "content": "Get ready for the ultimate high-octane spectacle with **IDRL Drone Racing**, the next frontier of high-speed sports where elite pilots navigate custom nano-drones at blistering speeds of over 140 km/hr! As India’s first and largest drone racing league with a massive community of over 13,000 pilots, IDRL brings an adrenaline-pumping experience that puts you right in the cockpit through immersive FPV (First Person View) technology. Whether it's the thrill of the chase through a professionally designed 3D obstacle course or the glowing intensity of a specially constructed Night Drone Racing Arena, this competition promises an unforgettable fusion of cutting-edge innovation and world-class engineering."
+        },
+        "prizeMoney": "INR 1,50,000",
+        "image": "/idrl.png"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Multirotor"
+        },
+        "desc": {
+          "content": "**Multirotor** aircraft hobby is rapidly growing, offering a unique opportunity to compete with the nation’s best pilots, technicians, inventors, and enthusiasts. Showcase your flying skills and bot stability, and be part of a dynamic community reshaping the future of model aviation."
+        },
+        "image": "/multirotor.jpeg",
+        "prizeMoney": "INR 65,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Skysparks"
+        },
+        "desc": {
+          "content": "**Skysparks** Techkriti's new version of the competition offers aerospace enthusiasts the chance to showcase their skills in flying manoeuvres such payload dropping, limbo flying, and on-thespot landing at Skysparks, the Boeing National Aeromodelling Competition's North Zone."
+        },
+        "image": "/skysparks.jpeg"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Hovermania"
+        },
+        "desc": {
+          "content": "**Hovermania** 2026 challenges teams to design and build lightweight, agile hovercrafts for knockout and racing rounds. Competing in a thrilling arena, teams must demonstrate battle prowess and navigate complex tracks. Emphasizing autonomy, innovation, and technical skill, participants aim to be crowned Hovermania Champions by excelling in design and performance."
+        },
+        "prizeMoney": "INR 50,000",
+        "image": "/hovermania.jpeg"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Shwetang:** +91 88614 01717\n\n**Vedant:** +91 70589 07231"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "software": {
+    "title": "Software Corner",
+    "category": "Technical",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Software Corner"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "From rapid quantitative problem-solving to team-based programming battles, the focus is on efficiency, reasoning, and smart strategy. It’s a proving ground for those who enjoy breaking complex problems into elegant solutions—and doing it faster and better than the rest.\nNumbers, logic, and code take center stage here. The arena gives stage to participants to perform when time is tight and problems are unforgiving, demanding clarity of thought and disciplined execution."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Speed Quant"
+        },
+        "desc": {
+          "content": "Unleash your mathematical prowess at **Speed Quant**—Techkriti' 26’s electrifying challenge! Solve rapidfire quantitative problems in a race against time. Test your precision, speed, and strategy across two thrilling rounds. Compete individually, tackle brainteasers, and claim glory."
+        },
+        "prizeMoney": "INR 25,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Code and Compete"
+        },
+        "desc": {
+          "content": "Showcase your coding brilliance at **Code N Compete**, Techkriti' 26’s ultimate programming battle! Tackle challenging problems, strategize as a team, and rise to the top. Compete in two intense rounds, testing your algorithmic skills and problem-solving finesse."
+        },
+        "image": "/CodeNCompete.jpeg",
+        "prizeMoney": "INR 35,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "CTF"
+        },
+        "desc": {
+          "content": "**Capture The Flag (CTF)** is a cybersecurity competition where participants solve challenges in cryptography, web, and network security to find hidden flags. Simulating real-world scenarios, it tests skills like penetration testing and cryptographic analysis. Participants compete in teams or individually, striving for maximum points within a six-hour time frame."
+        },
+        "image": "/ctf.jpeg",
+        "prizeMoney": "INR 35,000"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Khushboo:** +91 93529 41607"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "ECDC": {
+    "title": "ECDC",
+    "category": "Technical",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "ECDC"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "This event blends electronics, creativity, and gaming into one exciting challenge. Participants get the chance to design and build a portable gaming system, turning their ideas into a playable experience powered by hardware, sensors, and smart connectivity.\nBy combining IoT concepts with game design, the competition encourages hands-on innovation—where circuits control characters, logic drives gameplay, and imagination shapes the final product. It’s a perfect playground for those who love electronics and want to see their creations come alive beyond the screen."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Galactic Dodger"
+        },
+        "desc": {
+          "content": "You now have a platform thanks to **Galactic Dodger** where you can channel your love of all things electrical into making a new video game hero. There is no such thing as trying. This year, Electromania offers you the chance to explore your interest with video games by creating your own portable gaming system."
+        },
+        "image": "/GalacticDodger.jpeg",
+        "prizeMoney": "INR 15,000"
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Khushboo:** +91 93529 41607"
+        }
+      }
+    ]
+  },
+  "technovation": {
+    "title": "Technovation",
+    "category": "Technical",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Technovation"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "A space built for bold thinking and meaningful collaboration, where innovative ideas meet real-world impact. Creators present transformative concepts—ranging from prototypes and digital solutions to patents and working models—while engaging with industry experts who challenge, refine, and elevate these ideas.\nBy enabling direct interaction between students and industry, it creates a pathway from concept to application, equipping participants with practical insight, exposure to emerging technologies, and the confidence to innovate in a rapidly evolving global ecosystem."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "TIC(Techkriti Innovation Challenge)"
+        },
+        "desc": {
+          "content": "The only place where dreams become impossible is in your dreams.” **Techkriti Innovation Challenge (TIC)** invites creators worldwide to showcase groundbreaking ideas as models, prototypes, patents, apps, or software before a distinguished panel. Unleash your imagination, think beyond limits, and seize this platform to shape the future of technology!"
+        },
+        "image": "/TIC.png",
+        "prizeMoney": "INR 90,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "III(Industry Institute Interaction)"
+        },
+        "desc": {
+          "content": "A stronger collaboration between technical institutions and industry is essential to enhance engineering curricula, expose students to industrial environments, and improve placements. With globalization intensifying competition, industries seek academic support for solutions, while students need exposure to advanced technologies and methodologies to prepare for multinational careers, bridging the industryacademia gap effectively"
+        },
+        "image": "/III.png",
+        "prizeMoney": "INR 25,000"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Prabal:** +91 73768 83923"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "design-events": {
+    "title": "Design Events",
+    "category": "Miscellaneous",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Design Events"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "Design comes alive when creativity is guided by structure.\nParticipants explore the balance between strength and elegance by transforming simple materials into load-bearing marvels and translating bold ideas into detailed digital designs. Every decision—from geometry and material choice to precision drafting—reflects an understanding of both engineering and aesthetics.\nBy blending hands-on construction with professional design tools, the challenges celebrate innovation, originality, and thoughtful execution."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Autodesk Design Challenge"
+        },
+        "desc": {
+          "content": "The **AutoCAD Design Challenge** offers a platform to showcase innovative, unconventional design ideas. Participants will have the chance to demonstrate their creativity and technical skills, with their work evaluated by a panel of industry experts. This competition encourages unique solutions and provides valuable feedback from professionals."
+        },
+        "image": "/AutodeskDesignChallenge.png"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Bridge Design Challenge"
+        },
+        "desc": {
+          "content": "This competition invites participants to design a popsicle stick truss bridge that can bear the heaviest load. It’s a chance to showcase engineering prowess, creativity, and innovation by building a strong, efficient bridge. Compete for the top spot and demonstrate your design expertise in this thrilling challenge."
+        },
+        "prizeMoney": "INR 25,000",
+        "image": "/BridgeDesign.png"
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Prabal:** +91 73768 83923"
+        }
+      }
+    ]
+  },
+  "mandakini": {
+    "title": "Mandakini",
+    "category": "Miscellaneous",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Mandakini"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "Step into a domain where curiosity drives competition and the universe becomes the playing field. Mandakini challenges participants to think beyond textbooks, drawing on astronomy, logic, and creative interpretation to answer questions that span science, stories, and the night sky.\nThrough rapid-fire quizzes and thoughtfully designed analytical challenges, participants test what they know, how they reason, and how imaginatively they can connect ideas. It’s a cerebral experience that rewards insight over memorization and transforms cosmic knowledge into an exciting contest of minds."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Astro Quiz"
+        },
+        "desc": {
+          "content": "Prepare to embark on a celestial journey with **Astro Quiz**, the ultimate challenge for space enthusiasts and cosmic explorers! This event invites you to test your knowledge of stars, the universe, and the fascinating science behind the cosmos through a series of intriguing and thought-provoking questions."
+        },
+        "image": "/AstroQuiz.png",
+        "prizeMoney": "INR 20,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Observe Analyze and Solve"
+        },
+        "desc": {
+          "content": "**Observe Analyse & Solve:** This is an event where you can put your knowledge of astronomy and mythology to the test by solving creatively crafted riddles and coming up with amazing solutions."
+        },
+        "image": "/OAS.png",
+        "prizeMoney": "INR 15,000"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Prabal:** +91 73768 83923"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "mun": {
+    "title": "Model United Nations",
+    "category": "Miscellaneous",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Model United Nations"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "MUN offers participants a chance to experience how major national and international institutions function. By stepping into parliamentary and global committees, delegates discuss issues related to governance, security, and human rights in an interactive and engaging setting.\nThe experience encourages thoughtful discussion and collaboration, making it an ideal platform for anyone interested in experiencing how decisions are processed at both the national and global level"
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "UNHRC"
+        },
+        "desc": {
+          "content": "The **United Nations Human Rights Council (UNHRC)**, based in Geneva, Switzerland, promotes and protects global human rights. Comprising 47 members serving staggered three-year terms, it addresses breaches of human rights in UN member states and key issues like freedom of expression, women’s rights, LGBT rights, and minority rights."
+        },
+        "image": "/UNHRC.png",
+        "prizeMoney": "INR 10,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Lok Sabha"
+        },
+        "desc": {
+          "content": "The **Lok Sabha**, India’s lower parliamentary house, has 543 elected members, with seats based on population. Its five-year term can extend during emergencies. The 106th Amendment (2023) reserves 33% seats for women post-2026 delimitation. The 104th Amendment (2020) reduced the maximum strength to 550, abolishing AngloIndian nominations."
+        },
+        "image": "/LokSabha.png",
+        "prizeMoney": "INR 10,000"
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "UNSC"
+        },
+        "desc": {
+          "content": "The **United Nations Security Council (UNSC)**, a principal UN organ, ensures global peace and security, admits new members, and approves charter amendments. It authorizes peacekeeping, sanctions, and military actions through binding resolutions, uniquely among UN bodies. The council convened its inaugural session on January 17, 1946."
+        },
+        "image": "/UNSC.png",
+        "prizeMoney": "INR 10,000"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Nitin:** +91 99589 49055"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  },
+  "cubing-events": {
+    "title": "Cubing Events",
+    "category": "Miscellaneous",
+    "data": [
+      {
+        "flag": {
+          "content": "heading"
+        },
+        "title": {
+          "content": "Cubing Events"
+        },
+        "desc": {
+          "content": ""
+        }
+      },
+      {
+        "flag": {
+          "content": "overview"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "Get ready to twist, turn, and solve! Techkriti brings you the ultimate cubing challenge where speed, precision, and strategy come together. Whether you're a seasoned speedcuber or a curious beginner, join us for a thrilling competition that will test your mental agility and reflexes."
+        }
+      },
+      {
+        "flag": {
+          "content": "comp"
+        },
+        "title": {
+          "content": "Cubic Extravaganza"
+        },
+        "desc": {
+          "content": "**Cubing Extravaganza** is a speedcubing competition which brings together hundreds of speedcubers from all around the world to showcase their abilities. The competition will follow the rules provided by the World Cube Association(WCA) . Cubing Extravaganza is an esteemed event aimed at offering a premier-level competition experience. This competition features events that are in line with the World Cube Association (WCA) rules and regulations, as well as additional challenging puzzles. Our goal is to utilize the opportunities presented by our independence and cultivate a competitive and enjoyable atmosphere for all participants"
+        },
+        "image": "/cubing.jpeg"
+      },
+      {
+        "flag": {
+          "content": "contacts"
+        },
+        "title": {
+          "content": ""
+        },
+        "desc": {
+          "content": "**Khushboo:** +91 93529 41607"
+        }
+      },
+      {
+        "flag": {
+          "content": "problem_statement"
+        },
+        "title": {
+          "content": "Problem Statements"
+        },
+        "desc": {
+          "content": "Here are the problem statements for the competitions. Please refer to the document linked below for complete details and constraints."
+        },
+        "link": "https://drive.google.com/drive/folders/1aqil17tatGESwLofTuIZx9bWuT6OCTZp?usp=sharing"
+      }
+    ]
+  }
+}
