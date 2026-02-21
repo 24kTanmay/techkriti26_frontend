@@ -7,7 +7,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './DnaModelMaterial'
-import { useScrollProgress } from './Scene'
+import { useScrollProgress } from '@/context/ScrollProgressContext'
 
 // ─── Optimization: module-level constants — allocated ONCE, not on every render
 const WARM_COLOR_1 = new THREE.Color('#ffffff')

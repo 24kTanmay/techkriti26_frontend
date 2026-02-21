@@ -1,6 +1,6 @@
 'use client'
 
-import React, { Suspense, createContext, useContext, useEffect, useRef } from 'react'
+import React, { Suspense, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Environment, Preload } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
@@ -11,18 +11,13 @@ import { Head } from './Head'
 import { HumanDna2 } from './HumanDna2'
 import { Nebula } from './nebula/Nebula'
 import NeuralHUD from '../common/NeuralHUD'
-
-// ─── Optimization: Scroll progress stored in a ref, NOT state.
-// This means scroll events NEVER trigger React re-renders.
-// Components read from the context ref inside useFrame instead.
-export const ScrollProgressContext = createContext<React.MutableRefObject<number>>({ current: 0 } as any)
-export const useScrollProgress = () => useContext(ScrollProgressContext)
+import { ScrollProgressProvider, useScrollProgress } from '@/context/ScrollProgressContext'
 
 // ─── Hoisted constant: computed once, not every frame
 const START_ROTATION_Y = (22 * Math.PI) / 180
 
-function TransformGroup({ children }: { children: React.ReactElement[] }) {
-  const groupRef = useRef<THREE.Group>(null!)
+function TransformGroup({ children }: { children: React.ReactNode }) {
+  const groupRef = React.useRef<THREE.Group>(null!)
   const progressRef = useScrollProgress()
 
   useFrame(() => {
@@ -47,11 +42,16 @@ function TransformGroup({ children }: { children: React.ReactElement[] }) {
   )
 }
 
-export default function Scene() {
-  // ─── Optimization: useRef instead of useState — no React re-renders on scroll
-  const progressRef = useRef(0)
+function SceneContent() {
+  const progressRef = useScrollProgress()
+  const [hasMounted, setHasMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    setHasMounted(true)
+  }, [])
 
   useEffect(() => {
+    if (!hasMounted) return
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
         trigger: '#scroll-trigger',
@@ -59,20 +59,27 @@ export default function Scene() {
         end: 'bottom bottom',
         scrub: 2.5,
         onUpdate: (self) => {
-          progressRef.current = self.progress // Write to ref only, no setState
+          progressRef.current = self.progress 
         },
       })
     })
     return () => ctx.revert()
-  }, [])
+  }, [progressRef, hasMounted])
+
+  if (!hasMounted) return null
 
   return (
-    <ScrollProgressContext.Provider value={progressRef}>
+    <>
       <NeuralHUD />
       <Canvas
         camera={{ position: [0, 0, 5], fov: 45, near: 0.1, far: 5000 }}
-        gl={{ antialias: true, alpha: false, toneMapping: 3 }}
-        dpr={[1, 1.5]}  // Optimization: was [1,2] — saves ~33% GPU fill-rate on HiDPI
+        gl={{ 
+          antialias: false, 
+          toneMapping: THREE.ACESFilmicToneMapping,
+          powerPreference: 'high-performance',
+          alpha: true
+        }}
+        dpr={[1, 1.5]}
         style={{ background: '#050505' }}
       >
         <color attach="background" args={['#050505']} />
@@ -91,18 +98,25 @@ export default function Scene() {
           <Nebula />
 
           <Environment preset="city" background={false} />
-        </Suspense>
 
-        {/* Optimization: DepthOfField removed (most expensive post pass, barely visible) */}
-        <EffectComposer>
-          <Bloom
-            luminanceThreshold={0.8}
-            luminanceSmoothing={0.3}
-            intensity={0.25}
-          />
-        </EffectComposer>
+          <EffectComposer multisampling={4}>
+            <Bloom
+              luminanceThreshold={0.8}
+              luminanceSmoothing={0.3}
+              intensity={0.25}
+            />
+          </EffectComposer>
+        </Suspense>
         <Preload all />
       </Canvas>
-    </ScrollProgressContext.Provider>
+    </>
+  )
+}
+
+export default function Scene() {
+  return (
+    <ScrollProgressProvider>
+      <SceneContent />
+    </ScrollProgressProvider>
   )
 }

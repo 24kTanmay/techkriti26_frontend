@@ -9,8 +9,8 @@
 
     --comp-sub-bg: #101014;
     --comp-sub-border: rgba(255, 255, 255, 0.04);
-    --comp-btn-bg: rgba(30, 58, 138, 0.15);
-    --comp-btn-text: #60a5fa;
+    --comp-btn-bg: rgba(203, 163, 129, 0.15);
+    --comp-btn-text: #cba381;
 
     --comp-font-ui: 'Space Grotesk', sans-serif;
     --comp-font-body: 'Space Grotesk', sans-serif;
@@ -334,8 +334,8 @@
 }
 
 .sub-btn:hover {
-    background: rgba(30, 58, 138, 0.3);
-    border-color: rgba(96, 165, 250, 0.3);
+    background: rgba(203, 163, 129, 0.3);
+    border-color: rgba(203, 163, 129, 0.3);
     color: #fff;
 }
 

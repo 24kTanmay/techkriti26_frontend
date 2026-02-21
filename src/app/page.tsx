@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import dynamic from 'next/dynamic'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -10,31 +10,76 @@ import AboutSection from '@/components/sections/AboutSection'
 import HeroConclusion from '@/components/sections/HeroConclusion'
 import AmbientAurora from '@/components/common/AmbientAurora'
 import Preloader from '@/components/common/Preloader'
+import Wheel from '@/components/ui/Wheel'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
 const HeroHead = dynamic(() => import('@/components/3d/Scene'), { ssr: false })
-// const Space = dynamic(() => import('@/components/canvas/Space'), { ssr: false })
-// const Dna = dynamic(() => import('@/components/canvas/Dna'), { ssr: false })
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
-  
-  // ─── Optimization: useRef for phase to avoid re-renders on scroll
+  const [wheelProgress, setWheelProgress] = useState(0)
+  const [currentSummit, setCurrentSummit] = useState(0)
+  const wheelSectionRef = useRef<HTMLDivElement>(null)
   const phaseRef = useRef(0)
+
+  // Random Unsplash IDs for summits
+  const summitImages = [
+    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000", // Tech
+    "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000", // AI
+    "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=1000", // Rakshakriti
+    "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=1000", // MedTech
+    "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1000", // Space
+    "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=1000", // E-Conclave
+    "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1000", // Sustainability
+    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1000", // Industry 4.0
+    "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=1000", // Women Panel
+    "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=1000"  // Vision 360
+  ]
+
+  const summitNames = [
+    "Tech Summit",
+    "AI Summit",
+    "Rakshakriti",
+    "MedTech",
+    "Space",
+    "E - Conclave",
+    "Sustainability",
+    "Industry 4.0",
+    "Women Panel",
+    "Vision 360 Policy Conclave"
+  ];
+
+  const summitBriefs = [
+    "Engineering the future through disruptive innovations.",
+    "Exploring the frontiers of artificial intelligence and machine learning.",
+    "Strengthening national security through indigenous defense technology.",
+    "Revolutionizing healthcare with advanced medical engineering.",
+    "Scaling new heights in aerospace and interplanetary exploration.",
+    "Igniting the entrepreneurial spirit of tomorrow's leaders.",
+    "Crafting eco-friendly solutions for a greener planet.",
+    "Mastering the smart manufacturing and automation revolution.",
+    "Celebrating and empowering women leaders in the tech ecosystem.",
+    "Shaping global policies through multifaceted dialogue."
+  ];
+
+  const handleSummitSelect = useCallback((index: number) => {
+    setCurrentSummit(index)
+  }, [])
 
   useEffect(() => {
     setMounted(true)
     const lenis = new Lenis()
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
+    // Bridge Lenis scroll events to GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update)
 
-    requestAnimationFrame(raf)
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000)
+    })
+    gsap.ticker.lagSmoothing(0)
 
     // Phases: 0 = Head Zoom, 1 = Explosion/DNA, 2 = Space
     ScrollTrigger.create({
@@ -44,7 +89,6 @@ export default function Home() {
       scrub: true,
       onUpdate: (self) => {
         const p = self.progress
-        // ─── Optimization: only write to ref, no setState = no re-renders
         if (p < 0.45) {
           phaseRef.current = 0
         } else if (p < 0.55) {
@@ -61,6 +105,26 @@ export default function Home() {
     }
   }, [])
 
+  // Separate effect for wheel pin — runs after mount so ref is valid
+  useEffect(() => {
+    if (!mounted || !wheelSectionRef.current) return
+
+    const trigger = ScrollTrigger.create({
+      trigger: wheelSectionRef.current,
+      start: 'top top',
+      end: '+=400%',
+      pin: true,
+      scrub: 1,
+      onUpdate: (self) => {
+        setWheelProgress(self.progress)
+      }
+    })
+
+    return () => {
+      trigger.kill()
+    }
+  }, [mounted])
+
   if (!mounted) return <div className="min-h-screen bg-[#050505]" />;
 
   return (
@@ -71,32 +135,12 @@ export default function Home() {
       
       {/* 3D Background Layer */}
       <div className="fixed top-0 left-0 w-full h-[100vh] z-0 pointer-events-none">
-        
-        {/* 
-           ✅ HERO HEAD (Head + Particles) 
-           Logic: Visible in Phase 0 (Head) AND Phase 1 (DNA). 
-           This allows particles to "Scatter and Concentrate" while DNA is fading in.
-        */}
         <div className="absolute inset-0">
           <HeroHead />
         </div>
-
-        {/* 
-           Old DNA component disabled — DNA is now handled 
-           by HumanDna particles inside the Scene component.
-        */}
-
-        {/* 
-           ✅ SPACE 
-           Logic: Phase 2 only
-           Disabled for now
-        */}
-        {/* <div className={`transition-opacity duration-1000 absolute inset-0 ${phase === 2 ? 'opacity-100' : 'opacity-0'}`}>
-          <Space />
-        </div> */}
       </div>
 
-      {/* Scroll Triggers */}
+      {/* Scroll Triggers (Main Hero Logic) */}
       <div id="scroll-trigger" className="relative w-full z-10 pointer-events-none">
         <section className="h-[200vh]" data-label="Zoom Phase" />
         <section className="h-[200vh]" data-label="Scatter/DNA Phase" />
@@ -105,6 +149,39 @@ export default function Home() {
       </div>
 
       <AboutSection />
+      
+      {/* Interactive Wheel Section - Locked until completion */}
+      <div ref={wheelSectionRef} className="w-full relative h-screen flex items-center overflow-hidden">
+        
+        {/* Summit Visual Preview */}
+        <div className="absolute right-[6%] top-1/2 -translate-y-1/2 w-[35vw] aspect-square rounded-[40px] overflow-hidden border border-white/10 z-20 shadow-2xl transition-all duration-700">
+           <div 
+             key={currentSummit} // Key ensures transition on mount
+             className="w-full h-full bg-cover bg-center animate-fade-in"
+             style={{ 
+               backgroundImage: `url(${summitImages[currentSummit] || summitImages[0]})`,
+               filter: 'contrast(1.1) brightness(0.8)'
+             }}
+           />
+           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+           
+           {/* Details Layer (Rectangle Removed) */}
+           <div className="absolute bottom-12 left-10 right-10 transform transition-all duration-500">
+              <h3 className="text-3xl font-bold tracking-tight text-white uppercase mb-3 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                {summitNames[currentSummit]}
+              </h3>
+              <p className="text-white/60 text-sm leading-relaxed max-w-[90%] font-light tracking-wide">
+                {summitBriefs[currentSummit]}
+              </p>
+           </div>
+        </div>
+
+        <Wheel 
+          scrollDrive={wheelProgress} 
+          onSelect={handleSummitSelect}
+        />
+      </div>
+
       <HeroConclusion />
     </main>
   )

@@ -2,8 +2,8 @@
     --gateway-bg: #020205;
     --gateway-text: #ffffff;
     --gateway-muted: #888890;
-    --gateway-accent: #00f0ff;
-    --gateway-accent-glow: rgba(0, 240, 255, 0.15);
+    --gateway-accent: #cba381;
+    --gateway-accent-glow: rgba(203, 163, 129, 0.15);
     --gateway-glass: rgba(255, 255, 255, 0.02);
     --gateway-border: rgba(255, 255, 255, 0.08);
 
@@ -179,7 +179,7 @@
 .loader-ring-gateway {
     width: 80px;
     height: 80px;
-    border: 1px solid rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(203, 163, 129, 0.1);
     border-top: 2px solid var(--gateway-accent);
     border-radius: 50%;
     animation: gatewaySpin 1.2s linear infinite;
@@ -239,7 +239,7 @@
     color: var(--gateway-accent);
     text-decoration: none;
     letter-spacing: 2px;
-    border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+    border-bottom: 1px solid rgba(203, 163, 129, 0.2);
     transition: all 0.4s var(--gateway-ease);
     padding: 8px 0;
     display: inline-block;
@@ -272,9 +272,9 @@
 
 .upload-shard-gateway.scanning {
     border-color: var(--gateway-accent);
-    background: rgba(0, 240, 255, 0.03);
+    background: rgba(203, 163, 129, 0.03);
     border-style: solid;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);
+    box-shadow: 0 0 20px rgba(203, 163, 129, 0.1);
 }
 
 .upload-shard-gateway.complete {
@@ -286,7 +286,7 @@
 
 .upload-shard-gateway:hover:not(.scanning):not(.complete) {
     border-color: var(--gateway-accent);
-    background: rgba(0, 240, 255, 0.03);
+    background: rgba(203, 163, 129, 0.03);
 }
 
 /* --- HORIZONTAL NEURAL SYNC --- */
@@ -301,8 +301,8 @@
     top: 0;
     width: 100px;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.05), transparent);
-    border-right: 1px solid rgba(0, 240, 255, 0.1);
+    background: linear-gradient(90deg, transparent, rgba(203, 163, 129, 0.05), transparent);
+    border-right: 1px solid rgba(203, 163, 129, 0.1);
     animation: sweepGateway 4s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
@@ -374,8 +374,8 @@
     top: 0;
     left: 0;
     height: 100%;
-    background: linear-gradient(90deg, #b53cff, var(--gateway-accent));
-    box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    background: linear-gradient(90deg, #8a6c51, var(--gateway-accent));
+    box-shadow: 0 0 15px rgba(203, 163, 129, 0.3);
     transition: width 0.4s var(--gateway-ease);
     display: flex;
     align-items: center;

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react'
 import './NeuralHUD.css'
-import { useScrollProgress } from '../3d/Scene'
+import { useScrollProgress } from '@/context/ScrollProgressContext'
 
 export default function NeuralHUD() {
     const [isReady, setIsReady] = useState(false)

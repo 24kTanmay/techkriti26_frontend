@@ -4,7 +4,7 @@ import React, { useMemo, useRef, useEffect, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { GalaxyGeometry, GalaxyShader } from './'
-import { useScrollProgress } from '../Scene'
+import { useScrollProgress } from '@/context/ScrollProgressContext'
 
 // ─── Hoisted constants: computed once at module load, not every render ───
 const ORBIT_CONFIG = {

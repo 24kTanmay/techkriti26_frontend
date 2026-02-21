@@ -167,7 +167,7 @@ export default function HeroConclusion() {
           </div>
         </div>
         
-        <p className="copyright mt-12 md:mt-[200px] text-center text-[15px] tracking-[0.4em] text-gray-400 uppercase pb-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        <p className="copyright mt-12 md:mt-[200px] text-center text-[7.5px] tracking-[0.4em] text-gray-400 uppercase pb-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
           © 2026 All Rights Reserved. IIT Kanpur.
         </p>
       </div>

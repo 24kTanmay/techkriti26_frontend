@@ -6,7 +6,12 @@ import './Preloader.css'
 export default function Preloader() {
     const [progress, setProgress] = useState(0)
     const [isComplete, setIsComplete] = useState(false)
+    const [mounted, setMounted] = useState(false)
     const canvasRef = useRef<HTMLCanvasElement>(null)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     // Progress Simulation
     useEffect(() => {
@@ -87,10 +92,12 @@ export default function Preloader() {
         }
     }, [])
 
+    if (!mounted) return null
     if (isComplete && progress === 100) return null
 
     return (
         <div className={`preloader-overlay ${progress === 100 ? 'fading' : ''}`} 
+             suppressHydrationWarning
              style={{ 
                  opacity: progress === 100 ? 0 : 1,
                  transform: progress === 100 ? 'scale(1.1)' : 'scale(1)',
@@ -108,8 +115,8 @@ export default function Preloader() {
                 <div style={{ 
                     marginTop: '20px', 
                     fontFamily: 'monospace', 
-                    fontSize: '9px', 
-                    color: '#333',
+                    fontSize: '13.5px', 
+                    color: '#444',
                     letterSpacing: '2px'
                 }}>
                     SYNCING_CORE_NODES_{Math.round(progress)}%

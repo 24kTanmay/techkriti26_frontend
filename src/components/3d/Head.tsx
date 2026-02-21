@@ -7,7 +7,7 @@ import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './ParticleMaterial'
-import { useScrollProgress } from './Scene'
+import { useScrollProgress } from '@/context/ScrollProgressContext'
 
 // ─── Hoisted constants — computed once at module load, not every frame
 const WHITE_COLOR = new THREE.Color('#ffffff')
