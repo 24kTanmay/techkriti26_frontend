@@ -30,7 +30,7 @@ export default function RootLayout({
           #spline-watermark { display: none !important; }
         `}</style>
       </head>
-      <body className="antialiased">
+      <body className="antialiased" suppressHydrationWarning>
         {children}
       </body>
     </html>

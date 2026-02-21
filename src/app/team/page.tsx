@@ -1,5 +1,5 @@
-import TeamSection from '@/components/ui/TeamSection'
-import Navbar from '@/components/ui/Navbar'
+import TeamSection from '@/components/sections/TeamSection'
+import Navbar from '@/components/common/Navbar'
 
 export const metadata = {
   title: "Team | TechKriti '26",

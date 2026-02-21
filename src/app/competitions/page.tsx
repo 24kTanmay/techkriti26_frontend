@@ -1,8 +1,8 @@
 'use client'
 
 import React from 'react'
-import Navbar from '@/components/ui/Navbar'
-import CompetitionsSection from '@/components/ui/CompetitionsSection'
+import Navbar from '@/components/common/Navbar'
+import CompetitionsSection from '@/components/sections/CompetitionsSection'
 
 export default function CompetitionsPage() {
   return (

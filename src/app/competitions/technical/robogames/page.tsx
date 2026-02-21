@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { StarBackgroundViewport } from '@/components/ui/StarBackground'
-import Navbar from '@/components/ui/Navbar'
+import { StarBackgroundViewport } from '@/components/common/StarBackground'
+import Navbar from '@/components/common/Navbar'
 import '@/components/ui/CategoryGrid.css'
 
 /* ─── Types ─── */

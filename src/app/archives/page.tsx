@@ -2,9 +2,10 @@
 
 import React, { useEffect } from 'react'
 import Lenis from 'lenis'
-import Navbar from '@/components/ui/Navbar'
-import GallerySection from '@/components/ui/GallerySection'
-import ArchivesSection from '@/components/ui/ArchivesSection'
+import Navbar from '@/components/common/Navbar'
+import GallerySection from '@/components/sections/GallerySection'
+import ArchivesSection from '@/components/sections/ArchivesSection'
+import PastPerformers from '@/components/sections/PastPerformers'
 
 export default function ArchivesPage() {
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function ArchivesPage() {
       <div className="pt-20"> {/* Offset for Fixed Navbar */}
         <GallerySection />
         <ArchivesSection />
+        <PastPerformers />
       </div>
     </main>
   )
