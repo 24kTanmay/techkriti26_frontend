@@ -10,7 +10,7 @@
 .team-container {
     background: var(--team-bg);
     color: #fff;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     overflow: hidden;
     min-height: 100vh;
     width: 100%;
@@ -232,15 +232,60 @@
 
 @media (max-width: 768px) {
     .section-header-team {
-        padding: 6rem 2rem 2rem;
+        padding: 6rem 2rem 1rem;
+    }
+
+    .gallery-viewport-team {
+        height: 65vh;
+    }
+
+    .gallery-track-team {
+        gap: 2rem;
+        padding: 0 5vw;
     }
 
     .team-node {
-        flex: 0 0 300px;
-        height: 450px;
+        flex: 0 0 280px;
+        height: 400px;
+    }
+
+    .node-info-team {
+        padding: 1.5rem;
     }
 
     .name-team {
         font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .bio-team {
+        font-size: 0.8rem;
+        max-width: 100%;
+    }
+
+    .scroll-hint-team {
+        bottom: 2rem;
+        right: 2rem;
+        font-size: 0.6rem;
+        gap: 1rem;
+    }
+
+    .hint-bar-team {
+        width: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-header-team {
+        padding: 5rem 1.5rem 0.5rem;
+    }
+
+    .team-node {
+        flex: 0 0 240px;
+        height: 350px;
+    }
+
+    .gallery-track-team {
+        gap: 1.5rem;
     }
 }

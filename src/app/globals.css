@@ -15,6 +15,7 @@
 body {
   color: rgb(var(--foreground-rgb));
   background: #050505;
+  font-family: 'Space Grotesk', sans-serif;
   overflow-x: hidden;
 }
 

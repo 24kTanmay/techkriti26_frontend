@@ -167,5 +167,70 @@
     font-size: 1.05rem;
     font-weight: 300;
     max-width: 750px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
+}
+
+/* --- RESPONSIVE OVERRIDES --- */
+@media (max-width: 768px) {
+    .faq-section {
+        padding: 10vh 1.5rem;
+    }
+
+    .faq-title {
+        margin-bottom: 3.5rem;
+    }
+
+    .faq-trigger {
+        padding: 1.5rem;
+        gap: 1.25rem;
+    }
+
+    .faq-index {
+        font-size: 0.75rem;
+    }
+
+    .faq-question {
+        font-size: 1.1rem;
+    }
+
+    .faq-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .faq-icon::before {
+        height: 14px;
+    }
+
+    .faq-icon::after {
+        width: 14px;
+    }
+
+    .faq-content {
+        padding: 0 1.5rem 0 3.75rem;
+    }
+
+    .faq-answer {
+        font-size: 0.95rem;
+        padding-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-section {
+        padding: 8vh 1.25rem;
+    }
+
+    .faq-trigger {
+        padding: 1.25rem;
+        gap: 1rem;
+    }
+
+    .faq-content {
+        padding: 0 1.25rem 0 3.25rem;
+    }
+
+    .faq-question {
+        font-size: 1rem;
+    }
 }

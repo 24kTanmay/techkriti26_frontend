@@ -17,7 +17,7 @@
     inset: 0;
     background-color: var(--gateway-bg);
     color: var(--gateway-text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;

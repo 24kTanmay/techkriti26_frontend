@@ -6,7 +6,7 @@
     --gallery-glass-highlight: rgba(255, 255, 255, 0.1);
     --gallery-text-muted: #888890;
     --gallery-font-ui: 'Space Grotesk', sans-serif;
-    --gallery-font-body: 'Inter', sans-serif;
+    --gallery-font-body: 'Space Grotesk', sans-serif;
     --gallery-font-display: 'Playfair Display', serif;
     --gallery-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }

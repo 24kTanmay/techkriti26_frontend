@@ -13,7 +13,7 @@
     --comp-btn-text: #60a5fa;
 
     --comp-font-ui: 'Space Grotesk', sans-serif;
-    --comp-font-body: 'Inter', sans-serif;
+    --comp-font-body: 'Space Grotesk', sans-serif;
     --comp-font-display: 'Playfair Display', serif;
 
     --comp-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -353,4 +353,100 @@
     pointer-events: none;
     opacity: 0.04;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* --- RESPONSIVE OVERRIDES --- */
+@media (max-width: 1024px) {
+    .competitions-container {
+        padding: 8rem 2rem 4rem;
+    }
+
+    .main-card {
+        padding: 2rem 2.5rem;
+    }
+
+    .card-title {
+        font-size: 1.75rem;
+    }
+
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .competitions-container {
+        padding: 6rem 1.5rem 3rem;
+    }
+
+    .hero-text {
+        margin-bottom: 3.5rem;
+    }
+
+    .section-title {
+        margin-bottom: 1rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .main-card {
+        padding: 1.5rem 1.75rem;
+        border-radius: 16px;
+    }
+
+    .card-title {
+        font-size: 1.35rem;
+    }
+
+    .card-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .expand-icon {
+        width: 36px;
+        height: 36px;
+    }
+
+    .sub-inner {
+        padding-bottom: 1.5rem;
+    }
+
+    .tilt-card {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .sub-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .sub-title {
+        font-size: 1.15rem;
+    }
+
+    .sub-desc {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-card {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .expand-icon {
+        width: 32px;
+        height: 32px;
+    }
 }

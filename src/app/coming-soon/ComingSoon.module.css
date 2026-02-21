@@ -7,7 +7,7 @@
 
     background: var(--bg);
     color: #fff;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Space Grotesk', sans-serif;
     overflow: hidden;
     height: 100vh;
     width: 100vw;
@@ -109,4 +109,25 @@
     color: #444;
     letter-spacing: 3px;
     text-transform: uppercase;
+
+}
+
+@media (max-width: 640px) {
+    .tag {
+        letter-spacing: 0.25em;
+        font-size: 0.6rem;
+    }
+
+    .title {
+        font-size: 3rem;
+    }
+
+    .progressLine {
+        width: 140px;
+        margin: 2rem auto;
+    }
+
+    .status {
+        letter-spacing: 2px;
+    }
 }
