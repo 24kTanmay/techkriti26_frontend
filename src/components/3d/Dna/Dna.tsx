@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './DnaModelMaterial'
 import { useScrollProgress } from '@/context/ScrollProgressContext'
+import { PHASES, phaseProgress } from '@/config/scrollPhases'
 
 // ─── Optimization: module-level constants — allocated ONCE, not on every render
 const WARM_COLOR_1 = new THREE.Color('#ffffff')
@@ -21,7 +22,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-export function HumanDna2() {
+export function Dna() {
   const progressRef = useScrollProgress()
   const groupRef = useRef<THREE.Group>(null!)
   const dnaRef = useRef<THREE.Points>(null!)
@@ -80,7 +81,7 @@ export function HumanDna2() {
     }
 
     if (dnaRef.current) {
-      const dnaMorphP = THREE.MathUtils.smoothstep(p, 0.25, 0.35)
+      const dnaMorphP = phaseProgress(p, PHASES.DNA_ROTATION)
       dnaRef.current.rotation.y = t * 0.25 * dnaMorphP
     }
   })
@@ -103,13 +104,19 @@ export function HumanDna2() {
           depthTest={false}
           side={THREE.DoubleSide}
           blending={THREE.AdditiveBlending}
-          // ─── Optimization: module-level color constants, not `new THREE.Color` per-render
           uWarmColor1={WARM_COLOR_1}
           uWarmColor2={WARM_COLOR_2}
           uWarmColor3={WARM_COLOR_3}
           uColor1={COOL_COLOR_1}
           uColor2={COOL_COLOR_2}
           uColor3={COOL_COLOR_3}
+          uDnaScatterStart={PHASES.DNA_SCATTER.start}
+          uDnaScatterEnd={PHASES.DNA_SCATTER.end}
+          uDnaMorphStart={PHASES.DNA_MORPH.start}
+          uDnaMorphEnd={PHASES.DNA_MORPH.end}
+          uDnaFadeinAt={PHASES.DNA_FADEIN.start}
+          uDnaFadeoutStart={PHASES.DNA_FADEOUT.start}
+          uDnaFadeoutEnd={PHASES.DNA_FADEOUT.end}
         />
       </points>
     </group>

@@ -5,10 +5,8 @@ import * as THREE from 'three'
 /**
  * DnaModelMaterial: Shader for the GLTF-based DNA particle effect.
  * 
- * 3-Stage Transition:
- * 1. Singularity Point (Matches Head's singularity)
- * 2. Scatter Sphere (Pops out briefly)
- * 3. DNA Helix (Final coalesced form)
+ * Phase boundaries are passed as uniforms from Dna.tsx (sourced from scrollPhases.ts).
+ * No hardcoded scroll thresholds in this file.
  */
 const DnaModelMaterial = shaderMaterial(
   {
@@ -21,6 +19,14 @@ const DnaModelMaterial = shaderMaterial(
     uColor2: new THREE.Color('#ffccaa'),
     uColor3: new THREE.Color('#ff8866'),
     uPixelRatio: 3.0,
+    // Phase boundary uniforms (from scrollPhases.ts via Dna.tsx)
+    uDnaScatterStart: 0.16,
+    uDnaScatterEnd: 0.17,
+    uDnaMorphStart: 0.25,
+    uDnaMorphEnd: 0.30,
+    uDnaFadeinAt: 0.17,
+    uDnaFadeoutStart: 0.25,
+    uDnaFadeoutEnd: 0.50,
   },
   /* glsl vertex shader */
   `
@@ -28,8 +34,14 @@ const DnaModelMaterial = shaderMaterial(
     uniform float uScrollProgress;
     uniform float uPixelRatio;
 
+    // Phase boundary uniforms
+    uniform float uDnaScatterStart;
+    uniform float uDnaScatterEnd;
+    uniform float uDnaMorphStart;
+    uniform float uDnaMorphEnd;
+
     attribute float randoms;
-    attribute vec3 aRandomVec; // For scatter direction
+    attribute vec3 aRandomVec;
     attribute float colorRandoms;
 
     varying vec2 vUv;
@@ -41,32 +53,24 @@ const DnaModelMaterial = shaderMaterial(
       vUv = uv;
       vColorRandom = colorRandoms;
 
-      // ============================================
-      // 3-STAGE MORPH TIMING
-      // ============================================
-      // Instantly visible at 0.35 handover
-      // 1. Singularity Point -> Scatter Sphere (0.16 -> 0.17)
-      float scatterP = smoothstep(0.16, 0.17, uScrollProgress);
+      // 1. Singularity Point -> Scatter Sphere
+      float scatterP = smoothstep(uDnaScatterStart, uDnaScatterEnd, uScrollProgress);
       
-      // 2. Scatter Sphere -> DNA Helix (0.25 -> 0.35)
-      float dnaP = smoothstep(0.25, 0.30, uScrollProgress);
+      // 2. Scatter Sphere -> DNA Helix
+      float dnaP = smoothstep(uDnaMorphStart, uDnaMorphEnd, uScrollProgress);
       
       vMorphProgress = dnaP;
 
-      // Local Singularity Center (Matches Head's brainYOffset EXACTLY)
-      vec3 singularityCenter = vec3(0.0, 3.7, 0.0);
+      // Local Singularity Center (Matches Head's brainYOffset)
+      vec3 singularityCenter = vec3(0.0, 3.0, 0.0);
       
-      // Scatter state: A small sphere around the singularity
-      float scatterRadius = 0.15; // Tightened from 0.2
+      float scatterRadius = 0.05;
       vec3 scatterPos = singularityCenter + aRandomVec * scatterRadius;
 
-      // Interpolate stages
       vec3 pos;
-      if (uScrollProgress < 0.25) {
-        // Stage 1: Point to Scatter Cloud
+      if (uScrollProgress < uDnaMorphStart) {
         pos = mix(singularityCenter, scatterPos, scatterP);
       } else {
-        // Stage 2: Scatter Cloud to DNA Helix
         pos = mix(scatterPos, position, dnaP);
       }
 
@@ -74,13 +78,12 @@ const DnaModelMaterial = shaderMaterial(
 
       vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
 
-      // Point size logic
       float singularitySize = 20.0;
       float scatterSize = 20.0;
       float dnaSize = 20.0 * randoms + 3.0; 
       
       float finalSize;
-      if (uScrollProgress < 0.25) {
+      if (uScrollProgress < uDnaMorphStart) {
         finalSize = mix(singularitySize, scatterSize, scatterP);
       } else {
         finalSize = mix(scatterSize, dnaSize, dnaP);
@@ -101,6 +104,15 @@ const DnaModelMaterial = shaderMaterial(
     uniform vec3 uColor1;
     uniform vec3 uColor2;
     uniform vec3 uColor3;
+
+    // Phase boundary uniforms
+    uniform float uDnaScatterStart;
+    uniform float uDnaScatterEnd;
+    uniform float uDnaMorphStart;
+    uniform float uDnaMorphEnd;
+    uniform float uDnaFadeinAt;
+    uniform float uDnaFadeoutStart;
+    uniform float uDnaFadeoutEnd;
 
     varying vec2 vUv;
     varying vec3 vPosition;
@@ -128,12 +140,12 @@ const DnaModelMaterial = shaderMaterial(
 
       vec3 finalColor = mix(warmColor, coolColor, vMorphProgress);
 
-      // Brightness logic tuned for the new stages
-      float scatterP = smoothstep(0.17, 0.25, uScrollProgress);
-      float dnaP = smoothstep(0.25, 0.35, uScrollProgress);
+      // Brightness logic
+      float scatterP = smoothstep(uDnaScatterEnd, uDnaMorphStart, uScrollProgress);
+      float dnaP = smoothstep(uDnaMorphStart, uDnaMorphEnd, uScrollProgress);
       
       float brightness;
-      if (uScrollProgress < 0.25) {
+      if (uScrollProgress < uDnaMorphStart) {
         brightness = mix(2.5, 1.5, scatterP);
       } else {
         brightness = mix(1.5, 0.4, dnaP);
@@ -143,9 +155,9 @@ const DnaModelMaterial = shaderMaterial(
       float gradient = smoothstep(0.1, 0.9, vUv.y);
       gradient = mix(1.0, gradient, vMorphProgress);
 
-      // Visibility thresholds (Visible from 0.17 onwards)
-      float fadeIn = step(0.17, uScrollProgress);
-      float fadeOut = 1.0 - smoothstep(0.25, 0.50, uScrollProgress);
+      // Visibility
+      float fadeIn = step(uDnaFadeinAt, uScrollProgress);
+      float fadeOut = 1.0 - smoothstep(uDnaFadeoutStart, uDnaFadeoutEnd, uScrollProgress);
       float scrollAlpha = fadeIn * fadeOut;
 
       gl_FragColor = vec4(finalColor, alpha * gradient * scrollAlpha);

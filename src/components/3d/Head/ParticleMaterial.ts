@@ -5,53 +5,57 @@ import * as THREE from 'three'
 /**
  * ParticleMaterial: A custom ShaderMaterial for the neural particles.
  * 
- * This material handles:
- * 1. The three-stage motion: Initial -> Scatter (Explosion) -> Singularity (Implosion).
- * 2. High-frequency "neural" jitter/noise.
- * 3. Perspective-aware point sizing with a clamp/limit.
- * 4. Fragment-level roundness to prevent boxy artifacts.
+ * Phase boundaries are passed as uniforms from Head.tsx (sourced from scrollPhases.ts).
+ * No hardcoded scroll thresholds in this file.
  */
 const ParticleMaterial = shaderMaterial(
   {
-    uTime: 0,                   // Elapsed time for animations (jitter/twinkle)
+    uTime: 0,
     uColor: new THREE.Color('#ffffff'),
-    uScrollProgress: 0,          // Normalized scroll value (0 to 1) from page.tsx
-    uPixelRatio: 1,             // Screen pixel ratio for size consistency
-    uMap: null,                 // Radial glow texture generated in Head.tsx
+    uScrollProgress: 0,
+    uPixelRatio: 1,
+    uMap: null,
+    // Phase boundary uniforms (from scrollPhases.ts via Head.tsx)
+    uScatterStart: 0.10,
+    uScatterEnd: 0.15,
+    uImplodeStart: 0.16,
+    uImplodeEnd: 0.20,
+    uFadeoutAt: 0.17,
   },
   /* glsl vertex shader */ `
     uniform float uTime;
     uniform float uScrollProgress;
     uniform float uPixelRatio;
 
-    // Attributes passed from the BufferGeometry in Head.tsx
-    attribute vec3 aRandom;     // Unique random values per particle
-    attribute vec3 aStartPos;   // Initial brain-shaped position
-    attribute vec3 aSpreadPos;  // Target explosion position
-    attribute vec3 aEndPos;     // Target singularity position (center)
-    attribute vec3 color;       // Unique color from palette
+    // Phase boundary uniforms
+    uniform float uScatterStart;
+    uniform float uScatterEnd;
+    uniform float uImplodeStart;
+    uniform float uImplodeEnd;
+    uniform float uFadeoutAt;
 
-    varying float vAlpha;       // Pass transparency to fragment shader
-    varying vec3 vColor;        // Pass color to fragment shader
-    varying float vP2;          // Pass contraction progress for dynamic brightness
+    attribute vec3 aRandom;
+    attribute vec3 aStartPos;
+    attribute vec3 aSpreadPos;
+    attribute vec3 aEndPos;
+    attribute vec3 color;
+
+    varying float vAlpha;
+    varying vec3 vColor;
+    varying float vP2;
 
     void main() {
       // --- PHASE 1: SCATTER (Explosion) ---
-      float scatterStart = 0.1; 
-      float scatterEnd = 0.15;   
-      float p1 = clamp((uScrollProgress - scatterStart) / (scatterEnd - scatterStart), 0.0, 1.0);
+      float p1 = clamp((uScrollProgress - uScatterStart) / (uScatterEnd - uScatterStart), 0.0, 1.0);
 
       // --- PHASE 2: SINGULARITY (Implosion) ---
-      float concStart = 0.16;   
-      float concEnd = 0.20;      
-      float p2 = clamp((uScrollProgress - concStart) / (concEnd - concStart), 0.0, 1.0);
-      vP2 = p2; // Pass to fragment shader
+      float p2 = clamp((uScrollProgress - uImplodeStart) / (uImplodeEnd - uImplodeStart), 0.0, 1.0);
+      vP2 = p2;
 
-      // Apply easing to the scatter phase so it feels organic
       float smoothP1 = smoothstep(0.0, 1.0, p1);
       
       vec3 pos;
-      if (uScrollProgress < concStart) {
+      if (uScrollProgress < uImplodeStart) {
         pos = mix(aStartPos, aSpreadPos, smoothP1);
       } else {
         pos = mix(aSpreadPos, aEndPos, p2);
@@ -73,8 +77,6 @@ const ParticleMaterial = shaderMaterial(
 
       // --- PARTICLE SIZING ---
       float randomSize = 1.0 + aRandom.x * 2.0; 
-      // Aggressively reduced end size from 1.5 to 0.2
-      // This will make the individual particles almost invisible at the center point
       float sizeFactor = mix(8.0, 0.2, p2) * randomSize; 
       
       gl_PointSize = sizeFactor * uPixelRatio;
@@ -82,7 +84,7 @@ const ParticleMaterial = shaderMaterial(
 
       // --- TWINKLE & FADE ---
       float baseAlpha = 0.8 + 0.2 * sin(uTime * 3.0 + aRandom.y * 10.0);
-      float fadeOut = 1.0 - step(0.17, uScrollProgress); // Hard cut at 0.17
+      float fadeOut = 1.0 - step(uFadeoutAt, uScrollProgress);
       
       vAlpha = baseAlpha * fadeOut;
       vColor = color;
@@ -108,9 +110,6 @@ const ParticleMaterial = shaderMaterial(
       vec4 texColor = texture2D(uMap, gl_PointCoord);
       
       // --- DYNAMIC BRIGHTNESS ---
-      // At scatter (p2=0), brightness is 4.0 (normal).
-      // At singularity end (p2=1), brightness ramps up to 10.0.
-      // Kept moderate so bloom doesn't inflate the circle size.
       float brightnessBoost = 4.0 + (vP2 * 6.0);
 
       vec3 finalColor = vColor * brightnessBoost * strength; 
@@ -120,7 +119,6 @@ const ParticleMaterial = shaderMaterial(
   `
 )
 
-// Register the custom element so it can be used as <particleMaterial /> in JSX
 extend({ ParticleMaterial })
 
 export { ParticleMaterial }

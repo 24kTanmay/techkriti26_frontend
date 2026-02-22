@@ -8,6 +8,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import './ParticleMaterial'
 import { useScrollProgress } from '@/context/ScrollProgressContext'
+import { PHASES } from '@/config/scrollPhases'
 
 // ─── Hoisted constants — computed once at module load, not every frame
 const WHITE_COLOR = new THREE.Color('#ffffff')
@@ -29,10 +30,10 @@ if (typeof window !== 'undefined') {
 // Configuration for the MeshPhysicalMaterial (The Glass look)
 const GLASS_CONFIG = {
   color: '#ffffff',       // Base color
-  roughness: 0.0,         // Perfectly smooth surface
+  roughness: 0.15,         // Perfectly smooth surface
   metalness: 0.0,         // Non-metallic for clear transparency
   transmission: 1.0,      // 100% Light transmission (Refraction)
-  thickness: 0.0,         // 0 thickness prevents dark absorption in the center
+  thickness: 1.0,         // 0 thickness prevents dark absorption in the center
   ior: 1.1,               // Low Index of Refraction (preventing distorted 'bug eyes')
   iridescence: 0.4,       // Subtle rainbow effect on edges
   envMapIntensity: 1.0,   // How much the background reflects
@@ -71,7 +72,8 @@ export function Head() {
   const progressRef = useScrollProgress()
   // ─── Optimization: devicePixelRatio never changes at runtime — read once
   const dprRef = useRef(Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2))
-  const { scene } = useGLTF('/models/human-head.glb')
+  // const { scene } = useGLTF('/models/human-head.glb')
+  const { scene } = useGLTF('/models/human-maya-edits-v1-optimize.glb')
   const glowTexture = useMemo(() => createGlowTexture(), [])
 
   // 1. Extract all meshes from the GLTF scene
@@ -137,7 +139,7 @@ export function Head() {
     ]
 
     const brainW = 0.03; const brainH = 0.03; const brainD = 0.03
-    const brainYOffset = 0.1 
+    const brainYOffset = 0.2
 
     const tempColor = new THREE.Color()
 
@@ -198,7 +200,7 @@ export function Head() {
     const t = state.clock.elapsedTime
 
     // Toggle Glass Head visibility
-    if (scene) scene.visible = p < 0.15
+    if (scene) scene.visible = p < PHASES.HEAD_VISIBLE.end
 
     if (particleMatRef.current) {
       particleMatRef.current.uTime = t
@@ -209,7 +211,7 @@ export function Head() {
 
     if (lightRef.current) {
       const lightIntensity = 5 + (p * p) * 100.0
-      const fadeOut = 1.0 - THREE.MathUtils.smoothstep(p, 0.17, 0.20)
+      const fadeOut = 1.0 - THREE.MathUtils.smoothstep(p, PHASES.HEAD_LIGHT_FADE.start, PHASES.HEAD_LIGHT_FADE.end)
       lightRef.current.intensity = lightIntensity * fadeOut
     }
   })
@@ -230,17 +232,19 @@ export function Head() {
 
   return (
     <group ref={groupRef}>
-      <group scale={scaleFactor} position={[-center.x * scaleFactor, -center.y * scaleFactor, -center.z * scaleFactor]}>
+      <group scale={scaleFactor} position={[-center.x * scaleFactor,
+         -center.y * scaleFactor, 
+         -center.z * scaleFactor]}>
         <primitive object={scene} />
         
-        <pointLight 
+        {/* <pointLight 
             ref={lightRef}
             position={[center.x, center.y + 0.25, center.z]} 
             color="#ffaa88" 
             intensity={5} 
             distance={4}
             decay={2}
-        />
+        /> */}
 
         {particleGeo && (
             <points 
@@ -253,11 +257,16 @@ export function Head() {
                 <particleMaterial 
                     ref={particleMatRef}
                     transparent={true}
-                    depthWrite={false} // Prevents particles from occluding each other
-                    depthTest={false}  // Makes them shine through the glass smoothly
+                    depthWrite={false}
+                    depthTest={false}
                     uColor={WHITE_COLOR} 
                     uMap={glowTexture}
-                    blending={THREE.AdditiveBlending} // "Glowing" overlap effect
+                    blending={THREE.AdditiveBlending}
+                    uScatterStart={PHASES.PARTICLE_SCATTER.start}
+                    uScatterEnd={PHASES.PARTICLE_SCATTER.end}
+                    uImplodeStart={PHASES.PARTICLE_IMPLODE.start}
+                    uImplodeEnd={PHASES.PARTICLE_IMPLODE.end}
+                    uFadeoutAt={PHASES.PARTICLE_FADEOUT.start}
                 />
             </points>
         )}

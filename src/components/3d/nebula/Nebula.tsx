@@ -5,6 +5,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { GalaxyGeometry, GalaxyShader } from './'
 import { useScrollProgress } from '@/context/ScrollProgressContext'
+import { PHASES } from '@/config/scrollPhases'
 
 // ─── Hoisted constants: computed once at module load, not every render ───
 const ORBIT_CONFIG = {
@@ -31,10 +32,10 @@ const NEBULA_CONFIG = {
   colorMode: 1,
   colorPalette: NEBULA_PALETTE,
   colorIntensity: 1.1,
-  appearanceStart: 0.45,
-  appearanceEnd: 0.50,
-  vanishStart: 0.90,
-  vanishEnd: 0.99
+  appearanceStart: PHASES.NEBULA_APPEAR.start,
+  appearanceEnd: PHASES.NEBULA_APPEAR.end,
+  vanishStart: PHASES.NEBULA_VANISH.start,
+  vanishEnd: PHASES.NEBULA_VANISH.end
 }
 
 export const Nebula = () => {
@@ -83,7 +84,7 @@ const orbitState = useRef({
     const deltaY = e.clientY - state.prevY
 
     // Sensitivity adjustment for hover (usually feels better slightly slower than drag)
-    const hoverScale = 0.6
+    const hoverScale = 0.05
 
     // Update target angles
     state.targetTheta -= deltaX * ORBIT_CONFIG.rotateSpeed * hoverScale
@@ -184,7 +185,7 @@ const orbitState = useRef({
         ref={meshRef} 
         geometry={geometry} 
         material={material} 
-        scale={[4.0, 4.0, 4.0]} 
+        scale={[3.5, 3.5, 3.5]} 
       />
     </group>
   )
