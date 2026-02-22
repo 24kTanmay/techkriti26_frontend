@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useMemo, useRef } from 'react'
-import { useGLTF } from '@react-three/drei'
+import { useGLTF,MeshTransmissionMaterial, Environment  } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import gsap from 'gsap'
@@ -26,18 +26,23 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-// Configuration for the MeshPhysicalMaterial (The Glass look)
-const GLASS_CONFIG = {
-  color: '#ffffff',       // Base color
-  roughness: 0.0,         // Perfectly smooth surface
-  metalness: 0.0,         // Non-metallic for clear transparency
-  transmission: 1.0,      // 100% Light transmission (Refraction)
-  thickness: 0.0,         // 0 thickness prevents dark absorption in the center
-  ior: 1.1,               // Low Index of Refraction (preventing distorted 'bug eyes')
-  iridescence: 0.4,       // Subtle rainbow effect on edges
-  envMapIntensity: 1.0,   // How much the background reflects
-  clearcoat: 1.0,         // Extra shiny top layer
-  clearcoatRoughness: 0.0,
+// Configuration for the MeshTransmissionMaterial 
+const PREMIUM_GLASS_CONFIG = {
+  backside: true,
+  samples: 8,           // Lower samples while testing to ensure it renders
+  resolution: 256,
+  transmission: 0.95,    // Slightly less than 1.0 so the "surface" stays visible
+  roughness: 0.2,       // HIGHER roughness catches more light on a black background
+  ior: 1.5,             // Standard glass IOR provides better edges
+  thickness: 0.5,       // Start smaller; 1.5 might be too "thick" for some model scales
+  chromaticAberration: 0.04,
+  anisotropy: 0.1,
+  distortion: 0.0,
+  distortionScale: 0.0,
+  temporalDistortion: 0.0,
+  attenuationDistance: 0.5,
+  attenuationColor: '#ffffff',
+  color: '#ffffff',
 }
 
 /**
@@ -103,16 +108,8 @@ export function Head() {
     return { center: c, scaleFactor: sf }
   }, [allMeshes])
 
-  const glassMaterial = useMemo(() => {
-    return new THREE.MeshPhysicalMaterial({
-      ...GLASS_CONFIG,
-      color: new THREE.Color(GLASS_CONFIG.color),
-      transparent: true,
-      side: THREE.FrontSide, // FrontSide hides inner eyeball geometry for a cleaner look
-    })
-  }, [])
-
   const groupRef = useRef<THREE.Group>(null!)
+  const headMeshRef = useRef<THREE.Mesh>(null!)
   const particleMatRef = useRef<any>(null!)
   const lightRef = useRef<THREE.PointLight>(null!)
 
@@ -198,7 +195,7 @@ export function Head() {
     const t = state.clock.elapsedTime
 
     // Toggle Glass Head visibility
-    if (scene) scene.visible = p < 0.15
+    // if (headMeshRef.current) headMeshRef.current.visible = p < 0.15
 
     if (particleMatRef.current) {
       particleMatRef.current.uTime = t
@@ -214,54 +211,63 @@ export function Head() {
     }
   })
 
-  // Initial Material Setup
+  // Initial Setup
   useEffect(() => {
     scene.rotation.set(0, 0, 0)
-    scene.traverse((child) => {
-      const mesh = child as THREE.Mesh
-      if (mesh.isMesh) {
-        mesh.material = glassMaterial
-        mesh.renderOrder = 2 // Glass draws on top of particles
-      }
-    })
-  }, [scene, glassMaterial])
+  }, [scene])
 
   if (allMeshes.length === 0) return null
 
   return (
     <group ref={groupRef}>
       <group scale={scaleFactor} position={[-center.x * scaleFactor, -center.y * scaleFactor, -center.z * scaleFactor]}>
-        <primitive object={scene} />
         
+        {/* THE HEAD MESH */}
+        {allMeshes.map((mesh, i) => (
+          <mesh 
+            key={i} 
+            geometry={mesh.geometry} 
+            ref={i === 0 ? headMeshRef : null}
+            // Optimization: helps with transparency sorting
+            renderOrder={10} 
+          >
+             <MeshTransmissionMaterial {...PREMIUM_GLASS_CONFIG} />
+          </mesh>
+        ))}
+
+        {/* LIGHTING - Crucial for the glow */}
         <pointLight 
             ref={lightRef}
-            position={[center.x, center.y + 0.25, center.z]} 
-            color="#ffaa88" 
-            intensity={5} 
-            distance={4}
-            decay={2}
+            position={[center.x, center.y + 0.1, center.z]} 
+            color="#ffccaa" 
+            intensity={10} 
+            distance={2}
         />
 
+        {/* THE PARTICLES */}
         {particleGeo && (
             <points 
                 geometry={particleGeo} 
                 position={center} 
                 scale={0.95} 
-                renderOrder={1} // Particles drawn before Glass
             >
                 {/* @ts-ignore */}
                 <particleMaterial 
                     ref={particleMatRef}
                     transparent={true}
-                    depthWrite={false} // Prevents particles from occluding each other
-                    depthTest={false}  // Makes them shine through the glass smoothly
+                    depthWrite={false} 
+                    depthTest={true} // Set to true so they sit INSIDE the glass
                     uColor={WHITE_COLOR} 
                     uMap={glowTexture}
-                    blending={THREE.AdditiveBlending} // "Glowing" overlap effect
+                    blending={THREE.AdditiveBlending}
                 />
             </points>
         )}
       </group>
+
+      {/* THE SECRET SAUCE: Environment Map */}
+      {/* This provides the subtle gold/blue reflections seen in Image 1 */}
+      <Environment preset="city" environmentIntensity={2} />
     </group>
   )
 }

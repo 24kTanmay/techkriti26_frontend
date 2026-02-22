@@ -45,8 +45,6 @@ export const Nebula = () => {
   
   // ─── Manual Orbit State (mimics OrbitControls behavior) ───
 const orbitState = useRef({
-  isDragging: false,
-
   theta: -0.2680,
   phi: 0.3762,
 
@@ -71,56 +69,54 @@ const orbitState = useRef({
   }), [])
 
   // ─── Mouse Event Handlers ───
-  const onPointerDown = useCallback((e: PointerEvent) => {
-    // Only activate on left-click (button 0)
-    if (e.button !== 0) return
-    const state = orbitState.current
-    state.isDragging = true
-    state.prevX = e.clientX
-    state.prevY = e.clientY
-    state.velocityTheta = 0
-    state.velocityPhi = 0
-  }, [])
-
   const onPointerMove = useCallback((e: PointerEvent) => {
     const state = orbitState.current
-    if (!state.isDragging) return
+    
+    // Prevent jump on first move or after leaving window
+    if (state.prevX === 0 && state.prevY === 0) {
+      state.prevX = e.clientX
+      state.prevY = e.clientY
+      return
+    }
 
     const deltaX = e.clientX - state.prevX
     const deltaY = e.clientY - state.prevY
 
-    // Update target angles (like OrbitControls does internally)
-    state.targetTheta -= deltaX * ORBIT_CONFIG.rotateSpeed
-    state.targetPhi -= deltaY * ORBIT_CONFIG.rotateSpeed
+    // Sensitivity adjustment for hover (usually feels better slightly slower than drag)
+    const hoverScale = 0.6
 
-    // Clamp phi to prevent flipping
+    // Update target angles
+    state.targetTheta -= deltaX * ORBIT_CONFIG.rotateSpeed * hoverScale
+    state.targetPhi -= deltaY * ORBIT_CONFIG.rotateSpeed * hoverScale
+
+    // Clamp target phi to prevent flipping
     state.targetPhi = Math.max(ORBIT_CONFIG.minPhi, Math.min(ORBIT_CONFIG.maxPhi, state.targetPhi))
 
     // Store velocity for inertia
-    state.velocityTheta = -deltaX * ORBIT_CONFIG.rotateSpeed
-    state.velocityPhi = -deltaY * ORBIT_CONFIG.rotateSpeed
+    state.velocityTheta = -deltaX * ORBIT_CONFIG.rotateSpeed * hoverScale
+    state.velocityPhi = -deltaY * ORBIT_CONFIG.rotateSpeed * hoverScale
 
     state.prevX = e.clientX
     state.prevY = e.clientY
   }, [])
 
-  const onPointerUp = useCallback(() => {
-    orbitState.current.isDragging = false
+  const onPointerLeave = useCallback(() => {
+    // Reset previous coordinates so we don't jump when re-entering
+    const state = orbitState.current
+    state.prevX = 0
+    state.prevY = 0
   }, [])
 
   // ─── Attach listeners to the Canvas DOM element ───
   useEffect(() => {
-    const canvas = gl.domElement
-    canvas.addEventListener('pointerdown', onPointerDown)
     window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('pointerup', onPointerUp)
+    window.addEventListener('pointerleave', onPointerLeave)
 
     return () => {
-      canvas.removeEventListener('pointerdown', onPointerDown)
       window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('pointerup', onPointerUp)
+      window.removeEventListener('pointerleave', onPointerLeave)
     }
-  }, [gl, onPointerDown, onPointerMove, onPointerUp])
+  }, [onPointerMove, onPointerLeave])
 
   // ─── Render Loop ───
   useFrame((state) => {
@@ -143,21 +139,20 @@ const orbitState = useRef({
     }
 
     // --- Manual Orbit: Inertia (apply velocity when not dragging) ---
-    if (!os.isDragging) {
-      os.targetTheta += os.velocityTheta
-      os.targetPhi += os.velocityPhi
+    // --- Manual Orbit: Inertia (apply velocity) ---
+    os.targetTheta += os.velocityTheta
+    os.targetPhi += os.velocityPhi
 
-      // Clamp phi
-      os.targetPhi = Math.max(ORBIT_CONFIG.minPhi, Math.min(ORBIT_CONFIG.maxPhi, os.targetPhi))
+    // Clamp phi
+    os.targetPhi = Math.max(ORBIT_CONFIG.minPhi, Math.min(ORBIT_CONFIG.maxPhi, os.targetPhi))
 
-      // Decay velocity (inertia slowdown)
-      os.velocityTheta *= ORBIT_CONFIG.inertiaDecay
-      os.velocityPhi *= ORBIT_CONFIG.inertiaDecay
+    // Decay velocity (inertia slowdown)
+    os.velocityTheta *= ORBIT_CONFIG.inertiaDecay
+    os.velocityPhi *= ORBIT_CONFIG.inertiaDecay
 
-      // Kill micro-velocity
-      if (Math.abs(os.velocityTheta) < 0.00001) os.velocityTheta = 0
-      if (Math.abs(os.velocityPhi) < 0.00001) os.velocityPhi = 0
-    }
+    // Kill micro-velocity
+    if (Math.abs(os.velocityTheta) < 0.00001) os.velocityTheta = 0
+    if (Math.abs(os.velocityPhi) < 0.00001) os.velocityPhi = 0
 
     // --- Manual Orbit: Damping (smooth interpolation toward target) ---
     os.theta += (os.targetTheta - os.theta) * ORBIT_CONFIG.dampingFactor
