@@ -20,9 +20,11 @@ const HeroHead = dynamic(() => import('@/components/3d/Scene'), { ssr: false })
 
 export default function Home() {
   const [mounted, setMounted] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [wheelProgress, setWheelProgress] = useState(0)
   const [currentSummit, setCurrentSummit] = useState(0)
   const wheelSectionRef = useRef<HTMLDivElement>(null)
+  const lenisRef = useRef<Lenis | null>(null)
   const phaseRef = useRef(0)
 
   // Random Unsplash IDs for summits
@@ -72,6 +74,11 @@ export default function Home() {
   useEffect(() => {
     setMounted(true)
     const lenis = new Lenis()
+    lenisRef.current = lenis
+
+    if (isLoading) {
+      lenis.stop()
+    }
 
     // Bridge Lenis scroll events to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)
@@ -105,9 +112,21 @@ export default function Home() {
     }
   }, [])
 
+  // Start lenis when loading finishes
+  useEffect(() => {
+    if (!isLoading && lenisRef.current) {
+      lenisRef.current.start()
+      document.documentElement.classList.remove('no-scroll')
+      document.body.classList.remove('no-scroll')
+    } else if (isLoading) {
+      document.documentElement.classList.add('no-scroll')
+      document.body.classList.add('no-scroll')
+    }
+  }, [isLoading])
+
   // Separate effect for wheel pin — runs after mount so ref is valid
   useEffect(() => {
-    if (!mounted || !wheelSectionRef.current) return
+    if (!wheelSectionRef.current) return
 
     const trigger = ScrollTrigger.create({
       trigger: wheelSectionRef.current,
@@ -123,13 +142,11 @@ export default function Home() {
     return () => {
       trigger.kill()
     }
-  }, [mounted])
-
-  if (!mounted) return <div className="min-h-screen bg-[#050505]" />;
+  }, [])
 
   return (
     <main className="relative w-full bg-[#050505]">
-      <Preloader />
+      <Preloader onComplete={() => setIsLoading(false)} />
       <Navbar />
       <AmbientAurora />
       
@@ -154,19 +171,28 @@ export default function Home() {
       <div ref={wheelSectionRef} className="w-full relative h-screen flex items-center overflow-hidden">
         
         {/* Summit Visual Preview */}
-        <div className="absolute right-[6%] top-1/2 -translate-y-1/2 w-[35vw] aspect-square rounded-[40px] overflow-hidden border border-white/10 z-20 shadow-2xl transition-all duration-700">
+        <div 
+          className={`absolute right-[6%] top-1/2 -translate-y-1/2 w-[35vw] aspect-square rounded-[40px] overflow-hidden border border-white/10 z-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-1000 ease-out ${
+            wheelProgress > 0.01 ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-12 scale-95'
+          }`}
+        >
            <div 
-             key={currentSummit} // Key ensures transition on mount
+             key={`img-${currentSummit}`}
              className="w-full h-full bg-cover bg-center animate-fade-in"
              style={{ 
                backgroundImage: `url(${summitImages[currentSummit] || summitImages[0]})`,
-               filter: 'contrast(1.1) brightness(0.8)'
+               filter: 'contrast(1.1) brightness(0.8)',
+               transition: 'background-image 0.5s ease-in-out'
              }}
            />
-           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
            
-           {/* Details Layer (Rectangle Removed) */}
-           <div className="absolute bottom-12 left-10 right-10 transform transition-all duration-500">
+           {/* Details Layer */}
+           <div 
+             key={`text-${currentSummit}`}
+             className="absolute bottom-12 left-10 right-10 transform animate-text-reveal"
+             style={{ animationDelay: '0.1s' }}
+           >
               <h3 className="text-3xl font-bold tracking-tight text-white uppercase mb-3 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 {summitNames[currentSummit]}
               </h3>

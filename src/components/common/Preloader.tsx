@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import './Preloader.css'
 
-export default function Preloader() {
+export default function Preloader({ onComplete }: { onComplete?: () => void }) {
     const [progress, setProgress] = useState(0)
     const [isComplete, setIsComplete] = useState(false)
     const [mounted, setMounted] = useState(false)
@@ -19,7 +19,10 @@ export default function Preloader() {
             setProgress(prev => {
                 if (prev >= 100) {
                     clearInterval(interval)
-                    setTimeout(() => setIsComplete(true), 500)
+                    setTimeout(() => {
+                        setIsComplete(true)
+                        onComplete?.()
+                    }, 500)
                     return 100
                 }
                 const increment = Math.random() * 5
@@ -28,6 +31,7 @@ export default function Preloader() {
         }, 100)
         return () => clearInterval(interval)
     }, [])
+
 
     // Neural Web Animation
     useEffect(() => {
@@ -92,9 +96,6 @@ export default function Preloader() {
         }
     }, [])
 
-    if (!mounted) return null
-    if (isComplete && progress === 100) return null
-
     return (
         <div className={`preloader-overlay ${progress === 100 ? 'fading' : ''}`} 
              suppressHydrationWarning
@@ -103,7 +104,7 @@ export default function Preloader() {
                  transform: progress === 100 ? 'scale(1.1)' : 'scale(1)',
                  pointerEvents: progress === 100 ? 'none' : 'all'
              }}>
-            <canvas ref={canvasRef} className="preloader-canvas" />
+            {mounted && <canvas ref={canvasRef} className="preloader-canvas" />}
             
             <div className="preloader-content">
                 <div className="preloader-meta">Recalibrating Neural Architecture...</div>

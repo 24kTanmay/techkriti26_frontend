@@ -22,6 +22,37 @@ const DEFAULT_DATA = [
     "Vision 360 Policy Conclave"
 ];
 
+const WheelContent = React.memo(({ data, ticks, itemsRef }: { data: string[], ticks: any[], itemsRef: React.MutableRefObject<(HTMLDivElement | null)[]> }) => {
+    return (
+        <div className="wheel-dial">
+            {/* Tick Marks Layer */}
+            {ticks.map((tick, i) => (
+                <div 
+                    key={`tick-${i}`}
+                    className={`wheel-tick ${tick.isMajor ? 'major' : 'minor'}`}
+                    style={{ transform: `rotate(${tick.rotation}deg) translateX(46vh) translateZ(0px)` }}
+                />
+            ))}
+
+            {/* Interactive Items Layer */}
+            {data.map((name, i) => (
+                <div 
+                    key={`item-${i}`}
+                    className="wheel-dial-item"
+                    ref={el => { itemsRef.current[i] = el; }}
+                >
+                    <div className="wheel-item-text">
+                        <span>{(i + 1).toString().padStart(2, '0')}</span>
+                        {name}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+});
+
+WheelContent.displayName = 'WheelContent';
+
 export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: WheelProps) {
     const sceneRef = useRef<HTMLDivElement>(null);
     const dialContainerRef = useRef<HTMLDivElement>(null);
@@ -56,12 +87,12 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
             
             // Only notify parent if index actually changes to prevent render cascades
             const index = Math.round(state.current.target / state.current.step);
-            if (index !== lastSelectedIndex.current) {
+            if (index >= 0 && index < data.length && index !== lastSelectedIndex.current) {
                 lastSelectedIndex.current = index;
                 if (onSelect) onSelect(index);
             }
         }
-    }, [scrollDrive, onSelect]);
+    }, [scrollDrive, onSelect, data.length]);
 
     // 2. Persistent Animation Loop - Runs once on mount
     useEffect(() => {
@@ -86,9 +117,11 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
                 const d = Math.abs(angle);
                 
                 // 3D positioning
-                const zPush = -Math.pow(d, 1.3) * 0.6; 
-                const rotateX = d * 0.25 * (angle > 0 ? 1 : -1);
-                const scale = Math.max(0.75, 1 - d / 200);
+                const zPush = -Math.pow(d, 1.2) * 0.5; 
+                const rotateX = d * 0.2 * (angle > 0 ? 1 : -1);
+                
+                // Smoother scale transition
+                const scale = d < 100 ? 1 - Math.pow(d / 100, 1.5) * 0.3 : 0.7;
 
                 el.style.transform = `
                     rotate(${base}deg)
@@ -102,15 +135,19 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
                 // Visual Styling (Opacity/Blur)
                 const textWrapper = el.querySelector('.wheel-item-text') as HTMLElement;
                 if (textWrapper) {
-                    const opacity = Math.max(0, 1 - d / 45);
-                    const blur = Math.min(6, d * 0.12);
+                    // Wider visibility range (60 instead of 40)
+                    const opacityBase = Math.max(0, 1 - d / 65);
+                    const opacity = Math.pow(opacityBase, 1.2);
+                    
+                    const blur = Math.min(6, d * 0.1);
                     textWrapper.style.opacity = opacity.toString();
                     textWrapper.style.filter = `blur(${blur}px)`;
 
-                    if (d < 3) {
+                    // Smoother active state transition
+                    if (d < 4) {
                         textWrapper.style.color = "#FFFFFF";
                         textWrapper.style.fontWeight = "400";
-                        textWrapper.style.textShadow = "0 0 20px rgba(203, 163, 129, 0.8)";
+                        textWrapper.style.textShadow = "0 0 30px rgba(203, 163, 129, 0.8)";
                     } else {
                         textWrapper.style.color = "var(--wheel-text-muted)";
                         textWrapper.style.fontWeight = "200";
@@ -135,30 +172,7 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
                 <div className="physical-rim"></div>
                 <div className="physical-hub"></div>
                 
-                <div className="wheel-dial">
-                    {/* Tick Marks Layer */}
-                    {ticks.map((tick, i) => (
-                        <div 
-                            key={`tick-${i}`}
-                            className={`wheel-tick ${tick.isMajor ? 'major' : 'minor'}`}
-                            style={{ transform: `rotate(${tick.rotation}deg) translateX(46vh) translateZ(0px)` }}
-                        />
-                    ))}
-
-                    {/* Interactive Items Layer */}
-                    {data.map((name, i) => (
-                        <div 
-                            key={`item-${i}`}
-                            className="wheel-dial-item"
-                            ref={el => { itemsRef.current[i] = el; }}
-                        >
-                            <div className="wheel-item-text">
-                                <span>{(i + 1).toString().padStart(2, '0')}</span>
-                                {name}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <WheelContent data={data} ticks={ticks} itemsRef={itemsRef} />
             </div>
 
             <div className="wheel-pointer-wrapper">
