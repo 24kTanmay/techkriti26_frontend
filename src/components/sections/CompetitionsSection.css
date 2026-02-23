@@ -14,7 +14,7 @@
 
     --comp-font-ui: var(--font-space-grotesk), sans-serif;
     --comp-font-body: 'Space Grotesk', sans-serif;
-    --comp-font-display: var(--font-space-grotesk), sans-serif;
+    --comp-font-display: 'Playfair Display', serif;
 
     --comp-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -54,10 +54,9 @@
 }
 
 .section-title i {
-    font-family: var(--font-playfair), serif;
     font-style: italic;
-    font-weight: 400;
-    opacity: 0.7;
+    font-weight: 300;
+    opacity: 0.6;
 }
 
 .subtitle {

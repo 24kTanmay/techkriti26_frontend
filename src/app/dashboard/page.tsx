@@ -224,7 +224,7 @@ export default function NeuralDashboard() {
             <div className="status-badge">
               <div className="status-dot"></div> Singularity Synchronized
             </div>
-            <h1 className="dash-title">Neural <i>Dashboard</i></h1>
+            <h1 className="dash-title">Neural <i>Identity</i></h1>
           </div>
           <button 
             className="dash-logout-btn" 
@@ -241,13 +241,11 @@ export default function NeuralDashboard() {
           </button>
         </header>
 
-        <section className="dashboard-section">
-          <h2 className="dash-section-title">
-            <span className="title-num">01 //</span> Personal <i>Details.</i>
-          </h2>
+        <section>
+          <span className="section-label">01 // Personal Parameters</span>
           
           <div 
-            className="identity-card"
+            className="identity-card" 
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
