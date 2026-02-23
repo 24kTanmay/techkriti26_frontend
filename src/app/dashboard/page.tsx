@@ -5,43 +5,6 @@ import Link from 'next/link'
 import Navbar from '@/components/common/Navbar'
 import './Dashboard.css'
 
-const MY_REGISTRATIONS = [
-  {
-    id: 'cubic-1',
-    event: 'Cubic Extravaganza',
-    teamName: 'team_test (leader)',
-    teamId: 'cubic4426',
-    members: ['Tanmay Roy (You)', 'Shreyansh Rastogi']
-  },
-  {
-    id: 'unsc-1',
-    event: 'UNSC',
-    teamName: 'test_team (leader)',
-    teamId: 'unsc4061',
-    members: ['Tanmay Roy (You)']
-  }
-];
-
-const SENT_REQUESTS = [
-  {
-    id: 'req-1',
-    teamId: 'unsc4061',
-    event: 'UNSC',
-    status: 'Pending'
-  }
-];
-
-const JOIN_REQUESTS = [
-  {
-    id: 'jr-1',
-    name: 'Shreyansh Rastogi',
-    college: 'IIT Kanpur',
-    phone: '1234567890',
-    event: 'UNSC',
-    teamId: 'unsc4061'
-  }
-];
-
 export default function NeuralDashboard() {
   const cardRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -142,20 +105,15 @@ export default function NeuralDashboard() {
             <div className="status-badge">
               <div className="status-dot"></div> Singularity Synchronized
             </div>
-            <h1 className="dash-title">Neural <i>Dashboard</i></h1>
+            <h1 className="dash-title">Neural <i>Identity</i></h1>
           </div>
-          <button className="dash-logout-btn">
-            Logout
-          </button>
         </header>
 
-        <section className="dashboard-section">
-          <h2 className="dash-section-title">
-            <span className="title-num">01 //</span> Personal <i>Details.</i>
-          </h2>
+        <section>
+          <span className="section-label">01 // Personal Parameters</span>
           
           <div 
-            className="identity-card"
+            className="identity-card" 
             ref={cardRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -210,90 +168,10 @@ export default function NeuralDashboard() {
         </section>
 
         <section className="registrations-section">
-          <h2 className="dash-section-title">
-            <span className="title-num">02 //</span> My <i>Registrations.</i>
-          </h2>
-          {MY_REGISTRATIONS.length > 0 ? (
-            <div className="registrations-grid">
-              {MY_REGISTRATIONS.map(reg => (
-                <div key={reg.id} className="reg-card">
-                  <div className="reg-card-header">
-                    <div>
-                      <h3 className="reg-event-name">{reg.event}</h3>
-                      <p className="reg-team-info">Team: <span>{reg.teamName}</span></p>
-                      <p className="reg-team-id">Team ID: {reg.teamId} <span className="share-hint">(Share this with members)</span></p>
-                    </div>
-                    <button className="withdraw-btn">Withdraw</button>
-                  </div>
-                  
-                  <div className="team-members-box">
-                    <span className="members-label">TEAM MEMBERS</span>
-                    <div className="members-list">
-                      {reg.members.map((m, i) => (
-                        <div key={i} className="member-tag">{m}</div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="empty-state">
-              <p className="empty-text">No active event registrations detected in the current sector.</p>
-              <Link href="/competitions" className="explore-btn">Initiate Discovery →</Link>
-            </div>
-          )}
-        </section>
-
-        {/* Sent Team Requests */}
-        <section className="dashboard-sub-section">
-          <h2 className="dash-section-title">
-            <span className="title-num">03 //</span> Sent Team <i>Requests.</i>
-          </h2>
-          <div className="requests-container">
-            {SENT_REQUESTS.map(req => (
-              <div key={req.id} className="request-strip">
-                <div className="request-info">
-                  <p className="request-title">Request to join Team: <span>{req.teamId}</span></p>
-                  <p className="request-event">Event: {req.event}</p>
-                </div>
-                <div className="status-pill pending">{req.status}</div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Join Requests for Your Teams */}
-        <section className="dashboard-sub-section">
-          <h2 className="dash-section-title">
-            <span className="title-num">04 //</span> Join <i>Requests.</i>
-          </h2>
-          <div className="requests-container">
-            {JOIN_REQUESTS.map(req => (
-              <div key={req.id} className="join-request-card">
-                <div className="jr-header">
-                  <h4 className="jr-name">{req.name}</h4>
-                  <div className="jr-actions">
-                    <button className="jr-btn accept">Accept</button>
-                    <button className="jr-btn reject">Reject</button>
-                  </div>
-                </div>
-                <div className="jr-details">
-                  <div className="jr-detail">
-                    <span>College:</span> {req.college}
-                  </div>
-                  <div className="jr-detail">
-                    <span>Phone:</span> {req.phone}
-                  </div>
-                  <div className="jr-detail">
-                    <span>Event:</span> {req.event}
-                  </div>
-                  <div className="jr-detail">
-                    <span>Team ID:</span> {req.teamId}
-                  </div>
-                </div>
-              </div>
-            ))}
+          <span className="section-label">02 // Active Transmissions</span>
+          <div className="empty-state">
+            <p className="empty-text">No active event registrations detected in the current sector.</p>
+            <Link href="/competitions" className="explore-btn">Initiate Discovery →</Link>
           </div>
         </section>
       </main>
