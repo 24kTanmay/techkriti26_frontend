@@ -1,0 +1,135 @@
+:root {
+    --pi-bg: #020205;
+    --pi-accent: #cba381;
+    --pi-muted: #888890;
+    --pi-border: rgba(255, 255, 255, 0.08);
+    --pi-font-ui: var(--font-space-grotesk), sans-serif;
+    --pi-font-display: 'Playfair Display', serif;
+    --pi-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.instr-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #fff;
+    font-family: var(--pi-font-ui);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+}
+
+.instr-container.simple {
+    width: 90%;
+    max-width: 500px;
+    background: var(--pi-bg);
+    border: 1px solid var(--pi-border);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+    animation: piFadeIn 0.5s var(--pi-ease) forwards;
+}
+
+@keyframes piFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.instr-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.modal-title-instr {
+    font-family: var(--pi-font-display);
+    font-size: 2.2rem;
+    font-weight: 400;
+}
+
+.modal-title-instr i {
+    font-style: italic;
+    opacity: 0.6;
+}
+
+.steps-list-simple {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.step-item-simple {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+}
+
+.step-number-simple {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--pi-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    color: var(--pi-accent);
+    flex-shrink: 0;
+}
+
+.step-text-simple {
+    font-size: 0.95rem;
+    color: var(--pi-muted);
+    line-height: 1.5;
+}
+
+.btn-instr-simple {
+    width: 100%;
+    padding: 1.1rem;
+    border-radius: 12px;
+    background: #fff;
+    color: #000;
+    border: none;
+    font-family: var(--pi-font-ui);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s var(--pi-ease);
+}
+
+.btn-instr-simple:hover {
+    background: var(--pi-accent);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .instr-container.simple {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .modal-title-instr {
+        font-size: 1.6rem;
+    }
+
+    .step-text-simple {
+        font-size: 0.85rem;
+    }
+
+    .step-item-simple {
+        gap: 1rem;
+    }
+}

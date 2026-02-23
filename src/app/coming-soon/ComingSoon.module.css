@@ -1,0 +1,138 @@
+.container {
+    --bg: #030303;
+    --accent: #cba381;
+    /* Copper/Gold */
+    --font-ui: 'Space Grotesk', sans-serif;
+    --font-display: var(--font-playfair), "Playfair Display", serif;
+
+    background: var(--bg);
+    color: #fff;
+    font-family: var(--font-space-grotesk), sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* --- THE ATMOSPHERIC GLOW --- */
+.aura {
+    position: fixed;
+    width: 60vmax;
+    height: 60vmax;
+    background: radial-gradient(circle, rgba(203, 163, 129, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1);
+    left: 50%;
+    top: 50%;
+    margin-left: -30vmax;
+    margin-top: -30vmax;
+}
+
+/* Subtle Grain texture */
+.noise {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* --- CONTENT --- */
+.mainContent {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+}
+
+.tag {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    letter-spacing: 0.6em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: block;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1;
+}
+
+.title i {
+    font-family: var(--font-playfair), serif;
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.6;
+}
+
+/* Minimal Progress Bar */
+.progressLine {
+    width: 200px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 3rem auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.progressFill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    background: var(--accent);
+    animation: move 3s infinite ease-in-out;
+}
+
+@keyframes move {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+.status {
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    color: #444;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+
+}
+
+@media (max-width: 640px) {
+    .tag {
+        letter-spacing: 0.25em;
+        font-size: 0.6rem;
+    }
+
+    .title {
+        font-size: 3.2rem;
+        line-height: 1.1;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+
+    .progressLine {
+        width: 140px;
+        margin: 2rem auto;
+    }
+
+    .status {
+        letter-spacing: 2px;
+    }
+}

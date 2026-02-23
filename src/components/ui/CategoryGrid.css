@@ -1,0 +1,303 @@
+:root {
+    --bg-base-grid: #010103;
+    --text-main-grid: #ffffff;
+    --text-muted-grid: #8b8b99;
+    --accent-grid: #cba381;
+
+    --card-bg-grid: rgba(20, 20, 25, 0.4);
+    --card-border-grid: rgba(255, 255, 255, 0.06);
+
+    --font-ui-grid: var(--font-space-grotesk), sans-serif;
+    --font-body-grid: var(--font-space-grotesk), sans-serif;
+    --font-mono-grid: var(--font-jetbrains-mono), monospace;
+}
+
+.category-grid-page {
+    background-color: var(--bg-base-grid);
+    color: var(--text-main-grid);
+    font-family: var(--font-body-grid);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- BACKGROUND FX --- */
+.grid-star-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.noise-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.ambient-glow-grid {
+    position: fixed;
+    top: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vh;
+    background: radial-gradient(circle, rgba(203, 163, 129, 0.08) 0%, transparent 70%);
+    filter: blur(100px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* --- MAIN LAYOUT ADJUSTMENTS --- */
+
+.breadcrumb-grid {
+    font-family: var(--font-ui-grid);
+    font-size: 0.8rem;
+    color: var(--text-muted-grid);
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.breadcrumb-grid a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.breadcrumb-grid a:hover {
+    color: var(--text-main-grid);
+}
+
+/* --- HERO --- */
+.hero-grid {
+    padding: 10rem 15% 6rem;
+    text-align: left;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-title-grid {
+    font-family: var(--font-playfair), serif;
+    font-size: 6.5rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+    background: linear-gradient(180deg, #fff 0%, #aaa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+.hero-desc-grid {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: var(--text-muted-grid);
+    max-width: 650px;
+    font-weight: 300;
+}
+
+/* --- GRID CONTAINER --- */
+.arena-container-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem 8rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 3rem;
+    width: 100%;
+    z-index: 10;
+}
+
+/* --- EVENT CARD --- */
+.event-card-grid {
+    position: relative;
+    height: 450px;
+    background: var(--card-bg-grid);
+    border: 1px solid var(--card-border-grid);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3rem;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.event-card-grid.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.card-img-grid {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 0;
+    background-color: #08080c;
+    /* Placeholder bg */
+}
+
+.event-card-grid:hover .card-img-grid {
+    transform: scale(1.1);
+}
+
+.card-vignette-grid {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #010103 0%, rgba(1, 1, 3, 0.4) 60%, transparent 100%);
+    z-index: 1;
+}
+
+.card-number-grid {
+    position: absolute;
+    top: 2rem;
+    left: 2rem;
+    font-family: var(--font-mono-grid);
+    font-size: 0.9rem;
+    color: var(--accent-grid);
+    opacity: 0.6;
+    letter-spacing: 2px;
+    z-index: 2;
+}
+
+.card-content-grid {
+    position: relative;
+    z-index: 2;
+}
+
+.card-title-grid {
+    font-family: var(--font-ui-grid);
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.card-reveal-grid {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.event-card-grid:hover .card-reveal-grid {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 1rem;
+}
+
+.card-desc-grid {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-muted-grid);
+    margin-bottom: 2rem;
+}
+
+.btn-glass-grid {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.7rem 1.4rem;
+    border-radius: 30px;
+    font-family: var(--font-ui-grid);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.event-card-grid:hover .btn-glass-grid {
+    background: #fff;
+    color: #000;
+}
+
+@media (max-width: 1100px) {
+    .hero-grid {
+        padding: 10rem 10% 4rem;
+    }
+
+    .hero-title-grid {
+        font-size: 4.5rem;
+    }
+
+    .arena-container-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        padding: 0 2rem 6rem;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-grid {
+        padding: 8rem 2rem 3rem;
+        text-align: center;
+    }
+
+    .breadcrumb-grid {
+        justify-content: center;
+        font-size: 0.7rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .hero-title-grid {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .hero-desc-grid {
+        font-size: 0.95rem;
+        margin: 0 auto;
+    }
+
+    .arena-container-grid {
+        grid-template-columns: 1fr;
+        padding: 0 1.5rem 4rem;
+        gap: 1.5rem;
+    }
+
+    .event-card-grid {
+        height: 380px;
+        padding: 2rem;
+    }
+
+    .card-title-grid {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-grid {
+        padding: 7rem 1.5rem 2.5rem;
+    }
+
+    .hero-title-grid {
+        font-size: 2.5rem;
+    }
+
+    .event-card-grid {
+        height: 320px;
+    }
+}
