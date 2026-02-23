@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import './Confirmation.css'
 import PaymentInstructions from './PaymentInstructions'
 
-type GatewayState = 'confirm' | 'hub' | 'submitted'
+type GatewayState = 'confirm' | 'hub' | 'submitted' | 'pay_later'
 
 interface ConfirmationProps {
     onClose: () => void;
@@ -179,6 +179,18 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                             )}
                         </div>
 
+                        <div className="pay-later-divider-gateway">
+                            <span>OR</span>
+                        </div>
+
+                        <button 
+                            className="sub-link-gateway" 
+                            style={{ border: 'none', background: 'none', cursor: 'pointer', textAlign: 'center', width: '100%', opacity: 0.7 }}
+                            onClick={() => transition('pay_later')}
+                        >
+                            Complete Registration & Pay Later
+                        </button>
+
                         {uploadStatus === 'complete' && (
                             <button 
                                 className="btn-gateway btn-primary-gateway" 
@@ -188,6 +200,20 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                                 Submit Registration
                             </button>
                         )}
+                    </div>
+                </div>
+
+                {/* STATE: PAY LATER CONFIRMATION */}
+                <div className={`state-gateway ${state === 'pay_later' ? 'active' : ''}`}>
+                    <div className="loader-ring-gateway" style={{ borderTopColor: 'var(--gateway-accent)', width: '40px', height: '40px' }}></div>
+                    <span className="status-tag-gateway">Attention</span>
+                    <h2 className="modal-title-gateway">Finalize <i>Now?</i></h2>
+                    <p className="modal-desc-gateway">
+                        Your registration will be saved. You can upload the payment receipt later from your <b>Neural Dashboard</b> to complete verification.
+                    </p>
+                    <div className="btn-group-gateway">
+                        <button className="btn-gateway btn-primary-gateway" onClick={() => transition('submitted')}>Confirm</button>
+                        <button className="btn-gateway btn-secondary-gateway" onClick={() => transition('hub')}>Go Back</button>
                     </div>
                 </div>
 

@@ -11,14 +11,16 @@ const MY_REGISTRATIONS = [
     event: 'Cubic Extravaganza',
     teamName: 'team_test (leader)',
     teamId: 'cubic4426',
-    members: ['Tanmay Roy (You)', 'Shreyansh Rastogi']
+    members: ['Tanmay Roy (You)', 'Shreyansh Rastogi'],
+    status: 'Verified'
   },
   {
     id: 'unsc-1',
     event: 'UNSC',
     teamName: 'test_team (leader)',
     teamId: 'unsc4061',
-    members: ['Tanmay Roy (You)']
+    members: ['Tanmay Roy (You)'],
+    status: 'Unpaid'
   }
 ];
 
@@ -222,6 +224,20 @@ export default function NeuralDashboard() {
                       <h3 className="reg-event-name">{reg.event}</h3>
                       <p className="reg-team-info">Team: <span>{reg.teamName}</span></p>
                       <p className="reg-team-id">Team ID: {reg.teamId} <span className="share-hint">(Share this with members)</span></p>
+                      <div className="reg-status-container" style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <div className={`status-pill ${reg.status.toLowerCase()}`}>{reg.status}</div>
+                        {reg.status === 'Unpaid' ? (
+                          <button className="reg-action-btn upload">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                            Upload Receipt
+                          </button>
+                        ) : (
+                          <button className="reg-action-btn view">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            View Document
+                          </button>
+                        )}
+                      </div>
                     </div>
                     <button className="withdraw-btn">Withdraw</button>
                   </div>
@@ -257,7 +273,7 @@ export default function NeuralDashboard() {
                   <p className="request-title">Request to join Team: <span>{req.teamId}</span></p>
                   <p className="request-event">Event: {req.event}</p>
                 </div>
-                <div className="status-pill pending">{req.status}</div>
+                <div className={`status-pill ${req.status.toLowerCase()}`}>{req.status}</div>
               </div>
             ))}
           </div>

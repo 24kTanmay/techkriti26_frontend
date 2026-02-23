@@ -257,6 +257,29 @@
     transform: translateY(-1px);
 }
 
+.pay-later-divider-gateway {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.pay-later-divider-gateway::before,
+.pay-later-divider-gateway::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gateway-border);
+}
+
+.pay-later-divider-gateway span {
+    font-family: var(--gateway-font-ui);
+    font-size: 0.6rem;
+    color: var(--gateway-muted);
+    letter-spacing: 2px;
+}
+
 .upload-shard-gateway {
     margin-top: 1.5rem;
     width: 100%;

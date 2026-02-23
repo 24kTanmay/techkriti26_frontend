@@ -397,6 +397,75 @@
     color: var(--accent-cyan);
 }
 
+.status-pill.verified {
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #22c55e;
+}
+
+.status-pill.rejected {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #ef4444;
+}
+
+.status-pill.unpaid {
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #3b82f6;
+}
+
+/* Registration Action Buttons */
+.reg-action-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out-expo);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.reg-action-btn svg {
+    opacity: 0.8;
+}
+
+.reg-action-btn.view {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+}
+
+.reg-action-btn.view:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.reg-action-btn.upload {
+    background: rgba(203, 163, 129, 0.05);
+    border: 1px solid rgba(203, 163, 129, 0.2);
+    color: var(--accent-cyan);
+}
+
+.reg-action-btn.upload:hover {
+    background: var(--accent-cyan);
+    color: #000;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(203, 163, 129, 0.3);
+    transform: translateY(-1px);
+}
+
+.reg-action-btn.upload:hover svg {
+    filter: brightness(0);
+}
+
 /* Join Request Card */
 .join-request-card {
     background: rgba(255, 255, 255, 0.015);
