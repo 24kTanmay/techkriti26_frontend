@@ -136,34 +136,20 @@
 
 @media (max-width: 768px) {
     .timer-container {
-        gap: 0.5rem;
-        padding: 0 0.5rem;
-        width: 100%;
-        overflow: hidden;
+        gap: 0.6rem;
     }
 
-    .shard {
-        width: 72px;
-        height: 100px;
-        border-radius: 8px;
-    }
-
-    .number-display {
-        font-size: 2.8rem;
-    }
-
-    .timer-label {
-        font-size: 0.45rem;
-    }
-}
-
-@media (max-width: 360px) {
     .shard {
         width: 64px;
         height: 90px;
+        border-radius: 6px;
     }
 
     .number-display {
-        font-size: 2.4rem;
+        font-size: 2.625rem;
+    }
+
+    .timer-label {
+        font-size: 0.375rem;
     }
 }
