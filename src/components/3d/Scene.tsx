@@ -251,33 +251,22 @@ function SceneContent() {
 
 
       <Suspense fallback={null}>
-
         <Head />
-
         <Dna />
-
-
         <Nebula />
-
-
         <Environment
           preset="city"
           background={false}
         />
-
-
-        <EffectComposer>
-
-          <Bloom
-            luminanceThreshold={0.8}
-            luminanceSmoothing={0.3}
-            intensity={0.25}
-          />
-
-        </EffectComposer>
-
-
       </Suspense>
+
+      <EffectComposer multisampling={0}>
+        <Bloom
+          luminanceThreshold={0.8}
+          luminanceSmoothing={0.3}
+          intensity={0.25}
+        />
+      </EffectComposer>
 
 
       <Preload all />

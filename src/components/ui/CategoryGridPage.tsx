@@ -93,7 +93,7 @@ export default function CategoryGridPage({ data }: { data: CategoryGridData }) {
       <Navbar />
 
       <header className="hero-grid">
-        <div className="breadcrumb-grid" style={{ marginBottom: '2rem' }}>
+        <div className="breadcrumb-grid">
           {breadcrumbs.map((crumb, i) => (
             <React.Fragment key={i}>
               {i > 0 && <span style={{ margin: '0 10px', opacity: 0.3 }}>/</span>}

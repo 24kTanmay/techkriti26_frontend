@@ -18,6 +18,21 @@
     transition: transform 0.1s ease-out;
     overflow: hidden;
     background: var(--wheel-bg);
+    --wheel-orbit: 44vh;
+}
+
+@media (max-width: 900px) {
+    .wheel-scene {
+        --wheel-orbit: 32vmin;
+    }
+}
+
+@media (max-width: 600px) {
+    .wheel-scene {
+        --wheel-orbit: 35vh;
+        align-items: flex-end;
+        justify-content: center;
+    }
 }
 
 /* Ambient Lighting */
@@ -221,4 +236,138 @@
     border-radius: 0 4px 4px 0;
     box-shadow: inset -4px 0 10px -4px var(--wheel-accent-glow);
     opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+    .dial-container {
+        left: -35vmin;
+        width: 70vmin;
+        height: 70vmin;
+        margin-top: -35vmin;
+    }
+
+    .wheel-dial-item {
+        width: 40vmin;
+        padding-left: 140px;
+    }
+
+    .wheel-item-text {
+        font-size: 1.2rem;
+        letter-spacing: 3px;
+        max-width: 250px;
+    }
+
+    .wheel-item-text span {
+        right: calc(100% + 60px);
+        font-size: 0.75rem;
+    }
+
+    .wheel-pointer-wrapper {
+        left: 32vmin;
+    }
+
+    .wheel-pointer-line {
+        width: 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .dial-container {
+        left: 50%;
+        top: 100%;
+        width: 100vh;
+        height: 100vh;
+        margin-top: -50vh;
+        margin-left: -50vh;
+        /* Position center so top arc is visible */
+        transform: translateY(15vh) rotate(-90deg);
+        cursor: ns-resize;
+    }
+
+    .physical-rim {
+        top: 15%;
+        left: 15%;
+        right: 15%;
+        bottom: 15%;
+        border: 1px solid rgba(203, 163, 129, 0.2);
+        background: radial-gradient(circle at center, transparent 65%, rgba(203, 163, 129, 0.05) 100%);
+    }
+
+    .physical-hub {
+        top: 38%;
+        left: 38%;
+        width: 24%;
+        height: 24%;
+    }
+
+    .wheel-dial-item {
+        width: auto;
+        padding-left: 0;
+        transform-origin: left center;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .wheel-item-text {
+        font-size: 1.1rem;
+        letter-spacing: 4px;
+        /* Increased for technical look */
+        max-width: 250px;
+        text-align: center;
+        margin-left: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .wheel-item-text span {
+        position: absolute;
+        left: 50%;
+        bottom: -2.2rem;
+        /* Move inside the circumference */
+        transform: translateX(-50%);
+        font-size: 0.65rem;
+        opacity: 0.5;
+        letter-spacing: 2px;
+        color: var(--wheel-accent);
+    }
+
+    .wheel-pointer-wrapper {
+        left: 50%;
+        top: auto;
+        bottom: -15vh;
+        /* Align with the specific wheel center translateY */
+        height: 50vh;
+        /* Reaches from center to just above the text */
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 0;
+    }
+
+    .wheel-pointer-line {
+        width: 1px;
+        flex-grow: 1;
+        background: linear-gradient(180deg,
+                var(--wheel-accent) 0%,
+                rgba(203, 163, 129, 0.4) 50%,
+                transparent 100%);
+        box-shadow: 0 0 10px var(--wheel-accent-glow);
+        opacity: 0.6;
+    }
+
+    .wheel-pointer-bracket {
+        width: 40px;
+        height: 14px;
+        border-top: 2px solid var(--wheel-accent);
+        border-left: 2px solid var(--wheel-accent);
+        border-right: 2px solid var(--wheel-accent);
+        border-bottom: none;
+        border-radius: 6px 6px 0 0;
+        box-shadow: 0 -5px 15px -5px var(--wheel-accent-glow);
+        margin-bottom: -1px;
+    }
 }

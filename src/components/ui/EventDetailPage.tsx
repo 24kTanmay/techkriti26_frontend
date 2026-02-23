@@ -6,6 +6,9 @@ import Navbar from '@/components/common/Navbar'
 import { useTabIndicator } from '@/hooks/useTabIndicator'
 import type { EventDetailData } from '@/types/event'
 import '@/components/ui/EventDetailPage.css'
+import Confirmation from '@/components/ui/Confirmation'
+import CreateTeam from '@/components/ui/CreateTeam'
+import JoinTeam from '@/components/ui/JoinTeam'
 
 /**
  * Shared template for all competition detail pages.
@@ -26,6 +29,9 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
   } = data
 
   const [activeTab, setActiveTab] = useState(tabs[0]?.id ?? 'overview')
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const [showCreateTeam, setShowCreateTeam] = useState(false)
+  const [showJoinTeam, setShowJoinTeam] = useState(false)
   const { indicatorRef, tabsContainerRef } = useTabIndicator(activeTab)
 
   return (
@@ -112,13 +118,25 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
                 </div>
 
                 <div className="event-action-group">
-                  <button className="event-btn-action primary" aria-label="Register as Individual">
+                  <button 
+                    className="event-btn-action primary" 
+                    aria-label="Register as Individual"
+                    onClick={() => setShowConfirmation(true)}
+                  >
                     Individual
                   </button>
-                  <button className="event-btn-action" aria-label="Create a new team">
+                  <button 
+                    className="event-btn-action" 
+                    aria-label="Create a new team"
+                    onClick={() => setShowCreateTeam(true)}
+                  >
                     Create Team
                   </button>
-                  <button className="event-btn-action" aria-label="Join an existing team">
+                  <button 
+                    className="event-btn-action" 
+                    aria-label="Join an existing team"
+                    onClick={() => setShowJoinTeam(true)}
+                  >
                     Join Team
                   </button>
                 </div>
@@ -169,6 +187,19 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
           </div>
         </div>
       </div>
+
+      {showConfirmation && (
+        <Confirmation onClose={() => setShowConfirmation(false)} />
+      )}
+
+      {showCreateTeam && (
+        <CreateTeam onClose={() => setShowCreateTeam(false)} />
+      )}
+
+      {showJoinTeam && (
+        <JoinTeam onClose={() => setShowJoinTeam(false)} />
+      )}
     </div>
   )
 }
+

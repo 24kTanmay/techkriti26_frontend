@@ -3,7 +3,7 @@
     --team-accent: #cba381;
     /* Copper Transcendence */
     --team-font-ui: 'Space Grotesk', sans-serif;
-    --team-font-display: 'Playfair Display', serif;
+    --team-font-display: var(--font-playfair), serif;
     --team-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -138,6 +138,7 @@
 }
 
 .name-team {
+    font-family: var(--team-font-display);
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 1rem;

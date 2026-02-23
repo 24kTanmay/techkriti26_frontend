@@ -46,12 +46,18 @@
 }
 
 .preloader-progress-bar {
-    width: 700px;
+    width: 250px;
     height: 1px;
     background: rgba(255, 255, 255, 0.05);
     margin-top: 1rem;
     position: relative;
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    .preloader-progress-bar {
+        width: 700px;
+    }
 }
 
 .preloader-progress-fill {

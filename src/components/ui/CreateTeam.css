@@ -1,0 +1,356 @@
+:root {
+    --ct-bg: #020205;
+    --ct-text: #ffffff;
+    --ct-muted: #888890;
+    --ct-accent: #cba381;
+    --ct-accent-glow: rgba(203, 163, 129, 0.15);
+    --ct-glass: rgba(255, 255, 255, 0.02);
+    --ct-border: rgba(255, 255, 255, 0.08);
+
+    --ct-font-ui: var(--font-space-grotesk), sans-serif;
+    --ct-font-display: var(--font-playfair), serif;
+    --ct-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.create-team-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--ct-bg);
+    color: var(--ct-text);
+    font-family: var(--ct-font-ui);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+#star-canvas-createteam {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.5;
+}
+
+.noise-createteam {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.createteam-container {
+    width: 95%;
+    max-width: 500px;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--ct-border);
+    border-radius: 24px;
+    padding: 3rem;
+    position: relative;
+    z-index: 3;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    animation: ctWake 1s var(--ct-ease) forwards;
+}
+
+@keyframes ctWake {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.state-createteam {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.state-createteam.active {
+    display: flex;
+}
+
+.status-tag-createteam {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--ct-accent);
+    margin-bottom: 1.5rem;
+}
+
+.modal-title-createteam {
+    font-family: var(--ct-font-display);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+    font-weight: 400;
+}
+
+.modal-title-createteam i {
+    font-style: italic;
+    font-weight: 300;
+    opacity: 0.6;
+}
+
+.modal-desc-createteam {
+    color: var(--ct-muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+    max-width: 320px;
+}
+
+/* Input Styling */
+.input-field-createteam {
+    width: 100%;
+    margin-bottom: 2.5rem;
+    position: relative;
+    text-align: left;
+}
+
+.label-createteam {
+    display: block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ct-accent);
+    margin-bottom: 0.8rem;
+    opacity: 0.8;
+}
+
+.text-input-createteam {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--ct-border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    color: #fff;
+    font-family: var(--ct-font-ui);
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.4s var(--ct-ease);
+}
+
+.text-input-createteam:focus {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--ct-accent);
+    box-shadow: 0 0 20px rgba(203, 163, 129, 0.1);
+}
+
+.input-field-createteam:focus-within .input-glow {
+    opacity: 1;
+}
+
+.btn-group-createteam {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+}
+
+.btn-createteam {
+    flex: 1;
+    padding: 1.1rem;
+    border-radius: 12px;
+    font-family: var(--ct-font-ui);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s var(--ct-ease);
+    border: 1px solid transparent;
+    outline: none;
+}
+
+.btn-createteam:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.btn-secondary-createteam {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--ct-border);
+    color: #fff;
+}
+
+.btn-secondary-createteam:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #fff;
+}
+
+.btn-primary-createteam {
+    background: #fff;
+    color: #000;
+}
+
+.btn-primary-createteam:hover:not(:disabled) {
+    background: var(--ct-accent);
+    box-shadow: 0 10px 30px var(--ct-accent-glow);
+}
+
+/* Spinner for Processing */
+.hologram-spinner-createteam {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.ring-createteam {
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: 50%;
+}
+
+.ring-1 {
+    border-top-color: var(--ct-accent);
+    animation: ctSpin 1s linear infinite;
+}
+
+.ring-2 {
+    inset: 10px;
+    border-right-color: var(--ct-accent);
+    opacity: 0.6;
+    animation: ctSpin 1.5s linear infinite reverse;
+}
+
+.ring-3 {
+    inset: 20px;
+    border-bottom-color: var(--ct-accent);
+    opacity: 0.3;
+    animation: ctSpin 2s linear infinite;
+}
+
+@keyframes ctSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Progress Bar */
+.progress-conduit-createteam {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.conduit-fill-createteam {
+    height: 100%;
+    background: var(--ct-accent);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 15px var(--ct-accent);
+}
+
+.progress-label-createteam {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ct-muted);
+}
+
+/* Success Card */
+.success-icon-createteam {
+    width: 60px;
+    height: 60px;
+    background: rgba(74, 222, 128, 0.1);
+    border: 1px solid #4ade80;
+    color: #4ade80;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.team-id-card-createteam {
+    width: 100%;
+    background: rgba(203, 163, 129, 0.05);
+    border: 1px solid rgba(203, 163, 129, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.id-label-createteam {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--ct-accent);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.id-value-createteam {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.id-hint-createteam {
+    font-size: 0.75rem;
+    color: var(--ct-muted);
+    max-width: 240px;
+    margin: 0 auto;
+}
+
+@media (max-width: 600px) {
+    .createteam-container {
+        padding: 2rem 1.5rem;
+        border-radius: 16px;
+    }
+
+    .modal-title-createteam {
+        font-size: 1.8rem;
+    }
+
+    .modal-desc-createteam {
+        font-size: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .label-createteam {
+        font-size: 0.6rem;
+    }
+
+    .text-input-createteam {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .btn-group-createteam {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .btn-createteam {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .id-value-createteam {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+
+    .team-id-card-createteam {
+        padding: 1.5rem;
+    }
+}

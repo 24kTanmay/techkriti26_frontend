@@ -84,13 +84,19 @@ export default function AboutSection() {
         }
 
         .about-heading {
+          font-family: var(--font-playfair), serif;
           background: linear-gradient(to bottom, #fff 40%, #555 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-size: 3.5rem;
-          font-weight: 700;
+          font-weight: 400;
           line-height: 1.1;
           margin-bottom: 1.5rem;
+        }
+
+        .about-heading i {
+          font-style: italic;
+          opacity: 0.6;
         }
 
         @media (max-width: 1024px) {
@@ -146,7 +152,7 @@ export default function AboutSection() {
           <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_01</span>
           <h2 className="about-heading">Born at <br />IIT Kanpur</h2>
           <p className="text-lg text-gray-400 font-light leading-relaxed">
-            Founded in 1995, Techkriti was established to spark interest and encourage innovation in technology among students across India.
+            Since 1995, Techkriti has sparked innovation and technical interest among students across India.
           </p>
         </div>
 
@@ -155,7 +161,7 @@ export default function AboutSection() {
           <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_02</span>
           <h2 className="about-heading">Asia&apos;s <br />Largest Stage</h2>
           <p className="text-lg text-gray-400 font-light leading-relaxed">
-            Now in its 32nd edition, Techkriti has become one of Asia’s largest technical festivals, providing an elite platform for young minds.
+            In its 32nd edition, Techkriti is one of Asia’s largest technical festivals for young minds.
           </p>
         </div>
 
@@ -164,7 +170,7 @@ export default function AboutSection() {
           <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_03</span>
           <h2 className="about-heading">Social <br />Welfare</h2>
           <p className="text-lg text-gray-400 font-light leading-relaxed">
-            Innovation and perseverance are at our heart. We develop organizational skills and drive social change through technical excellence.
+            We drive social change and technical excellence through innovation and perseverance.
           </p>
         </div>
 

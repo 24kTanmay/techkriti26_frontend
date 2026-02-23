@@ -168,12 +168,12 @@ export default function Home() {
       <AboutSection />
       
       {/* Interactive Wheel Section - Locked until completion */}
-      <div ref={wheelSectionRef} className="w-full relative h-screen flex items-center overflow-hidden">
+      <div ref={wheelSectionRef} className="w-full relative h-[100vh] flex flex-col md:flex-row items-center overflow-hidden">
         
         {/* Summit Visual Preview */}
         <div 
-          className={`absolute right-[6%] top-1/2 -translate-y-1/2 w-[35vw] aspect-square rounded-[40px] overflow-hidden border border-white/10 z-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-1000 ease-out ${
-            wheelProgress > 0.01 ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-12 scale-95'
+          className={`absolute right-1/2 translate-x-1/2 md:right-[6%] md:translate-x-0 top-[20%] md:top-1/2 md:-translate-y-1/2 w-[85vw] md:w-[35vw] h-[35vh] md:aspect-square rounded-[30px] md:rounded-[40px] overflow-hidden border border-white/10 z-20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-1000 ease-out ${
+            wheelProgress > 0.01 ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
           }`}
         >
            <div 
@@ -190,22 +190,24 @@ export default function Home() {
            {/* Details Layer */}
            <div 
              key={`text-${currentSummit}`}
-             className="absolute bottom-12 left-10 right-10 transform animate-text-reveal"
+             className="absolute bottom-6 md:bottom-12 left-6 md:left-10 right-6 md:right-10 transform animate-text-reveal"
              style={{ animationDelay: '0.1s' }}
            >
-              <h3 className="text-3xl font-bold tracking-tight text-white uppercase mb-3 leading-tight" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
+              <h3 className="text-xl md:text-3xl font-bold tracking-tight text-white uppercase mb-1 md:mb-3 leading-tight" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
                 {summitNames[currentSummit]}
               </h3>
-              <p className="text-white/60 text-sm leading-relaxed max-w-[90%] font-light tracking-wide">
+              <p className="text-white/60 text-[10px] md:text-sm leading-relaxed max-w-[95%] font-light tracking-wide">
                 {summitBriefs[currentSummit]}
               </p>
            </div>
         </div>
 
-        <Wheel 
-          scrollDrive={wheelProgress} 
-          onSelect={handleSummitSelect}
-        />
+        <div className="w-full h-full mt-[30vh] md:mt-0 flex items-center justify-center">
+          <Wheel 
+            scrollDrive={wheelProgress} 
+            onSelect={handleSummitSelect}
+          />
+        </div>
       </div>
 
       <HeroConclusion />

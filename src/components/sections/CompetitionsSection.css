@@ -60,7 +60,7 @@
 }
 
 .subtitle {
-    max-width: 600px;
+    max-width: 520px;
     margin: 0 auto;
     color: var(--comp-text-muted);
     font-size: 1.1rem;
@@ -170,20 +170,25 @@
 .expand-icon {
     position: relative;
     z-index: 2;
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    border: 1px solid var(--comp-card-border);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.5s var(--comp-ease-out-expo);
+    font-size: 1.7rem;
+    line-height: 1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 .main-card:hover .expand-icon {
     border-color: var(--comp-text-main);
     background: var(--comp-text-main);
     color: var(--comp-bg-base);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
 }
 
 .comp-group.is-active .expand-icon {
@@ -191,6 +196,18 @@
     background: var(--comp-accent);
     border-color: var(--comp-accent);
     color: var(--comp-bg-base);
+    box-shadow: 0 0 25px rgba(203, 163, 129, 0.3);
+}
+
+.main-card:active .expand-icon {
+    transform: scale(0.85);
+    background: #fff;
+    color: #000;
+}
+
+.comp-group.is-active .main-card:active .expand-icon {
+    transform: rotate(180deg) scale(0.85);
+    background: var(--comp-accent);
 }
 
 /* --- SUB-GRID --- */
@@ -343,6 +360,10 @@
     transform: translateX(4px);
 }
 
+.sub-btn:active {
+    transform: scale(0.96);
+}
+
 .noise-overlay {
     position: absolute;
     top: 0;
@@ -405,8 +426,9 @@
     }
 
     .expand-icon {
-        width: 36px;
-        height: 36px;
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
     }
 
     .sub-inner {
@@ -446,7 +468,8 @@
     }
 
     .expand-icon {
-        width: 32px;
-        height: 32px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
     }
 }

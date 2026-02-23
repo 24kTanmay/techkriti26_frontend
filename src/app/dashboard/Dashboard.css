@@ -7,7 +7,7 @@
     --glass-border: rgba(255, 255, 255, 0.08);
     --font-ui: 'Space Grotesk', sans-serif;
     --font-body: 'Space Grotesk', sans-serif;
-    --font-display: 'Playfair Display', serif;
+    --font-display: var(--font-playfair), serif;
     --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -282,15 +282,30 @@
 @media (max-width: 768px) {
     .dash-container {
         padding-top: 6rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
 
     .identity-card {
         grid-template-columns: 1fr;
-        padding: 2.5rem;
-        gap: 2rem;
+        padding: 2rem;
+        gap: 1.5rem;
+    }
+
+    .edit-btn {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        justify-content: center;
     }
 
     .dash-title {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+    }
+
+    .empty-state {
+        padding: 3rem 1.5rem;
     }
 }

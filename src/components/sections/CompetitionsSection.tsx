@@ -157,7 +157,7 @@ export default function CompetitionsSection() {
         <div className="hero-text">
           <span className="tagline">Phase_02 // Competitions</span>
           <h1 className="section-title">Explore the <br /><i>Singularity.</i></h1>
-          <p className="subtitle">Where new intelligence meets cosmic transcendence. Select an arena below to view individual events, challenges, and problem statements.</p>
+          <p className="subtitle">New intelligence meets cosmic transcendence. Select an arena to view events and challenges.</p>
         </div>
 
         <div className={`comp-list ${activeIndex !== null ? 'comp-list-has-active' : ''}`}>

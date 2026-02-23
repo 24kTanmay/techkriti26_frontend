@@ -3,7 +3,7 @@
     --accent: #cba381;
     /* Copper/Gold */
     --font-ui: 'Space Grotesk', sans-serif;
-    --font-display: 'Playfair Display', serif;
+    --font-display: var(--font-playfair), "Playfair Display", serif;
 
     background: var(--bg);
     color: #fff;
@@ -69,8 +69,10 @@
 }
 
 .title i {
+    font-family: var(--font-display);
     font-style: italic;
-    opacity: 0.4;
+    font-weight: 400;
+    opacity: 0.6;
 }
 
 /* Minimal Progress Bar */
@@ -119,7 +121,10 @@
     }
 
     .title {
-        font-size: 3rem;
+        font-size: 3.2rem;
+        line-height: 1.1;
+        max-width: 300px;
+        margin: 0 auto;
     }
 
     .progressLine {

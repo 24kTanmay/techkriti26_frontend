@@ -203,7 +203,7 @@ export default function Navbar() {
           }}>
               TK
             </div>
-            <div style={{ textAlign: 'left' }}>
+            <div style={{ textAlign: 'left' }} className="hidden sm:block">
               <p style={{ fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2px', color: 'white' }}>TechKriti</p>
               <p style={{ fontSize: '12px', color: '#666', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>IIT Kanpur</p>
             </div>

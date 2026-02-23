@@ -30,7 +30,7 @@ const WheelContent = React.memo(({ data, ticks, itemsRef }: { data: string[], ti
                 <div 
                     key={`tick-${i}`}
                     className={`wheel-tick ${tick.isMajor ? 'major' : 'minor'}`}
-                    style={{ transform: `rotate(${tick.rotation}deg) translateX(46vh) translateZ(0px)` }}
+                    style={{ transform: `rotate(${tick.rotation}deg) translateX(calc(var(--wheel-orbit, 44vh) + 2vh)) translateZ(0px)` }}
                 />
             ))}
 
@@ -123,10 +123,15 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
                 // Smoother scale transition
                 const scale = d < 100 ? 1 - Math.pow(d / 100, 1.5) * 0.3 : 0.7;
 
+                // Correct for parent dial rotation on mobile (-90deg in CSS)
+                const isMobile = window.innerWidth <= 600;
+                const mobileOffset = isMobile ? 90 : 0;
+                const distOffset = isMobile ? 8 : 0; // Push text further out on mobile
+
                 el.style.transform = `
                     rotate(${base}deg)
-                    translateX(44vh)
-                    rotate(${-base + state.current.current}deg)
+                    translateX(calc(var(--wheel-orbit, 44vh) + ${distOffset}vh))
+                    rotate(${-base + state.current.current + mobileOffset}deg)
                     translateZ(${zPush}px)
                     rotateX(${rotateX}deg)
                     scale(${scale})

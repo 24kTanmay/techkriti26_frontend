@@ -2,11 +2,17 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import './Confirmation.css'
+import PaymentInstructions from './PaymentInstructions'
 
 type GatewayState = 'confirm' | 'hub' | 'submitted'
 
-export default function Confirmation() {
+interface ConfirmationProps {
+    onClose: () => void;
+}
+
+export default function Confirmation({ onClose }: ConfirmationProps) {
     const [state, setState] = useState<GatewayState>('confirm')
+    const [showInstructions, setShowInstructions] = useState(false)
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'scanning' | 'complete'>('idle')
     const [fileName, setFileName] = useState<string>('')
     const [progress, setProgress] = useState<number>(0)
@@ -98,37 +104,42 @@ export default function Confirmation() {
             <div className="noise-gateway"></div>
 
             <div className="gateway-container">
-                {/* STATE: CONFIRMATION */}
                 <div className={`state-gateway ${state === 'confirm' ? 'active' : ''}`}>
-                    <span className="status-tag-gateway">Protocol_Initialize</span>
-                    <h2 className="modal-title-gateway">Proceed to <i>Singularity?</i></h2>
-                    <p className="modal-desc-gateway">You are about to synchronize your identity with the Individual Participation node.</p>
+                    <span className="status-tag-gateway">Registration</span>
+                    <h2 className="modal-title-gateway">Register for <i>Participation?</i></h2>
+                    <p className="modal-desc-gateway">You are about to register for individual participation in this event.</p>
                     <div className="btn-group-gateway">
                         <button className="btn-gateway btn-primary-gateway" onClick={() => transition('hub')}>Confirm</button>
-                        <button className="btn-gateway btn-secondary-gateway" onClick={() => window.location.reload()}>Cancel</button>
+                        <button className="btn-gateway btn-secondary-gateway" onClick={onClose}>Cancel</button>
                     </div>
                 </div>
 
                 {/* STATE: HUB (PAYMENT & UPLOAD) */}
                 <div className={`state-gateway ${state === 'hub' ? 'active' : ''}`}>
-                    <h2 className="modal-title-gateway" style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>Transaction <i>Portal</i></h2>
+                    <h2 className="modal-title-gateway" style={{ fontSize: '1.8rem', marginBottom: '1rem' }}>Payment <i>Portal</i></h2>
                     <p className="modal-desc-gateway" style={{ fontSize: '0.85rem', marginBottom: '2rem' }}>
-                        To finalize your integration, a consolidated fee of <span style={{ color: 'var(--gateway-accent)', fontWeight: 600 }}>₹3,100</span> is required. 
-                        This includes your official Participation Pass and On-Campus Accommodation for Techkriti &apos;26.
+                        To complete your registration, a fee of <span style={{ color: 'var(--gateway-accent)', fontWeight: 600 }}>₹3,100</span> is required. 
+                        This includes your Participation Pass and On-Campus Accommodation.
                     </p>
                     
                     <div className="action-hub-gateway">
-                        <a href="https://onlinesbi.sbi.bank.in/sbicollect" target="_blank" rel="noopener noreferrer" className="payment-cta-gateway">Proceed for Payment</a>
+                        <a href="https://onlinesbi.sbi.bank.in/sbicollect" target="_blank" rel="noopener noreferrer" className="payment-cta-gateway">Proceed to Payment</a>
                         
-                        <a href="#" className="sub-link-gateway">Read Payment Instructions</a>
+                        <a 
+                            href="#" 
+                            className="sub-link-gateway" 
+                            onClick={(e) => { e.preventDefault(); setShowInstructions(true); }}
+                        >
+                            Read Payment Instructions
+                        </a>
 
                         <div className={`upload-shard-gateway ${uploadStatus}`}>
                             <div className="hologram-scan-gateway"></div>
                             {uploadStatus === 'idle' && (
                                 <label htmlFor="file-upload" style={{ cursor: 'pointer' }}>
-                                    <span className="upload-label-gateway">Upload Transaction Receipt</span>
+                                    <span className="upload-label-gateway">Upload Payment Receipt</span>
                                     <input type="file" id="file-upload" style={{ display: 'none' }} onChange={handleFileUpload} />
-                                    <p style={{ fontSize: '0.6rem', color: '#888890', marginTop: '8px' }}>PDF / Image Secure Portal</p>
+                                    <p style={{ fontSize: '0.6rem', color: '#888890', marginTop: '8px' }}>PDF / Image Format</p>
                                 </label>
                             )}
 
@@ -136,7 +147,7 @@ export default function Confirmation() {
                                 <div className="neural-sync-container">
                                     <div className="sync-header">
                                         <div className="status-group-sync">
-                                            <span className="label-sync">Integrating Shard</span>
+                                            <span className="label-sync">Uploading Receipt</span>
                                             <span className="filename-sync">{fileName.toUpperCase()}</span>
                                         </div>
                                         <div className="percentage-sync">{Math.floor(progress).toString().padStart(2, '0')}%</div>
@@ -147,11 +158,6 @@ export default function Confirmation() {
                                             <div className="lead-laser-gateway"></div>
                                         </div>
                                     </div>
-
-                                    <div className="sync-footer">
-                                        <span>{( (progress/100) * 4.2 ).toFixed(1)} / 4.2 MB</span>
-                                        <span>Bitrate: Optimized</span>
-                                    </div>
                                 </div>
                             )}
 
@@ -159,8 +165,8 @@ export default function Confirmation() {
                                 <div className="upload-success">
                                     <div className="mini-check">✓</div>
                                     <div style={{ flex: 1 }}>
-                                        <span className="upload-label-gateway" style={{ color: '#4ade80' }}>Transcendence Established</span>
-                                        <p style={{ fontSize: '0.55rem', color: '#888890', marginTop: '2px' }}>{fileName} Linked</p>
+                                        <span className="upload-label-gateway" style={{ color: '#4ade80' }}>Upload Complete</span>
+                                        <p style={{ fontSize: '0.55rem', color: '#888890', marginTop: '2px' }}>{fileName} Attached</p>
                                     </div>
                                     <button 
                                         className="change-btn-gateway"
@@ -179,7 +185,7 @@ export default function Confirmation() {
                                 style={{ marginTop: '1rem', width: '100%', flex: 'none' }}
                                 onClick={() => transition('submitted')}
                             >
-                                Final Proceed
+                                Submit Registration
                             </button>
                         )}
                     </div>
@@ -188,17 +194,20 @@ export default function Confirmation() {
                 {/* STATE: THANK YOU (SUBMITTED) */}
                 <div className={`state-gateway ${state === 'submitted' ? 'active' : ''}`}>
                     <div className="success-icon-gateway">✓</div>
-                    <span className="status-tag-gateway" style={{ color: '#4ade80' }}>Data Logged</span>
-                    <h2 className="modal-title-gateway">Thank You for <i>Registering</i></h2>
+                    <span className="status-tag-gateway" style={{ color: '#4ade80' }}>Submitted</span>
+                    <h2 className="modal-title-gateway">Registration <i>Received</i></h2>
                     <p className="modal-desc-gateway">
-                        Your transaction details have been received. Our team will manually verify the payment parameters. 
-                        You will receive a confirmation link once the link is established.
+                        Your payment details have been submitted. Our team will verify the payment and confirm your registration soon.
                     </p>
-                    <button className="btn-gateway btn-secondary-gateway" style={{ width: '100%' }} onClick={() => window.location.href = '/'}>
+                    <button className="btn-gateway btn-secondary-gateway" style={{ width: '100%' }} onClick={onClose}>
                         Back to Home
                     </button>
                 </div>
             </div>
+
+            {showInstructions && (
+                <PaymentInstructions onClose={() => setShowInstructions(false)} />
+            )}
         </div>
     )
 }
