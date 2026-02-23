@@ -44,6 +44,23 @@ const JOIN_REQUESTS = [
   }
 ];
 
+const ABSTRACT_SUBMISSIONS = [
+  {
+    id: 'abs-1',
+    event: 'IARC',
+    teamId: 'iarc9920',
+    status: 'Verified',
+    fileName: 'IARC_Abstract_v1.pdf'
+  },
+  {
+    id: 'abs-2',
+    event: 'Cubic Extravaganza',
+    teamId: 'cubic4426',
+    status: 'Pending',
+    fileName: 'Cubic_Design_Final.pdf'
+  }
+];
+
 export default function NeuralDashboard() {
   const cardRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -261,10 +278,33 @@ export default function NeuralDashboard() {
           )}
         </section>
 
+        {/* Abstract Submissions */}
+        <section className="dashboard-sub-section">
+          <h2 className="dash-section-title">
+            <span className="title-num">03 //</span> My <i>Abstracts.</i>
+          </h2>
+          <div className="requests-container">
+            {ABSTRACT_SUBMISSIONS.map(abs => (
+              <div key={abs.id} className="request-strip">
+                <div className="request-info">
+                  <p className="request-title">{abs.event} <span>({abs.teamId})</span></p>
+                  <p className="request-event">File: {abs.fileName}</p>
+                </div>
+                <div className="status-group-sync" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <div className={`status-pill ${abs.status.toLowerCase()}`}>{abs.status}</div>
+                    <button className="reg-action-btn view" style={{ padding: '4px 8px' }}>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Sent Team Requests */}
         <section className="dashboard-sub-section">
           <h2 className="dash-section-title">
-            <span className="title-num">03 //</span> Sent Team <i>Requests.</i>
+            <span className="title-num">04 //</span> Sent Team <i>Requests.</i>
           </h2>
           <div className="requests-container">
             {SENT_REQUESTS.map(req => (
@@ -282,7 +322,7 @@ export default function NeuralDashboard() {
         {/* Join Requests for Your Teams */}
         <section className="dashboard-sub-section">
           <h2 className="dash-section-title">
-            <span className="title-num">04 //</span> Join <i>Requests.</i>
+            <span className="title-num">05 //</span> Join <i>Requests.</i>
           </h2>
           <div className="requests-container">
             {JOIN_REQUESTS.map(req => (
