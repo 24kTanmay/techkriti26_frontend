@@ -12,7 +12,7 @@
     --comp-btn-bg: rgba(203, 163, 129, 0.15);
     --comp-btn-text: #cba381;
 
-    --comp-font-ui: 'Space Grotesk', sans-serif;
+    --comp-font-ui: var(--font-space-grotesk), sans-serif;
     --comp-font-body: 'Space Grotesk', sans-serif;
     --comp-font-display: 'Playfair Display', serif;
 

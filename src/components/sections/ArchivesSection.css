@@ -2,9 +2,9 @@
     --archive-gold: #cba381;
     --archive-blue: #cba381;
     --archive-muted: #6b6b78;
-    --archive-font-ui: 'Space Grotesk', sans-serif;
-    --archive-font-body: 'Space Grotesk', sans-serif;
-    --archive-font-display: 'Playfair Display', serif;
+    --archive-font-ui: var(--font-space-grotesk), sans-serif;
+    --archive-font-body: var(--font-space-grotesk), sans-serif;
+    --archive-font-display: var(--font-playfair), serif;
 }
 
 .archives-section {

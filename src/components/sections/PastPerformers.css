@@ -9,7 +9,7 @@
 .performer-archive-container {
     background: var(--performer-bg);
     color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;

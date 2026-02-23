@@ -10,7 +10,7 @@
 .team-container {
     background: var(--team-bg);
     color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), sans-serif;
     overflow: hidden;
     min-height: 100vh;
     width: 100%;

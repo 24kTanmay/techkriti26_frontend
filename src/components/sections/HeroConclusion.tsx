@@ -24,12 +24,12 @@ export default function HeroConclusion() {
       ></div>
 
       <div className="z-10 max-w-4xl group">
-        <p className="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-8 font-medium" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        <p className="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-8 font-medium" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
           The journey concludes here
         </p>
         
         <h2 className="tracking-tight leading-[1.1] font-normal" style={{ 
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "var(--font-playfair), serif",
           fontSize: 'clamp(3rem, 8vw, 6rem)'
         }}>
           Join the <br /><i style={{ fontStyle: 'italic', fontWeight: 300, opacity: 0.6 }}>Singularity.</i>
@@ -48,7 +48,7 @@ export default function HeroConclusion() {
                 color: #000000;
                 padding: 1.5rem 4.5rem;
                 border-radius: 100px;
-                font-family: 'Space Grotesk', sans-serif;
+                font-family: var(--font-space-grotesk), sans-serif;
                 font-size: 1rem;
                 font-weight: 600;
                 text-transform: uppercase;
@@ -128,8 +128,8 @@ export default function HeroConclusion() {
               TK
             </div>
             <div className="text-left">
-              <p className="text-[15px] md:text-[18px] font-bold tracking-[0.3em] uppercase leading-none mb-2 text-white/90" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>TECHKRITI 26</p>
-              <p className="text-[12px] md:text-[15px] font-medium tracking-[0.2em] text-gray-500 uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>IIT Kanpur Festival</p>
+              <p className="text-[15px] md:text-[18px] font-bold tracking-[0.3em] uppercase leading-none mb-2 text-white/90" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>TECHKRITI 26</p>
+              <p className="text-[12px] md:text-[15px] font-medium tracking-[0.2em] text-gray-500 uppercase" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>IIT Kanpur Festival</p>
             </div>
           </div>
 
@@ -140,7 +140,7 @@ export default function HeroConclusion() {
                 key={label}
                 href={`/${label.toLowerCase()}`} 
                 className="text-[15px] md:text-[16.5px] tracking-[0.35em] text-gray-400 hover:text-white transition-all duration-300 uppercase relative group/link"
-                style={{ fontFamily: "'Space Grotesk', sans-serif" }}
+                style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
               >
                 {label}
                 <span className="absolute -bottom-2 left-1/2 w-0 h-[1.5px] bg-white transition-all duration-300 -translate-x-1/2 group-hover/link:w-[60%]" />
@@ -167,7 +167,7 @@ export default function HeroConclusion() {
           </div>
         </div>
         
-        <p className="copyright mt-12 md:mt-[200px] text-center text-[7.5px] tracking-[0.4em] text-gray-400 uppercase pb-8" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+        <p className="copyright mt-12 md:mt-[200px] text-center text-[7.5px] tracking-[0.4em] text-gray-400 uppercase pb-8" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
           © 2026 All Rights Reserved. IIT Kanpur.
         </p>
       </div>

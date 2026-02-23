@@ -4,8 +4,8 @@
     /* Copper Transcendence */
     --timer-card-bg: rgba(255, 255, 255, 0.015);
     --timer-border: rgba(255, 255, 255, 0.08);
-    --timer-font-display: 'Space Grotesk', sans-serif;
-    --timer-font-ui: 'Space Grotesk', sans-serif;
+    --timer-font-display: var(--font-space-grotesk), sans-serif;
+    --timer-font-ui: var(--font-space-grotesk), sans-serif;
     --timer-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

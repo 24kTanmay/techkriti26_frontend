@@ -1,15 +1,36 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display, Space_Grotesk, Space_Mono, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const interFont = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfairFont = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  style: ["normal", "italic"],
+});
+
+const spaceGroteskFont = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+const spaceMonoFont = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const jetbrainsMonoFont = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -25,12 +46,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono&display=swap" />
         <style>{`
           #spline-watermark { display: none !important; }
         `}</style>
       </head>
-      <body className="antialiased" suppressHydrationWarning>
+      <body className={`${interFont.variable} ${playfairFont.variable} ${spaceGroteskFont.variable} ${spaceMonoFont.variable} ${jetbrainsMonoFont.variable} antialiased`} suppressHydrationWarning>
         {children}
       </body>
     </html>

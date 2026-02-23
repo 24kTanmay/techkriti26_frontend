@@ -50,7 +50,7 @@ export default function Navbar() {
           z-index: 1000;
           pointer-events: none;
           box-sizing: border-box;
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: var(--font-space-grotesk), sans-serif;
         }
 
         .navbar-left { flex: 1; display: flex; justify-content: flex-start; align-items: center; pointer-events: auto; }
@@ -124,7 +124,7 @@ export default function Navbar() {
           font-weight: 500;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          font-family: 'Space Grotesk', sans-serif;
+          font-family: var(--font-space-grotesk), sans-serif;
           transition: all 0.3s ease;
           opacity: 0;
           transform: translateY(20px);
@@ -247,7 +247,7 @@ export default function Navbar() {
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
                     textShadow: (mounted && item.href === pathname) ? '0 0 15px rgba(255,255,255,0.5)' : 'none'
                   }}
                   onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {

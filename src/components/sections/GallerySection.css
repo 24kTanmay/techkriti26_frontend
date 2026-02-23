@@ -5,9 +5,9 @@
     --gallery-glass-border: rgba(255, 255, 255, 0.04);
     --gallery-glass-highlight: rgba(255, 255, 255, 0.1);
     --gallery-text-muted: #888890;
-    --gallery-font-ui: 'Space Grotesk', sans-serif;
-    --gallery-font-body: 'Space Grotesk', sans-serif;
-    --gallery-font-display: 'Playfair Display', serif;
+    --gallery-font-ui: var(--font-space-grotesk), sans-serif;
+    --gallery-font-body: var(--font-space-grotesk), sans-serif;
+    --gallery-font-display: var(--font-playfair), serif;
     --gallery-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

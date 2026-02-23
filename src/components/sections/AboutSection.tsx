@@ -120,7 +120,7 @@ export default function AboutSection() {
             font-size: 1rem;
           }
           .about-card {
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: var(--font-space-grotesk), sans-serif;
           }
         }
       `}} />
@@ -143,7 +143,7 @@ export default function AboutSection() {
 
         {/* STEP 1: LEFT ALIGNED (Robot) */}
         <div ref={step1Ref} className="about-card invisible" style={{ left: '5%' }}>
-          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>/ PHASE_01</span>
+          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_01</span>
           <h2 className="about-heading">Born at <br />IIT Kanpur</h2>
           <p className="text-lg text-gray-400 font-light leading-relaxed">
             Founded in 1995, Techkriti was established to spark interest and encourage innovation in technology among students across India.
@@ -152,7 +152,7 @@ export default function AboutSection() {
 
         {/* STEP 2: RIGHT ALIGNED (DNA) */}
         <div ref={step2Ref} className="about-card invisible" style={{ right: '5%' }}>
-          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>/ PHASE_02</span>
+          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_02</span>
           <h2 className="about-heading">Asia&apos;s <br />Largest Stage</h2>
           <p className="text-lg text-gray-400 font-light leading-relaxed">
             Now in its 32nd edition, Techkriti has become one of Asia’s largest technical festivals, providing an elite platform for young minds.
@@ -161,7 +161,7 @@ export default function AboutSection() {
 
         {/* STEP 3: LEFT ALIGNED (Space) */}
         <div ref={step3Ref} className="about-card invisible" style={{ left: '5%' }}>
-          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>/ PHASE_03</span>
+          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_03</span>
           <h2 className="about-heading">Social <br />Welfare</h2>
           <p className="text-lg text-gray-400 font-light leading-relaxed">
             Innovation and perseverance are at our heart. We develop organizational skills and drive social change through technical excellence.

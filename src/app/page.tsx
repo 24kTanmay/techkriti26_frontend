@@ -193,7 +193,7 @@ export default function Home() {
              className="absolute bottom-12 left-10 right-10 transform animate-text-reveal"
              style={{ animationDelay: '0.1s' }}
            >
-              <h3 className="text-3xl font-bold tracking-tight text-white uppercase mb-3 leading-tight" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <h3 className="text-3xl font-bold tracking-tight text-white uppercase mb-3 leading-tight" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
                 {summitNames[currentSummit]}
               </h3>
               <p className="text-white/60 text-sm leading-relaxed max-w-[90%] font-light tracking-wide">

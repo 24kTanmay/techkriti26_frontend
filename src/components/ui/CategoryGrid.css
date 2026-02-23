@@ -7,9 +7,9 @@
     --card-bg-grid: rgba(20, 20, 25, 0.4);
     --card-border-grid: rgba(255, 255, 255, 0.06);
 
-    --font-ui-grid: 'Space Grotesk', sans-serif;
-    --font-body-grid: 'Space Grotesk', sans-serif;
-    --font-mono-grid: 'JetBrains Mono', monospace;
+    --font-ui-grid: var(--font-space-grotesk), sans-serif;
+    --font-body-grid: var(--font-space-grotesk), sans-serif;
+    --font-mono-grid: var(--font-jetbrains-mono), monospace;
 }
 
 .category-grid-page {
