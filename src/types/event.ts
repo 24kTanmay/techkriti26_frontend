@@ -43,6 +43,10 @@ export interface EventDetailData {
         description: string
         download?: DownloadConfig
     }
+    /** Third tab content (Abstract Submission) */
+    abstract?: {
+        description: string
+    }
     /** Optional: custom ambient gradient for terminal theme */
     ambientGradient?: string
     /** Optional: image background gradient for terminal theme (no image URL) */

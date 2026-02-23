@@ -9,6 +9,7 @@ import '@/components/ui/EventDetailPage.css'
 import Confirmation from '@/components/ui/Confirmation'
 import CreateTeam from '@/components/ui/CreateTeam'
 import JoinTeam from '@/components/ui/JoinTeam'
+import AbstractUpload from '@/components/ui/AbstractUpload'
 
 /**
  * Shared template for all competition detail pages.
@@ -24,6 +25,7 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
     contacts,
     overview,
     secondTab,
+    abstract,
     ambientGradient,
     imageFallbackGradient,
   } = data
@@ -162,6 +164,13 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
                       </div>
                     )}
                   </div>
+                </div>
+              )}
+
+              {/* Abstract */}
+              {abstract && (
+                <div className={`event-tab-pane ${activeTab === 'abstract' ? 'active' : ''}`}>
+                  <AbstractUpload eventTitle={title} />
                 </div>
               )}
 
