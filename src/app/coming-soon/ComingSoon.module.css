@@ -69,7 +69,7 @@
 }
 
 .title i {
-    font-family: var(--font-display);
+    font-family: var(--font-playfair), serif;
     font-style: italic;
     font-weight: 400;
     opacity: 0.6;

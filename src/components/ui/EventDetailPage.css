@@ -10,7 +10,7 @@
 
     --event-font-ui: var(--font-space-grotesk), sans-serif;
     --event-font-body: var(--font-space-grotesk), sans-serif;
-    --event-font-display: var(--font-playfair), serif;
+    --event-font-display: var(--font-space-grotesk), sans-serif;
     --event-font-mono: var(--font-jetbrains-mono), monospace;
 
     --event-ease-out: cubic-bezier(0.16, 1, 0.3, 1);

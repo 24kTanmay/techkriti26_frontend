@@ -84,19 +84,24 @@ export default function AboutSection() {
         }
 
         .about-heading {
-          font-family: var(--font-playfair), serif;
-          background: linear-gradient(to bottom, #fff 40%, #555 100%);
+          font-family: var(--font-space-grotesk), sans-serif;
+          background: linear-gradient(to bottom, #fff 60%, rgba(255,255,255,0.4) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-size: 3.5rem;
-          font-weight: 400;
+          font-weight: 700;
+          letter-spacing: -0.03em;
           line-height: 1.1;
           margin-bottom: 1.5rem;
         }
 
         .about-heading i {
+          font-family: var(--font-playfair), serif;
           font-style: italic;
-          opacity: 0.6;
+          font-weight: 400;
+          opacity: 0.8;
+          display: inline-block;
+          margin-left: 0.2em;
         }
 
         @media (max-width: 1024px) {
