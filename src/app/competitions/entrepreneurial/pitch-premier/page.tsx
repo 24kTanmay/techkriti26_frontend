@@ -10,6 +10,7 @@ const DATA: EventDetailData = {
   tabs: [
     { id: 'overview', label: 'Overview' },
     { id: 'rules', label: 'Guidelines' },
+    { id: 'abstract', label: 'Abstract' },
     { id: 'contacts', label: 'Contacts' },
   ],
   contacts: [
@@ -31,6 +32,9 @@ const DATA: EventDetailData = {
       title: 'Pitch_Premier_Rules.pdf',
       subtitle: 'Submission Guide \u2022 1.4 MB',
     },
+  },
+  abstract: {
+    description: 'Please upload your startup abstract or executive summary in PDF format. This should include your business model, value proposition, and target market.',
   },
 }
 

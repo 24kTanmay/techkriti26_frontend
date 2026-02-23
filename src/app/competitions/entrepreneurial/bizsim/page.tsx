@@ -10,6 +10,7 @@ const DATA: EventDetailData = {
   tabs: [
     { id: 'overview', label: 'Overview' },
     { id: 'rules', label: 'Simulation Rules' },
+    { id: 'abstract', label: 'Abstract' },
     { id: 'contacts', label: 'Contacts' },
   ],
   contacts: [
@@ -34,6 +35,9 @@ const DATA: EventDetailData = {
       title: 'BizSim_Rulebook_26.pdf',
       subtitle: 'Standard Operating Proc \u2022 1.2 MB',
     },
+  },
+  abstract: {
+    description: 'Please upload your startup abstract or executive summary in PDF format. This should include your business model, value proposition, and target market.',
   },
 }
 

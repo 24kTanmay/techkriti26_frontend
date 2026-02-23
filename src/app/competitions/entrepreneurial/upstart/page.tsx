@@ -9,6 +9,7 @@ const DATA: EventDetailData = {
   tabs: [
     { id: 'overview', label: 'Overview' },
     { id: 'impact', label: 'Competition Structure' },
+    { id: 'abstract', label: 'Abstract' },
     { id: 'contacts', label: 'Contacts' },
   ],
   contacts: [
@@ -30,6 +31,9 @@ const DATA: EventDetailData = {
       title: 'Upstart_Structure_2026.pdf',
       subtitle: 'Draft Document \u2022 1.8 MB',
     },
+  },
+  abstract: {
+    description: 'Please upload your startup abstract or executive summary in PDF format. This should include your business model, value proposition, and target market.',
   },
 }
 

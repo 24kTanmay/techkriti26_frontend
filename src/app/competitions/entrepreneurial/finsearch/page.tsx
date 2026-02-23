@@ -10,6 +10,7 @@ const DATA: EventDetailData = {
   tabs: [
     { id: 'overview', label: 'Overview' },
     { id: 'track', label: 'Competition Track' },
+    { id: 'abstract', label: 'Abstract' },
     { id: 'contacts', label: 'Contacts' },
   ],
   contacts: [
@@ -34,6 +35,9 @@ const DATA: EventDetailData = {
       title: 'Finsearch_Alpha_v1.pdf',
       subtitle: 'Encrypted Quant Set \u2022 0.9 MB',
     },
+  },
+  abstract: {
+    description: 'Please upload your startup abstract or executive summary in PDF format. This should include your business model, value proposition, and target market.',
   },
 }
 

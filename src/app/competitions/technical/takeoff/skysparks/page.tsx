@@ -8,6 +8,7 @@ const DATA: EventDetailData = {
   tabs: [
     { id: 'overview', label: 'Overview' },
     { id: 'problem', label: 'Problem Statement' },
+    { id: 'abstract', label: 'Abstract' },
     { id: 'contacts', label: 'Contacts' },
   ],
   contacts: [
@@ -31,6 +32,9 @@ const DATA: EventDetailData = {
       title: 'Skysparks_Guide_2026.pdf',
       subtitle: 'Full Constraints • 2.3 MB',
     },
+  },
+  abstract: {
+    description: 'Please upload your technical abstract in PDF format. This should include your team structure, high-level design, and proposed sensor suite.',
   },
 }
 

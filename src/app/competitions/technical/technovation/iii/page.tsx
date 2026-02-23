@@ -8,6 +8,7 @@ const DATA: EventDetailData = {
   tabs: [
     { id: 'overview', label: 'Overview' },
     { id: 'focus', label: 'Industry Focus' },
+    { id: 'abstract', label: 'Abstract' },
     { id: 'contacts', label: 'Contacts' },
   ],
   contacts: [
@@ -31,6 +32,9 @@ const DATA: EventDetailData = {
       title: 'III_Industrial_Connect_26.pdf',
       subtitle: 'Corporate Roadmap \u2022 1.5 MB',
     },
+  },
+  abstract: {
+    description: 'Please upload your technical abstract in PDF format. This should include your team structure, high-level design, and proposed sensor suite.',
   },
 }
 
