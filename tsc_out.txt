@@ -1,0 +1,12 @@
+﻿src/app/admin/page.tsx(389,142): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(390,145): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(391,147): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(392,147): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(393,151): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(394,145): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(410,144): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(411,145): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(412,147): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(413,146): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(414,150): error TS2304: Cannot find name 'handleColumnFilterChange'.
+src/app/admin/page.tsx(415,145): error TS2304: Cannot find name 'handleColumnFilterChange'.

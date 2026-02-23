@@ -38,6 +38,8 @@ export const metadata: Metadata = {
   description: "A transcendent journey from biological micro-structures to cosmic macro-structures.",
 };
 
+import { AuthProvider } from "../context/AuthContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -51,7 +53,9 @@ export default function RootLayout({
         `}</style>
       </head>
       <body className={`${interFont.variable} ${playfairFont.variable} ${spaceGroteskFont.variable} ${spaceMonoFont.variable} ${jetbrainsMonoFont.variable} antialiased`} suppressHydrationWarning>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

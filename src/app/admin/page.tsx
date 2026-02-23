@@ -1,23 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
-import Navbar from '@/components/common/Navbar';
+import Navbar from '../../components/common/Navbar';
 import './AdminPage.css';
 
-const usersMockData = [
-  { id: '#U-1001', name: 'Mugunthan D.K',  email: 'mugunthandk@gmail.com',  phone: '+91 98450 12345', college: 'VSB Engineering College', date: '15/02/2026' },
-  { id: '#U-1002', name: 'Tejas Vashista', email: 'tvashista_be24@thapar.edu', phone: '+91 70123 45678', college: 'Thapar Institute of Eng. & Tech.', date: '16/02/2026' },
-  { id: '#U-1003', name: 'Ananya Roy',      email: 'ananya.roy@iitk.ac.in', phone: '+91 94441 55223', college: 'IIT Kanpur', date: '18/02/2026' },
-  { id: '#U-1004', name: 'Siddharth Jain', email: 'sidjain@bits-pilani.ac.in', phone: '+91 88223 99001', college: 'BITS Pilani', date: '20/02/2026' },
-  { id: '#U-1005', name: 'Priya Sharma',   email: 'priya.sharma@nit.ac.in', phone: '+91 91100 88776', college: 'NIT Trichy', date: '22/02/2026' },
-];
-
-const registrantsMockData = [
-  { id: '#TK-8901', name: 'Mugunthan D.K',  email: 'mugunthandk@gmail.com',  college: 'VSB Engineering College', date: '19/02/2026', phone: '+91 98450 12345' },
-  { id: '#TK-8902', name: 'Tejas Vashista', email: 'tvashista_be24@thapar.edu', college: 'Thapar Institute of Eng. & Tech.', date: '22/02/2026', phone: '+91 70123 45678' },
-  { id: '#TK-8903', name: 'Ananya Roy',      email: 'ananya.roy@iitk.ac.in', college: 'IIT Kanpur', date: '23/02/2026', phone: '+91 94441 55223' },
-  { id: '#TK-8904', name: 'Siddharth Jain', email: 'sidjain@bits-pilani.ac.in', college: 'BITS Pilani', date: '24/02/2026', phone: '+91 88223 99001' },
-];
+import { db } from '../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { useAuth } from '../../context/AuthContext';
 
 export default function AdminPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -33,60 +22,184 @@ export default function AdminPage() {
   });
   const [activeTab, setActiveTab] = useState<'users' | 'registrations'>('users');
 
-  const currentData = activeTab === 'users' ? usersMockData : registrantsMockData;
+  const [users, setUsers] = useState<any[]>([]);
+  const [registrations, setRegistrations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [usersError, setUsersError] = useState<string|null>(null);
+  const [registrationsError, setRegistrationsError] = useState<string|null>(null);
+  const { currentUser } = useAuth();
+  
+  const [selectedCompetition, setSelectedCompetition] = useState('All');
+  const [sortConfig, setSortConfig] = useState<{ key: string | null, direction: 'asc' | 'desc' }>({ key: null, direction: 'asc' });
 
-  const filtered = currentData.filter(r => {
-    // Global search
-    const matchesGlobal = query === '' || 
-      r.name.toLowerCase().includes(query.toLowerCase()) ||
-      r.email.toLowerCase().includes(query.toLowerCase()) ||
-      (r as any).college?.toLowerCase().includes(query.toLowerCase());
+  useEffect(() => {
+    const fetchData = async () => {
+        if (!currentUser) return;
+        setLoading(true);
 
-    // Column specific filters
-    const matchesId = (r.id || '').toLowerCase().includes(columnFilters.id.toLowerCase());
-    const matchesName = (r.name || '').toLowerCase().includes(columnFilters.name.toLowerCase());
-    const matchesEmail = (r.email || '').toLowerCase().includes(columnFilters.email.toLowerCase());
-    const matchesPhone = ((r as any).phone || '').toLowerCase().includes(columnFilters.phone.toLowerCase());
-    const matchesCollege = ((r as any).college || '').toLowerCase().includes(columnFilters.college.toLowerCase());
-    const matchesDate = (r.date || '').toLowerCase().includes(columnFilters.date.toLowerCase());
+        try {
+            const usersSnap = await getDocs(collection(db, "users"));
+            const userList = usersSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setUsers(userList);
+            setUsersError(null);
+        } catch (error: any) {
+            setUsersError(error.message);
+        }
 
-    return matchesGlobal && matchesId && matchesName && matchesEmail && matchesPhone && matchesCollege && matchesDate;
-  });
+        try {
+            const regSnap = await getDocs(collection(db, "registrations"));
+            const regList = regSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setRegistrations(regList);
+            setRegistrationsError(null);
+        } catch (error: any) {
+            setRegistrationsError(error.message);
+        }
+        setLoading(false);
+    };
+
+    fetchData();
+  }, [currentUser]);
+
+  const userMap = users.reduce((acc: any, user: any) => {
+    acc[user.id] = user;
+    return acc;
+  }, {});
+
+  const uniqueCompetitions = ['All', ...Array.from(new Set(registrations.map(r => r.eventName || r.eventId).filter(Boolean)))];
+
+  const formatDate = (date: any) => {
+    if (!date) return '-';
+    if (date.toDate) return date.toDate().toLocaleDateString('en-GB'); 
+    return new Date(date).toLocaleDateString('en-GB');
+  };
+
+  const handleSort = (key: string) => {
+      let direction: 'asc' | 'desc' = 'asc';
+      if (sortConfig.key === key && sortConfig.direction === 'asc') direction = 'desc';
+      setSortConfig({ key, direction });
+  };
 
   const handleColumnFilterChange = (column: string, value: string) => {
     setColumnFilters(prev => ({ ...prev, [column]: value }));
   };
 
+  const currentData = activeTab === 'users' ? users : registrations;
+
+  const filtered = currentData.filter((r: any) => {
+    // Competition View Filter for Registrations
+    if (activeTab === 'registrations' && selectedCompetition !== 'All') {
+        if (r.eventName !== selectedCompetition && r.eventId !== selectedCompetition) return false;
+    }
+
+    // Global search
+    let globalStr = '';
+    if (activeTab === 'users') {
+        globalStr = `${r.fullName || ''} ${r.email || ''} ${r.college || ''}`;
+    } else {
+        const u = userMap[r.userId] || {};
+        globalStr = `${r.eventName || r.eventId || ''} ${r.teamId || ''} ${u.fullName || ''} ${u.email || ''}`;
+    }
+    const matchesGlobal = query === '' || globalStr.toLowerCase().includes(query.toLowerCase());
+
+    // Column specific filters
+    const matchesColumn = (colRawValue: any, filterVal: string) => {
+        if (!filterVal) return true;
+        return (String(colRawValue || '').toLowerCase().includes(filterVal.toLowerCase()));
+    };
+
+    let allColsMatch = true;
+    if (activeTab === 'users') {
+      allColsMatch = matchesColumn(r.fullName, columnFilters.name) &&
+                     matchesColumn(r.email, columnFilters.email) &&
+                     matchesColumn(r.phone, columnFilters.phone) &&
+                     matchesColumn(r.college, columnFilters.college) &&
+                     matchesColumn(formatDate(r.createdAt), columnFilters.date) &&
+                     matchesColumn(r.referralCode, columnFilters.id); // Re-labeling ID to Ref Code
+    } else {
+      const u = userMap[r.userId] || {};
+      allColsMatch = matchesColumn(r.eventName || r.eventId, columnFilters.id) &&
+                     matchesColumn(u.fullName, columnFilters.name) &&
+                     matchesColumn(u.email, columnFilters.email) &&
+                     matchesColumn(r.role, columnFilters.phone) && // Re-using phone col for Role conceptually
+                     matchesColumn(r.status, columnFilters.college) && // Re-using college col for Status
+                     matchesColumn(formatDate(r.registeredAt), columnFilters.date);
+    }
+
+    return matchesGlobal && allColsMatch;
+  });
+
+  if (sortConfig.key) {
+      filtered.sort((a: any, b: any) => {
+          let aValue = a[sortConfig.key as string];
+          let bValue = b[sortConfig.key as string];
+
+          if (activeTab === 'registrations') {
+              if (sortConfig.key === 'user.fullName') {
+                  aValue = userMap[a.userId]?.fullName;
+                  bValue = userMap[b.userId]?.fullName;
+              } else if (sortConfig.key === 'user.email') {
+                   aValue = userMap[a.userId]?.email;
+                   bValue = userMap[b.userId]?.email;
+              } else if (sortConfig.key === 'event') {
+                   aValue = a.eventName || a.eventId;
+                   bValue = b.eventName || b.eventId;
+              }
+          }
+
+          const isDateKey = ['createdAt', 'registeredAt', 'date'].includes(sortConfig.key as string);
+
+          if (isDateKey) {
+              if (aValue && typeof aValue === 'object' && aValue.toDate) aValue = aValue.toDate();
+              else if (aValue && (typeof aValue === 'string' || typeof aValue === 'number')) aValue = new Date(aValue);
+              
+              if (bValue && typeof bValue === 'object' && bValue.toDate) bValue = bValue.toDate();
+              else if (bValue && (typeof bValue === 'string' || typeof bValue === 'number')) bValue = new Date(bValue);
+          } else {
+              if (typeof aValue === 'string') aValue = aValue.toLowerCase();
+              if (typeof bValue === 'string') bValue = bValue.toLowerCase();
+          }
+
+          if (!aValue) return 1;
+          if (!bValue) return -1;
+          if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+          if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+          return 0;
+      });
+  }
+
   const handleExportCSV = () => {
     if (filtered.length === 0) return;
     
-    const headers = activeTab === 'users' 
-      ? ["#", "User ID", "Name", "Email", "Phone", "College", "Joined Date"]
-      : ["#", "Reg ID", "Name", "Email", "Phone", "College", "Reg Date"];
+    let headers: string[];
+    let rows: any[][];
     
-    const rows = filtered.map((row: any, index) => {
-      if (activeTab === 'users') {
-        return [
-          (index + 1).toString(),
-          row.id,
-          row.name,
-          row.email,
-          row.phone,
-          row.college,
-          row.date
-        ];
-      } else {
-        return [
-          (index + 1).toString(),
-          row.id,
-          row.name,
-          row.email,
-          row.phone,
-          row.college,
-          row.date
-        ];
-      }
-    });
+    if (activeTab === 'users') {
+      headers = ["Full Name", "Email", "Phone", "College", "Reference Code", "Profile Completed", "Joined At"];
+      rows = filtered.map((user: any) => [
+          user.fullName || '',
+          user.email || '',
+          user.phone || '',
+          user.college || '',
+          user.referralCode || '',
+          user.profileCompleted ? 'Yes' : 'No',
+          formatDate(user.createdAt)
+      ]);
+    } else {
+      headers = ["Event/Comp", "Team ID", "Type", "User Name", "User Email", "Role", "Status", "Registered At"];
+      rows = filtered.map((r: any) => {
+          const u = userMap[r.userId] || {};
+          return [
+              r.eventName || r.eventId || '',
+              r.teamId || '-',
+              r.type || (r.teamId ? 'team' : 'individual'),
+              u.fullName || r.userId || '',
+              u.email || '',
+              r.role || '-',
+              r.status || '',
+              formatDate(r.registeredAt)
+          ];
+      });
+    }
 
     const csvContent = [
       headers.join(","),
@@ -101,6 +214,13 @@ export default function AdminPage() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const getSortIcon = (key: string) => {
+      if (sortConfig.key === key) {
+          return sortConfig.direction === 'asc' ? ' ▲' : ' ▼';
+      }
+      return ' ↕';
   };
 
   useEffect(() => {
@@ -190,12 +310,17 @@ export default function AdminPage() {
           <div className="admin-shard">
             <div className="admin-shard-sweep" />
             <span className="admin-shard-label">Total Users</span>
-            <div className="admin-shard-value">1,391</div>
+            <div className="admin-shard-value">{usersError ? <span style={{fontSize: '14px', color: 'red'}}>Error</span> : users.length}</div>
           </div>
           <div className="admin-shard">
             <div className="admin-shard-sweep" />
             <span className="admin-shard-label">Total Registration</span>
-            <div className="admin-shard-value">1,254</div>
+            <div className="admin-shard-value">{registrationsError ? <span style={{fontSize: '14px', color: 'red'}}>Error</span> : registrations.length}</div>
+          </div>
+          <div className="admin-shard" style={{ borderTop: activeTab === 'registrations' ? '1px solid var(--accent)' : '' }}>
+            <div className="admin-shard-sweep" />
+            <span className="admin-shard-label">{activeTab === 'users' ? 'Users in View' : 'Registrations in View'}</span>
+            <div className="admin-shard-value">{filtered.length}</div>
           </div>
         </section>
 
@@ -239,82 +364,93 @@ export default function AdminPage() {
             <button className="admin-btn" onClick={handleExportCSV}>Export .CSV</button>
           </div>
 
+          {activeTab === 'registrations' && (
+              <div style={{ marginBottom: '1rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                  <span style={{ color: 'var(--text-muted)' }}>Filter Competition:</span>
+                  <select 
+                      value={selectedCompetition}
+                      onChange={e => setSelectedCompetition(e.target.value)}
+                      style={{ background: 'rgba(0,0,0,0.5)', color: 'white', border: '1px solid var(--border)', padding: '0.5rem', borderRadius: '4px' }}
+                  >
+                      {uniqueCompetitions.map((c: any) => (
+                          <option key={c} value={c}>{c}</option>
+                      ))}
+                  </select>
+              </div>
+          )}
           <div className="admin-table-wrap">
-            <table className="admin-table">
-              <thead>
-                {activeTab === 'users' ? (
-                  <>
-                    <tr>
-                      <th style={{ width: '50px' }}>#</th>
-                      <th>User ID</th>
-                      <th>Full Name</th>
-                      <th>Email Address</th>
-                      <th>Phone</th>
-                      <th>Institution</th>
-                      <th>Date</th>
-                    </tr>
-                    <tr className="filter-row">
-                      <th />
-                      <th><input type="text" className="column-filter" placeholder="ID..." value={columnFilters.id} onChange={(e) => handleColumnFilterChange('id', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Name..." value={columnFilters.name} onChange={(e) => handleColumnFilterChange('name', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Email..." value={columnFilters.email} onChange={(e) => handleColumnFilterChange('email', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Phone..." value={columnFilters.phone} onChange={(e) => handleColumnFilterChange('phone', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="College..." value={columnFilters.college} onChange={(e) => handleColumnFilterChange('college', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Date..." value={columnFilters.date} onChange={(e) => handleColumnFilterChange('date', e.target.value)} /></th>
-                    </tr>
-                  </>
-                ) : (
-                  <>
-                    <tr>
-                      <th style={{ width: '50px' }}>#</th>
-                      <th>Reg ID</th>
-                      <th>Full Name</th>
-                      <th>Email Address</th>
-                      <th>Phone</th>
-                      <th>Institution</th>
-                      <th>Date</th>
-                    </tr>
-                    <tr className="filter-row">
-                      <th />
-                      <th><input type="text" className="column-filter" placeholder="ID..." value={columnFilters.id} onChange={(e) => handleColumnFilterChange('id', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Name..." value={columnFilters.name} onChange={(e) => handleColumnFilterChange('name', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Email..." value={columnFilters.email} onChange={(e) => handleColumnFilterChange('email', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Phone..." value={columnFilters.phone} onChange={(e) => handleColumnFilterChange('phone', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="College..." value={columnFilters.college} onChange={(e) => handleColumnFilterChange('college', e.target.value)} /></th>
-                      <th><input type="text" className="column-filter" placeholder="Date..." value={columnFilters.date} onChange={(e) => handleColumnFilterChange('date', e.target.value)} /></th>
-                    </tr>
-                  </>
-                )}
-              </thead>
-              <tbody>
-                {filtered.length > 0 ? filtered.map((row: any, index) => (
-                  <tr key={row.id}>
-                    <td className="admin-id-cell" style={{ opacity: 0.5 }}>{(index + 1).toString().padStart(2, '0')}</td>
-                    <td className="admin-id-cell">{row.id}</td>
-                    <td>{row.name}</td>
-                    <td>{row.email}</td>
-                    <td className="admin-id-cell" style={{ color: 'var(--text-muted)' }}>{row.phone}</td>
-                    {activeTab === 'users' ? (
-                      <>
-                        <td>{row.college}</td>
-                        <td>{row.date}</td>
-                      </>
-                    ) : (
-                      <>
-                        <td>{row.college}</td>
-                        <td>{row.date}</td>
-                      </>
-                    )}
-                  </tr>
-                )) : (
-                  <tr>
-                    <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: '#8b8b99', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '2px' }}>
-                      NO MATCHING RECORDS FOUND
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+            {loading ? (
+                <div style={{ textAlign: 'center', padding: '3rem', color: '#8b8b99' }}>SYNCING WITH MAINFRAME...</div>
+            ) : (
+             <table className="admin-table">
+               <thead>
+                 {activeTab === 'users' ? (
+                   <>
+                     <tr>
+                       <th style={{ width: '50px' }}>#</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('referralCode')}>Ref Code {getSortIcon('referralCode')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('fullName')}>Full Name {getSortIcon('fullName')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('email')}>Email Address {getSortIcon('email')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('phone')}>Phone {getSortIcon('phone')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('college')}>Institution {getSortIcon('college')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('createdAt')}>Joined Date {getSortIcon('createdAt')}</th>
+                     </tr>
+                     <tr className="filter-row">
+                       <th />
+                       <th><input type="text" className="column-filter" placeholder="Ref..." value={columnFilters.id || ''} onChange={(e) => handleColumnFilterChange('id', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Name..." value={columnFilters.name || ''} onChange={(e) => handleColumnFilterChange('name', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Email..." value={columnFilters.email || ''} onChange={(e) => handleColumnFilterChange('email', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Phone..." value={columnFilters.phone || ''} onChange={(e) => handleColumnFilterChange('phone', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="College..." value={columnFilters.college || ''} onChange={(e) => handleColumnFilterChange('college', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Date..." value={columnFilters.date || ''} onChange={(e) => handleColumnFilterChange('date', e.target.value)} /></th>
+                     </tr>
+                   </>
+                 ) : (
+                   <>
+                     <tr>
+                       <th style={{ width: '50px' }}>#</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('event')}>Event {getSortIcon('event')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('user.fullName')}>Full Name {getSortIcon('user.fullName')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('user.email')}>Email Address {getSortIcon('user.email')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('role')}>Role {getSortIcon('role')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('status')}>Status {getSortIcon('status')}</th>
+                       <th style={{ cursor: 'pointer' }} onClick={() => handleSort('registeredAt')}>Reg Date {getSortIcon('registeredAt')}</th>
+                     </tr>
+                     <tr className="filter-row">
+                       <th />
+                       <th><input type="text" className="column-filter" placeholder="Event..." value={columnFilters.id || ''} onChange={(e) => handleColumnFilterChange('id', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Name..." value={columnFilters.name || ''} onChange={(e) => handleColumnFilterChange('name', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Email..." value={columnFilters.email || ''} onChange={(e) => handleColumnFilterChange('email', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Role..." value={columnFilters.phone || ''} onChange={(e) => handleColumnFilterChange('phone', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Status..." value={columnFilters.college || ''} onChange={(e) => handleColumnFilterChange('college', e.target.value)} /></th>
+                       <th><input type="text" className="column-filter" placeholder="Date..." value={columnFilters.date || ''} onChange={(e) => handleColumnFilterChange('date', e.target.value)} /></th>
+                     </tr>
+                   </>
+                 )}
+               </thead>
+               <tbody>
+                 {filtered.length > 0 ? filtered.map((row: any, index) => {
+                     const u = activeTab === 'users' ? row : (userMap[row.userId] || {});
+                     return (
+                   <tr key={row.id}>
+                     <td className="admin-id-cell" style={{ opacity: 0.5 }}>{(index + 1).toString().padStart(2, '0')}</td>
+                     <td className="admin-id-cell">{activeTab === 'users' ? (row.referralCode || '-') : (row.eventName || row.eventId)}</td>
+                     <td>{activeTab === 'users' ? row.fullName : u.fullName}</td>
+                     <td>{activeTab === 'users' ? row.email : u.email}</td>
+                     <td className="admin-id-cell" style={{ color: 'var(--text-muted)' }}>{activeTab === 'users' ? row.phone : (row.role || '-')}</td>
+                     <td>{activeTab === 'users' ? row.college : row.status}</td>
+                     <td>{formatDate(activeTab === 'users' ? row.createdAt : row.registeredAt)}</td>
+                   </tr>
+                 )}) : (
+                   <tr>
+                     <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: '#8b8b99', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '2px' }}>
+                       NO MATCHING RECORDS FOUND
+                     </td>
+                   </tr>
+                 )}
+               </tbody>
+             </table>
+            )}
           </div>
         </section>
       </main>

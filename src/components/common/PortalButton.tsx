@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function PortalButton() {
   return (
     <Link 
-      href="/dashboard" 
+      href="/signin" 
       className="group"
       style={{
         display: 'flex',

@@ -1,14 +1,14 @@
 'use client'
 
 import React, { useState } from 'react'
-import { StarBackgroundViewport } from '@/components/common/StarBackground'
-import Navbar from '@/components/common/Navbar'
-import { useTabIndicator } from '@/hooks/useTabIndicator'
-import type { EventDetailData } from '@/types/event'
-import '@/components/ui/EventDetailPage.css'
-import Confirmation from '@/components/ui/Confirmation'
-import CreateTeam from '@/components/ui/CreateTeam'
-import JoinTeam from '@/components/ui/JoinTeam'
+import { StarBackgroundViewport } from '../common/StarBackground'
+import Navbar from '../common/Navbar'
+import { useTabIndicator } from '../../hooks/useTabIndicator'
+import type { EventDetailData } from '../../types/event'
+import './EventDetailPage.css'
+import Confirmation from './Confirmation'
+import CreateTeam from './CreateTeam'
+import JoinTeam from './JoinTeam'
 
 /**
  * Shared template for all competition detail pages.

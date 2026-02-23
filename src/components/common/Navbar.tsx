@@ -3,7 +3,9 @@
 import Link from 'next/link'
 import React from 'react'
 import { usePathname } from 'next/navigation'
-import PortalButton from '@/components/common/PortalButton'
+import PortalButton from '../../components/common/PortalButton'
+import { useAuth } from '../../context/AuthContext'
+import { ADMIN_EMAILS } from '../../config/admins'
 
 const navItems = [
   { name: 'Home', href: '/' },
@@ -15,6 +17,7 @@ const navItems = [
 
 export default function Navbar() {
   const pathname = usePathname()
+  const { currentUser, userData, logout } = useAuth()
   const [mounted, setMounted] = React.useState(false)
   const [mobileOpen, setMobileOpen] = React.useState(false)
 
@@ -265,12 +268,173 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+
+            {/* Conditional Center Navigation */}
+            {currentUser && userData?.profileCompleted && (
+              <li>
+                <Link 
+                  href="/dashboard"
+                  style={{
+                    textDecoration: 'none',
+                    color: (mounted && '/dashboard' === pathname) ? '#ffffff' : '#888',
+                    fontSize: '16.5px',
+                    fontWeight: 500,
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                    textShadow: (mounted && '/dashboard' === pathname) ? '0 0 15px rgba(255,255,255,0.5)' : 'none'
+                  }}
+                  onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.currentTarget.style.color = '#ffffff';
+                    e.currentTarget.style.textShadow = '0 0 15px rgba(255,255,255,0.5)';
+                  }}
+                  onMouseOut={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    if (!(mounted && '/dashboard' === pathname)) {
+                      e.currentTarget.style.color = '#888';
+                      e.currentTarget.style.textShadow = 'none';
+                    }
+                  }}
+                >
+                  Dashboard
+                </Link>
+              </li>
+            )}
+
+            {currentUser && currentUser.email && ADMIN_EMAILS.includes(currentUser.email) && (
+              <li>
+                <Link 
+                  href="/admin"
+                  style={{
+                    textDecoration: 'none',
+                    color: (mounted && '/admin' === pathname) ? '#ffffff' : '#888',
+                    fontSize: '16.5px',
+                    fontWeight: 500,
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                    textShadow: (mounted && '/admin' === pathname) ? '0 0 15px rgba(255,255,255,0.5)' : 'none'
+                  }}
+                  onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.currentTarget.style.color = '#ffffff';
+                    e.currentTarget.style.textShadow = '0 0 15px rgba(255,255,255,0.5)';
+                  }}
+                  onMouseOut={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    if (!(mounted && '/admin' === pathname)) {
+                      e.currentTarget.style.color = '#888';
+                      e.currentTarget.style.textShadow = 'none';
+                    }
+                  }}
+                >
+                  Admin
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
 
         {/* Right: CTA Button (Desktop Only) */}
-        <div className="navbar-right">
-          <PortalButton />
+        <div className="navbar-right" style={{ gap: '16px' }}>
+          {mounted && currentUser ? (
+            <>
+              {!userData?.profileCompleted && (
+                <Link 
+                  href="/profile-setup" 
+                  className="group"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    backdropFilter: 'blur(40px)',
+                    WebkitBackdropFilter: 'blur(40px)',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    height: '56px',
+                    padding: '0 36px 0 36px',
+                    borderRadius: '100px',
+                    textDecoration: 'none',
+                    color: 'white',
+                    fontSize: '16.5px',
+                    fontWeight: 500,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    fontFamily: "var(--font-space-grotesk), sans-serif",
+                    transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                  }}
+                  onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                  }}
+                  onMouseOut={(e: React.MouseEvent<HTMLAnchorElement>) => {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+                    e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                  }}
+                >
+                  Register
+                </Link>
+              )}
+
+              <button 
+                onClick={async () => {
+                  try {
+                    await logout();
+                    window.location.href = '/';
+                  } catch (error) {
+                    console.error("Failed to log out", error);
+                  }
+                }}
+                className="group"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  backdropFilter: 'blur(40px)',
+                  WebkitBackdropFilter: 'blur(40px)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  height: '56px',
+                  padding: '0 8px 0 36px',
+                  borderRadius: '100px',
+                  cursor: 'pointer',
+                  color: 'white',
+                  fontSize: '16.5px',
+                  fontWeight: 500,
+                  letterSpacing: '0.1em',
+                  fontFamily: "var(--font-space-grotesk), sans-serif",
+                  textTransform: 'uppercase',
+                  transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                  boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
+                }}
+                onMouseOver={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                }}
+                onMouseOut={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                }}
+              >
+                <span style={{ marginRight: '24px' }}>Sign Out</span>
+                <div 
+                  style={{
+                    backgroundColor: '#fff',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                  }}
+                >
+                  <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
+                </div>
+              </button>
+            </>
+          ) : (
+            mounted && <PortalButton />
+          )}
         </div>
 
         {/* Hamburger Button (Mobile Only) */}
@@ -302,8 +466,106 @@ export default function Navbar() {
             {item.name}
           </Link>
         ))}
-        <div className="mobile-nav-portal">
-          <PortalButton />
+
+        {mounted && currentUser && userData?.profileCompleted && (
+          <Link
+            href="/dashboard"
+            className={(mounted && '/dashboard' === pathname) ? 'is-active-link' : ''}
+            onClick={() => setMobileOpen(false)}
+          >
+            Dashboard
+          </Link>
+        )}
+
+        {mounted && currentUser && currentUser.email && ADMIN_EMAILS.includes(currentUser.email) && (
+          <Link
+            href="/admin"
+            className={(mounted && '/admin' === pathname) ? 'is-active-link' : ''}
+            onClick={() => setMobileOpen(false)}
+          >
+            Admin
+          </Link>
+        )}
+
+        <div className="mobile-nav-portal" style={{ display: 'flex', flexDirection: 'column', gap: '16px', alignItems: 'center' }}>
+          {mounted && currentUser ? (
+            <>
+              {!userData?.profileCompleted && (
+                 <Link 
+                   href="/profile-setup" 
+                   onClick={() => setMobileOpen(false)}
+                   style={{
+                     display: 'flex',
+                     alignItems: 'center',
+                     background: 'rgba(255, 255, 255, 0.02)',
+                     backdropFilter: 'blur(40px)',
+                     WebkitBackdropFilter: 'blur(40px)',
+                     border: '1px solid rgba(255, 255, 255, 0.08)',
+                     height: '56px',
+                     padding: '0 36px',
+                     borderRadius: '100px',
+                     textDecoration: 'none',
+                     color: 'white',
+                     fontSize: '16.5px',
+                     fontWeight: 500,
+                     letterSpacing: '0.1em',
+                     textTransform: 'uppercase',
+                     fontFamily: "var(--font-space-grotesk), sans-serif",
+                   }}
+                 >
+                   Register
+                 </Link>
+              )}
+              
+              <button 
+                onClick={async () => {
+                  try {
+                    await logout();
+                    window.location.href = '/';
+                  } catch (error) {
+                    console.error("Failed to log out", error);
+                  }
+                }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  backdropFilter: 'blur(40px)',
+                  WebkitBackdropFilter: 'blur(40px)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  height: '56px',
+                  padding: '0 8px 0 36px',
+                  borderRadius: '100px',
+                  cursor: 'pointer',
+                  color: 'white',
+                  fontSize: '16.5px',
+                  fontWeight: 500,
+                  letterSpacing: '0.1em',
+                  fontFamily: "var(--font-space-grotesk), sans-serif",
+                  textTransform: 'uppercase',
+                }}
+              >
+                <span style={{ marginRight: '24px' }}>Sign Out</span>
+                <div 
+                  style={{
+                    backgroundColor: '#fff',
+                    width: '40px',
+                    height: '40px',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke="#000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                  </svg>
+                </div>
+              </button>
+            </>
+          ) : (
+            mounted && <PortalButton />
+          )}
         </div>
       </div>
     </>

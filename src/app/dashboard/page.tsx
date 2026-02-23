@@ -1,50 +1,125 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import Navbar from '@/components/common/Navbar'
+import Navbar from '../../components/common/Navbar'
+import { useAuth } from '../../context/AuthContext'
+import {
+    getUserRegistrations,
+    getPendingRequestsForLeader,
+    getSentRequests,
+    handleTeamRequest,
+    withdrawFromEvent
+} from '../../services/eventService'
 import './Dashboard.css'
 
-const MY_REGISTRATIONS = [
-  {
-    id: 'cubic-1',
-    event: 'Cubic Extravaganza',
-    teamName: 'team_test (leader)',
-    teamId: 'cubic4426',
-    members: ['Tanmay Roy (You)', 'Shreyansh Rastogi']
-  },
-  {
-    id: 'unsc-1',
-    event: 'UNSC',
-    teamName: 'test_team (leader)',
-    teamId: 'unsc4061',
-    members: ['Tanmay Roy (You)']
-  }
-];
+interface TeamMember {
+  uid: string;
+  fullName: string;
+}
 
-const SENT_REQUESTS = [
-  {
-    id: 'req-1',
-    teamId: 'unsc4061',
-    event: 'UNSC',
-    status: 'Pending'
-  }
-];
+interface Registration {
+  id: string;
+  eventId?: string;
+  eventName?: string;
+  event?: { id?: string; name?: string } | null;
+  teamId?: string;
+  role?: string;
+  team?: {
+    name?: string;
+    memberDetails?: TeamMember[];
+  } | null;
+}
 
-const JOIN_REQUESTS = [
-  {
-    id: 'jr-1',
-    name: 'Shreyansh Rastogi',
-    college: 'IIT Kanpur',
-    phone: '1234567890',
-    event: 'UNSC',
-    teamId: 'unsc4061'
-  }
-];
+interface SentRequest {
+  id: string;
+  teamId?: string;
+  eventId?: string;
+  eventName?: string;
+  status?: string;
+}
+
+interface JoinRequest {
+  id: string;
+  eventId?: string;
+  eventName?: string;
+  teamId?: string;
+  user?: {
+    fullName?: string;
+    college?: string;
+    phone?: string;
+  } | null;
+}
 
 export default function NeuralDashboard() {
+  const router = useRouter()
+  const { currentUser, userData, logout } = useAuth()
   const cardRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const [registrations, setRegistrations] = useState<Registration[]>([])
+  const [pendingRequests, setPendingRequests] = useState<JoinRequest[]>([])
+  const [sentRequests, setSentRequests] = useState<SentRequest[]>([])
+  const [loadingConfig, setLoadingConfig] = useState(true)
+
+  const fetchDashboardData = async () => {
+    if (!currentUser) return;
+    setLoadingConfig(true);
+    try {
+        const [regs, leaderRequests, myRequests] = await Promise.all([
+            getUserRegistrations(currentUser.uid),
+            getPendingRequestsForLeader(currentUser.uid),
+            getSentRequests(currentUser.uid)
+        ]);
+
+        setRegistrations(regs);
+        setPendingRequests(leaderRequests);
+        setSentRequests(myRequests);
+    } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+    } finally {
+        setLoadingConfig(false);
+    }
+  };
+
+  useEffect(() => {
+      fetchDashboardData();
+  }, [currentUser]);
+
+  const onAcceptRequest = async (requestId: string) => {
+      try {
+          await handleTeamRequest(requestId, 'accepted');
+          fetchDashboardData();
+      } catch (error: unknown) {
+          console.error("Accept Error:", error);
+          if (error instanceof Error) {
+            alert("Failed to accept request: " + error.message);
+          }
+      }
+  };
+
+  const onRejectRequest = async (requestId: string) => {
+      try {
+          await handleTeamRequest(requestId, 'rejected');
+          fetchDashboardData();
+      } catch (error) {
+          alert("Failed to reject request");
+      }
+  };
+
+  const onWithdraw = async (eventId: string) => {
+      if (window.confirm("Are you sure you want to withdraw from this event?")) {
+          try {
+              if (currentUser) {
+                  await withdrawFromEvent(currentUser.uid, eventId);
+                  fetchDashboardData();
+              }
+          } catch (error) {
+              alert("Failed to withdraw");
+          }
+      }
+  };
 
   // --- 1. STARFIELD ENGINE ---
   useEffect(() => {
@@ -53,7 +128,14 @@ export default function NeuralDashboard() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    let width: number, height: number, stars: any[] = []
+    let width: number, height: number, stars: {
+      x: number;
+      y: number;
+      z: number;
+      alpha: number;
+      vx: number;
+      vy: number;
+    }[] = []
     let animationFrameId: number
 
     const initStars = () => {
@@ -144,7 +226,17 @@ export default function NeuralDashboard() {
             </div>
             <h1 className="dash-title">Neural <i>Dashboard</i></h1>
           </div>
-          <button className="dash-logout-btn">
+          <button 
+            className="dash-logout-btn" 
+            onClick={async () => {
+              try {
+                await logout();
+                router.push('/');
+              } catch (error) {
+                console.error("Failed to log out", error);
+              }
+            }}
+          >
             Logout
           </button>
         </header>
@@ -169,42 +261,42 @@ export default function NeuralDashboard() {
             
             <div className="detail-item">
               <span className="detail-label">Designation // Full Name</span>
-              <div className="detail-value">Tanmay Roy</div>
+              <div className="detail-value">{userData?.fullName || currentUser?.displayName || 'Unknown'}</div>
             </div>
 
             <div className="detail-item">
               <span className="detail-label">Neural Address // Email</span>
-              <div className="detail-value">rtanmay588@gmail.com</div>
+              <div className="detail-value">{userData?.email || currentUser?.email || 'Unknown'}</div>
             </div>
 
             <div className="detail-item">
               <span className="detail-label">Institution // College</span>
-              <div className="detail-value">IIT Kanpur</div>
+              <div className="detail-value">{userData?.college || 'N/A'}</div>
             </div>
 
             <div className="detail-item">
               <span className="detail-label">Comm_Link // Phone</span>
-              <div className="detail-value">+91 89000 58536</div>
+              <div className="detail-value">{userData?.phone || 'N/A'}</div>
             </div>
 
             <div className="detail-item">
               <span className="detail-label">Origin // City</span>
-              <div className="detail-value">Kanpur</div>
+              <div className="detail-value">{userData?.city || 'N/A'}</div>
             </div>
 
             <div className="detail-item">
               <span className="detail-label">Specialization // Branch</span>
-              <div className="detail-value">Electrical Engineering</div>
+              <div className="detail-value">{userData?.branch || 'N/A'}</div>
             </div>
 
             <div className="detail-item">
               <span className="detail-label">Temporal Rank // Year</span>
-              <div className="detail-value">3rd Year Undergraduate</div>
+              <div className="detail-value">{userData?.year || 'N/A'}</div>
             </div>
 
             <div className="detail-item">
               <span className="detail-label">Phenotype // Gender</span>
-              <div className="detail-value">Male</div>
+              <div className="detail-value">{userData?.gender || 'N/A'}</div>
             </div>
           </div>
         </section>
@@ -213,27 +305,37 @@ export default function NeuralDashboard() {
           <h2 className="dash-section-title">
             <span className="title-num">02 //</span> My <i>Registrations.</i>
           </h2>
-          {MY_REGISTRATIONS.length > 0 ? (
+          {registrations.length > 0 ? (
             <div className="registrations-grid">
-              {MY_REGISTRATIONS.map(reg => (
+              {registrations.map(reg => (
                 <div key={reg.id} className="reg-card">
                   <div className="reg-card-header">
                     <div>
-                      <h3 className="reg-event-name">{reg.event}</h3>
-                      <p className="reg-team-info">Team: <span>{reg.teamName}</span></p>
-                      <p className="reg-team-id">Team ID: {reg.teamId} <span className="share-hint">(Share this with members)</span></p>
+                      <h3 className="reg-event-name">{reg.event?.name || reg.eventName || reg.eventId}</h3>
+                      {reg.teamId && (
+                        <>
+                          <p className="reg-team-info">Team: <span>{reg.team?.name} ({reg.role})</span></p>
+                          {reg.role === 'leader' && (
+                            <p className="reg-team-id">Team ID: {reg.teamId} <span className="share-hint">(Share this with members)</span></p>
+                          )}
+                        </>
+                      )}
                     </div>
-                    <button className="withdraw-btn">Withdraw</button>
+                    <button className="withdraw-btn" onClick={() => reg.eventId && onWithdraw(reg.eventId)}>Withdraw</button>
                   </div>
                   
-                  <div className="team-members-box">
-                    <span className="members-label">TEAM MEMBERS</span>
-                    <div className="members-list">
-                      {reg.members.map((m, i) => (
-                        <div key={i} className="member-tag">{m}</div>
-                      ))}
+                  {reg.team?.memberDetails && (
+                    <div className="team-members-box">
+                      <span className="members-label">TEAM MEMBERS</span>
+                      <div className="members-list">
+                        {reg.team.memberDetails.map((m) => (
+                          <div key={m.uid} className="member-tag" style={{ border: m.uid === currentUser?.uid ? '1px solid var(--primary)' : '1px solid transparent' }}>
+                            {m.fullName} {m.uid === currentUser?.uid && '(You)'}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -246,56 +348,60 @@ export default function NeuralDashboard() {
         </section>
 
         {/* Sent Team Requests */}
-        <section className="dashboard-sub-section">
-          <h2 className="dash-section-title">
-            <span className="title-num">03 //</span> Sent Team <i>Requests.</i>
-          </h2>
-          <div className="requests-container">
-            {SENT_REQUESTS.map(req => (
-              <div key={req.id} className="request-strip">
-                <div className="request-info">
-                  <p className="request-title">Request to join Team: <span>{req.teamId}</span></p>
-                  <p className="request-event">Event: {req.event}</p>
+        {sentRequests.length > 0 && (
+          <section className="dashboard-sub-section">
+            <h2 className="dash-section-title">
+              <span className="title-num">03 //</span> Sent Team <i>Requests.</i>
+            </h2>
+            <div className="requests-container">
+              {sentRequests.map(req => (
+                <div key={req.id} className="request-strip">
+                  <div className="request-info">
+                    <p className="request-title">Request to join Team: <span>{req.teamId}</span></p>
+                    <p className="request-event">Event: {req.eventName || req.eventId}</p>
+                  </div>
+                  <div className="status-pill pending">{req.status || 'Pending'}</div>
                 </div>
-                <div className="status-pill pending">{req.status}</div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Join Requests for Your Teams */}
-        <section className="dashboard-sub-section">
-          <h2 className="dash-section-title">
-            <span className="title-num">04 //</span> Join <i>Requests.</i>
-          </h2>
-          <div className="requests-container">
-            {JOIN_REQUESTS.map(req => (
-              <div key={req.id} className="join-request-card">
-                <div className="jr-header">
-                  <h4 className="jr-name">{req.name}</h4>
-                  <div className="jr-actions">
-                    <button className="jr-btn accept">Accept</button>
-                    <button className="jr-btn reject">Reject</button>
+        {pendingRequests.length > 0 && (
+          <section className="dashboard-sub-section">
+            <h2 className="dash-section-title">
+              <span className="title-num">04 //</span> Join <i>Requests.</i>
+            </h2>
+            <div className="requests-container">
+              {pendingRequests.map(req => (
+                <div key={req.id} className="join-request-card">
+                  <div className="jr-header">
+                    <h4 className="jr-name">{req.user?.fullName || 'Unknown User'}</h4>
+                    <div className="jr-actions">
+                      <button className="jr-btn accept" onClick={() => onAcceptRequest(req.id)}>Accept</button>
+                      <button className="jr-btn reject" onClick={() => onRejectRequest(req.id)}>Reject</button>
+                    </div>
+                  </div>
+                  <div className="jr-details">
+                    <div className="jr-detail">
+                      <span>College:</span> {req.user?.college || 'N/A'}
+                    </div>
+                    <div className="jr-detail">
+                      <span>Phone:</span> {req.user?.phone || 'N/A'}
+                    </div>
+                    <div className="jr-detail">
+                      <span>Event:</span> {req.eventName || req.eventId}
+                    </div>
+                    <div className="jr-detail">
+                      <span>Team ID:</span> {req.teamId}
+                    </div>
                   </div>
                 </div>
-                <div className="jr-details">
-                  <div className="jr-detail">
-                    <span>College:</span> {req.college}
-                  </div>
-                  <div className="jr-detail">
-                    <span>Phone:</span> {req.phone}
-                  </div>
-                  <div className="jr-detail">
-                    <span>Event:</span> {req.event}
-                  </div>
-                  <div className="jr-detail">
-                    <span>Team ID:</span> {req.teamId}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </div>
   )
