@@ -26,7 +26,7 @@ const NEBULA_PALETTE = [
 const NEBULA_CONFIG = {
   spiralCount: 5,
   turnsPerSpiral: 0.8,
-  totalStars: 12000,
+  totalStars: 4000,
   pointSize: 2.8,
   blackHoleRadius: 0.25,
   colorMode: 1,
