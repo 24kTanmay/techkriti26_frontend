@@ -10,11 +10,11 @@
 .light-node {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.6;
+    opacity: 0.4;
     /* Increased visibility */
     mix-blend-mode: screen;
     will-change: transform;
-    filter: blur(120px);
+    filter: blur(60px);
     /* Individual blurs for better glow control */
     transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
 }

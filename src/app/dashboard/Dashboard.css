@@ -160,8 +160,8 @@
 
 .identity-card {
     background: rgba(255, 255, 255, 0.015);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 4rem;

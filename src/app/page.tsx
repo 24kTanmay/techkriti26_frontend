@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import dynamic from 'next/dynamic'
 import Lenis from 'lenis'
 import gsap from 'gsap'
@@ -176,13 +177,16 @@ export default function Home() {
             wheelProgress > 0.01 ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
           }`}
         >
-           <div 
+           <Image 
              key={`img-${currentSummit}`}
-             className="w-full h-full bg-cover bg-center animate-fade-in"
+             src={summitImages[currentSummit] || summitImages[0]}
+             alt={summitNames[currentSummit]}
+             fill
+             className="object-cover animate-fade-in transition-opacity duration-500"
+             sizes="(max-width: 768px) 85vw, 30vw"
+             priority={currentSummit === 0}
              style={{ 
-               backgroundImage: `url(${summitImages[currentSummit] || summitImages[0]})`,
                filter: 'contrast(1.1) brightness(0.8)',
-               transition: 'background-image 0.5s ease-in-out'
              }}
            />
            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />

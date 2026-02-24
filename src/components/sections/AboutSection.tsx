@@ -72,8 +72,8 @@ export default function AboutSection() {
           width: 32%; 
           padding: 3.5rem;
           background: rgba(255, 255, 255, 0.03);
-          backdrop-filter: blur(40px);
-          -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 40px;
           isolation: isolate;
