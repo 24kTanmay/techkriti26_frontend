@@ -1,6 +1,44 @@
 @import "tailwindcss";
 
 :root {
+
+  /* Core */
+  --color-black: #050505;
+  --color-white: #ffffff;
+  --color-white-rgb: 255, 255, 255;
+
+  --color-copper: #cba381;
+  --color-copper-rgb: 203, 163, 129;
+
+  /* Backgrounds */
+  --bg-primary: #050505;
+  --bg-secondary: #0d0c0a;
+  --bg-surface: #1a1815;
+  --bg-overlay: rgba(15, 15, 20, 0.4);
+
+  /* Text */
+  --text-primary: var(--color-white);
+  --text-secondary: rgba(var(--color-white-rgb), 0.7);
+  --text-muted: rgba(var(--color-white-rgb), 0.5);
+  --text-accent: var(--color-copper);
+
+  /* Copper Levels */
+  --copper-subtle: rgba(var(--color-copper-rgb), 0.05);
+  --copper-normal: rgba(var(--color-copper-rgb), 0.15);
+  --copper-strong: rgba(var(--color-copper-rgb), 0.30);
+  --copper-glow: rgba(var(--color-copper-rgb), 0.50);
+
+  /* White Levels */
+  --white-subtle: rgba(var(--color-white-rgb), 0.05);
+  --white-normal: rgba(var(--color-white-rgb), 0.15);
+  --white-strong: rgba(var(--color-white-rgb), 0.30);
+
+  /* Borders */
+  --border-subtle: var(--white-subtle);
+  --border-normal: var(--white-normal);
+  --border-strong: var(--white-strong);
+
+  /* Legacy / Compatibility */
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 5, 5, 5;
   --background-end-rgb: 5, 5, 5;
