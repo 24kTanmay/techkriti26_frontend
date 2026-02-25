@@ -5,7 +5,7 @@ body::before {
 }
 
 body {
-    background: #010103 !important;
+    background: var(--bg-primary) !important;
 }
 
 /* =============================================
@@ -13,17 +13,17 @@ body {
    Aligned with TechKriti '26 site identity 
 ============================================= */
 .admin-body {
-    --bg: #010103;
-    --accent: #cba381;
+    --bg: var(--bg-primary);
+    --accent: var(--color-copper);
     /* same copper as rest of site */
-    --accent-glow: rgba(203, 163, 129, 0.45);
-    --accent-soft: rgba(203, 163, 129, 0.08);
-    --accent-border: rgba(203, 163, 129, 0.25);
-    --glass: rgba(15, 15, 20, 0.4);
-    --border: rgba(255, 255, 255, 0.06);
-    --border-hover: rgba(255, 255, 255, 0.16);
-    --text-main: #ffffff;
-    --text-muted: #8b8b99;
+    --accent-glow: var(--copper-glow);
+    --accent-soft: var(--copper-subtle);
+    --accent-border: var(--copper-normal);
+    --glass: var(--bg-overlay);
+    --border: var(--border-subtle);
+    --border-hover: var(--border-normal);
+    --text-main: var(--text-primary);
+    --text-muted: var(--text-secondary);
     --font-ui: var(--font-space-grotesk), sans-serif;
     --font-display: var(--font-space-grotesk), sans-serif;
     --font-mono: var(--font-jetbrains-mono), monospace;
@@ -57,7 +57,7 @@ body {
     transform: translate(-50%, -50%);
     width: 70vw;
     height: 60vh;
-    background: radial-gradient(circle, rgba(203, 163, 129, 0.10) 0%, transparent 65%);
+    background: radial-gradient(circle, var(--copper-subtle) 0%, transparent 65%);
     z-index: 0;
     pointer-events: none;
     filter: blur(80px);
@@ -68,7 +68,7 @@ body {
     position: fixed;
     width: 60vmax;
     height: 60vmax;
-    background: radial-gradient(circle, rgba(203, 163, 129, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--copper-subtle) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 1;
@@ -89,7 +89,7 @@ body {
 
 /* === BUTTON SYSTEM === */
 .admin-btn {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--white-subtle);
     border: 1px solid var(--border);
     color: var(--text-muted);
     padding: 0.7rem 1.6rem;
@@ -117,7 +117,7 @@ body {
     height: 100%;
     background: linear-gradient(to right,
             transparent,
-            rgba(203, 163, 129, 0.15),
+            var(--copper-normal),
             transparent);
     transform: skewX(-25deg);
     transition: 0s;
@@ -125,10 +125,10 @@ body {
 
 .admin-btn:hover {
     border-color: var(--accent);
-    background: rgba(203, 163, 129, 0.05);
-    color: #ffffff;
+    background: var(--copper-subtle);
+    color: var(--color-white);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 20px rgba(var(--color-black-rgb), 0.2);
 }
 
 .admin-btn:hover::before {
@@ -139,12 +139,12 @@ body {
 .admin-btn.primary {
     border-color: var(--accent-border);
     color: var(--accent);
-    background: rgba(203, 163, 129, 0.03);
+    background: var(--copper-subtle);
 }
 
 .admin-btn.primary:hover {
     background: var(--accent);
-    color: #000000;
+    color: var(--color-black);
     border-color: var(--accent);
 }
 
@@ -158,14 +158,14 @@ body {
 }
 
 .admin-toggle-track {
-    background: #0a0a0f;
+    background: var(--bg-secondary);
     border: 1px solid var(--accent-border);
     border-radius: 12px;
     padding: 4px;
     display: flex;
     position: relative;
     width: 380px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 30px rgba(var(--color-black-rgb), 0.6);
 }
 
 .admin-toggle-btn {
@@ -176,7 +176,7 @@ body {
     font-family: var(--font-ui);
     font-size: 0.85rem;
     font-weight: 600;
-    color: #8b8b99;
+    color: var(--text-muted);
     cursor: pointer;
     z-index: 2;
     transition: color 0.3s;
@@ -193,8 +193,8 @@ body {
     left: 4px;
     width: calc(50% - 4px);
     height: calc(100% - 8px);
-    background: rgba(203, 163, 129, 0.12);
-    border: 1px solid rgba(203, 163, 129, 0.25);
+    background: var(--copper-subtle);
+    border: 1px solid var(--copper-normal);
     border-radius: 8px;
     z-index: 1;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -209,19 +209,19 @@ body {
     font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--white-subtle);
 }
 
 .admin-status-tag.active {
-    color: #4ade80;
-    background: rgba(74, 222, 128, 0.1);
-    border: 1px solid rgba(74, 222, 128, 0.2);
+    color: var(--color-success);
+    background: rgba(var(--color-success-rgb), 0.1);
+    border: 1px solid rgba(var(--color-success-rgb), 0.2);
 }
 
 .admin-status-tag.inactive {
-    color: #f87171;
-    background: rgba(248, 113, 113, 0.1);
-    border: 1px solid rgba(248, 113, 113, 0.2);
+    color: var(--color-danger);
+    background: rgba(var(--color-danger-rgb), 0.1);
+    border: 1px solid rgba(var(--color-danger-rgb), 0.2);
 }
 
 .admin-nexus-container {
@@ -248,7 +248,7 @@ body {
     flex: 1;
     max-width: 480px;
     min-width: 320px;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    background: linear-gradient(145deg, var(--white-subtle) 0%, var(--white-subtle) 100%);
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 3rem 2.5rem;
@@ -258,8 +258,8 @@ body {
     position: relative;
     overflow: hidden;
     box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.3),
-        inset 0 0 40px rgba(255, 255, 255, 0.02);
+        0 20px 50px rgba(var(--color-black-rgb), 0.3),
+        inset 0 0 40px var(--white-subtle);
 }
 
 .admin-shard::before,
@@ -268,7 +268,7 @@ body {
     position: absolute;
     width: 32px;
     height: 32px;
-    border-color: rgba(203, 163, 129, 0.15);
+    border-color: var(--copper-normal);
     border-style: solid;
     pointer-events: none;
     transition: all 0.6s var(--ease-expo);
@@ -292,9 +292,9 @@ body {
     inset: 0;
     background: linear-gradient(105deg,
             transparent 20%,
-            rgba(203, 163, 129, 0.05) 45%,
-            rgba(203, 163, 129, 0.1) 50%,
-            rgba(203, 163, 129, 0.05) 55%,
+            var(--copper-subtle) 45%,
+            var(--copper-normal) 50%,
+            var(--copper-subtle) 55%,
             transparent 80%);
     transform: translateX(-100%) skewX(-15deg);
     transition: none;
@@ -305,9 +305,9 @@ body {
     border-color: var(--accent-border);
     transform: translateY(-8px) scale(1.02);
     box-shadow:
-        0 40px 80px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(203, 163, 129, 0.05),
-        inset 0 0 60px rgba(203, 163, 129, 0.03);
+        0 40px 80px rgba(var(--color-black-rgb), 0.5),
+        0 0 40px var(--copper-subtle),
+        inset 0 0 60px var(--copper-subtle);
 }
 
 .admin-shard:hover .admin-shard-sweep {
@@ -348,7 +348,7 @@ body {
     font-family: var(--font-display);
     font-size: 3.5rem;
     font-weight: 400;
-    color: #ffffff;
+    color: var(--color-white);
     line-height: 1;
     letter-spacing: -0.02em;
     position: relative;
@@ -368,8 +368,8 @@ body {
     border-radius: 50%;
     border: 1px solid var(--border);
     box-shadow:
-        inset 0 0 60px rgba(203, 163, 129, 0.05),
-        0 0 60px rgba(0, 0, 0, 0.6);
+        inset 0 0 60px var(--copper-subtle),
+        0 0 60px rgba(var(--color-black-rgb), 0.6);
 }
 
 .admin-dial-svg {
@@ -381,7 +381,7 @@ body {
 
 .admin-dial-track {
     fill: none;
-    stroke: rgba(255, 255, 255, 0.05);
+    stroke: var(--white-subtle);
     stroke-width: 3;
 }
 
@@ -476,7 +476,7 @@ body {
 }
 
 .admin-search {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(var(--color-black-rgb), 0.3);
     border: 1px solid var(--border);
     color: var(--text-main);
     padding: 0.75rem 1.2rem;
@@ -495,7 +495,7 @@ body {
 .admin-search:focus {
     outline: none;
     border-color: var(--accent-border);
-    box-shadow: 0 0 0 3px rgba(203, 163, 129, 0.06);
+    box-shadow: 0 0 0 3px rgba(var(--color-copper-rgb), 0.06);
 }
 
 /* Data Table */
@@ -506,7 +506,7 @@ body {
     overflow: hidden;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    box-shadow: 0 30px 60px rgba(var(--color-black-rgb), 0.4), inset 0 1px 0 var(--border-normal);
 }
 
 .admin-table {
@@ -523,7 +523,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 3px;
     border-bottom: 1px solid var(--border);
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(var(--color-black-rgb), 0.15);
 }
 
 .admin-table td {
@@ -531,8 +531,8 @@ body {
     font-family: var(--font-ui);
     font-size: 0.88rem;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.8);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-subtle);
     transition: all 0.3s;
     letter-spacing: 0.01em;
 }
@@ -553,7 +553,7 @@ body {
 
 .admin-id-cell {
     font-family: var(--font-mono);
-    color: rgba(203, 163, 129, 0.6);
+    color: var(--copper-strong);
     font-size: 0.72rem;
     letter-spacing: 1px;
     white-space: nowrap;
@@ -562,31 +562,31 @@ body {
 /* === COLUMN FILTERS === */
 .filter-row th {
     padding: 0.5rem 1.8rem 1.2rem;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(var(--color-black-rgb), 0.15);
     border-bottom: 2px solid var(--border);
 }
 
 .column-filter {
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--white-subtle);
+    border: 1px solid var(--border-subtle);
     border-radius: 4px;
     padding: 6px 10px;
-    color: #fff;
+    color: var(--text-primary);
     font-family: var(--font-ui);
     font-size: 0.75rem;
     transition: all 0.3s;
 }
 
 .column-filter::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--text-muted);
     font-size: 0.7rem;
 }
 
 .column-filter:focus {
     outline: none;
     border-color: var(--accent-border);
-    background: rgba(203, 163, 129, 0.05);
+    background: var(--copper-subtle);
 }
 
 /* === RESPONSIVE === */

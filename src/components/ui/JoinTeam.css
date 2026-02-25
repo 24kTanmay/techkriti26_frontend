@@ -1,9 +1,9 @@
 :root {
-    --jt-bg: #020205;
-    --jt-text: #ffffff;
-    --jt-muted: #888890;
-    --jt-accent: #cba381;
-    --jt-border: rgba(255, 255, 255, 0.08);
+    --jt-bg: var(--bg-primary);
+    --jt-text: var(--text-primary);
+    --jt-muted: var(--text-secondary);
+    --jt-accent: var(--text-accent);
+    --jt-border: var(--border-normal);
     --jt-font-ui: var(--font-space-grotesk), sans-serif;
     --jt-font-display: var(--font-playfair), serif;
     --jt-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -41,7 +41,7 @@
 .jointeam-container {
     width: 95%;
     max-width: 480px;
-    background: rgba(10, 10, 15, 0.82);
+    background: var(--bg-overlay);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     border: 1px solid var(--jt-border);
@@ -49,7 +49,7 @@
     padding: 3.5rem;
     position: relative;
     z-index: 3;
-    box-shadow: 0 50px 120px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 50px 120px rgba(var(--color-black-rgb), 0.9);
     animation: jtWake 1.2s var(--jt-ease) forwards;
 }
 
@@ -90,7 +90,7 @@
     margin-bottom: 1.2rem;
     letter-spacing: -0.01em;
     font-weight: 400;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .modal-title-jointeam i {
@@ -126,11 +126,11 @@
 
 .text-input-jointeam {
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--white-subtle);
     border: 1px solid var(--jt-border);
     border-radius: 14px;
     padding: 1.2rem 1.5rem;
-    color: #fff;
+    color: var(--text-primary);
     font-family: var(--jt-font-ui);
     font-size: 1.1rem;
     outline: none;
@@ -138,9 +138,9 @@
 }
 
 .text-input-jointeam:focus {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--white-normal);
     border-color: var(--jt-accent);
-    box-shadow: 0 0 30px rgba(203, 163, 129, 0.12);
+    box-shadow: 0 0 30px var(--copper-normal);
 }
 
 .btn-group-jointeam {
@@ -164,24 +164,24 @@
 }
 
 .btn-primary-jointeam {
-    background: #fff;
-    color: #000;
+    background: var(--color-white);
+    color: var(--color-black);
 }
 
 .btn-primary-jointeam:hover:not(:disabled) {
     background: var(--jt-accent);
-    box-shadow: 0 10px 40px rgba(203, 163, 129, 0.2);
+    box-shadow: 0 10px 40px var(--copper-strong);
 }
 
 .btn-secondary-jointeam {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--white-subtle);
     border-color: var(--jt-border);
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .btn-secondary-jointeam:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #fff;
+    background: var(--white-normal);
+    border-color: var(--color-white);
 }
 
 .btn-jointeam:disabled {
@@ -194,7 +194,7 @@
 .beacon-scanner-jointeam {
     width: 100%;
     height: 120px;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--white-subtle);
     border: 1px solid var(--jt-border);
     border-radius: 16px;
     margin-bottom: 2.5rem;
@@ -235,7 +235,7 @@
     font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: 8px;
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0.4;
     font-family: var(--jt-font-ui);
 }
@@ -243,7 +243,7 @@
 .progress-conduit-jointeam {
     width: 100%;
     height: 3px;
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--white-subtle);
     border-radius: 10px;
     margin-bottom: 1rem;
     overflow: hidden;

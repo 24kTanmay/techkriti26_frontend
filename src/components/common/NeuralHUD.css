@@ -1,5 +1,5 @@
 :root {
-    --hud-dim: rgba(255, 255, 255, 0.08);
+    --hud-dim: var(--white-normal);
     --hud-font: var(--font-space-grotesk), sans-serif;
     --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -87,8 +87,8 @@
     left: -1px;
     width: 3px;
     height: 40px;
-    background: white;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    background: var(--color-white);
+    box-shadow: 0 0 15px rgba(var(--color-white-rgb), 0.5);
     transition: top 0.2s ease-out;
 }
 
@@ -99,7 +99,7 @@
     font-size: 8px;
     writing-mode: vertical-rl;
     letter-spacing: 0.5em;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     text-transform: uppercase;
     font-family: var(--hud-font);
 }
@@ -114,7 +114,7 @@
     font-family: var(--font-space-mono), monospace;
     font-size: 9px;
     line-height: 2.2;
-    color: rgba(255, 255, 255, 0.15);
+    color: var(--white-normal);
 }
 
 .data-stream span {
@@ -146,7 +146,7 @@
     position: fixed;
     width: 30px;
     height: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-normal);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;

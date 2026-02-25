@@ -132,7 +132,7 @@ export default function AdminPage() {
       dots.forEach(d => {
         ctx.beginPath();
         ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(203, 163, 129, 0.4)`;
+        ctx.fillStyle = `rgba(var(--color-copper-rgb), 0.4)`;
         ctx.fill();
         d.x += d.vx; d.y += d.vy;
         if (d.x < 0 || d.x > w) d.vx *= -1;
@@ -308,7 +308,7 @@ export default function AdminPage() {
                   </tr>
                 )) : (
                   <tr>
-                    <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: '#8b8b99', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '2px' }}>
+                    <td colSpan={7} style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', letterSpacing: '2px' }}>
                       NO MATCHING RECORDS FOUND
                     </td>
                   </tr>

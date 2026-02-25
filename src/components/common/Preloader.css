@@ -1,7 +1,7 @@
 .preloader-overlay {
     position: fixed;
     inset: 0;
-    background: #000;
+    background: var(--color-black);
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -30,25 +30,25 @@
     font-size: 15px;
     letter-spacing: 0.8em;
     text-transform: uppercase;
-    color: #444;
+    color: var(--text-muted);
     font-weight: 300;
     animation: preloader-pulse 2s infinite alternate;
 }
 
 @keyframes preloader-pulse {
     from {
-        color: #222;
+        color: var(--bg-surface);
     }
 
     to {
-        color: #666;
+        color: var(--text-muted);
     }
 }
 
 .preloader-progress-bar {
     width: 700px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--white-subtle);
     margin-top: 1rem;
     position: relative;
     overflow: hidden;
@@ -59,7 +59,7 @@
     top: 0;
     left: 0;
     height: 100%;
-    background: white;
-    box-shadow: 0 0 10px white;
+    background: var(--color-white);
+    box-shadow: 0 0 10px var(--color-white);
     transition: width 0.3s ease-out;
 }

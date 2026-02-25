@@ -138,7 +138,7 @@ const StarBackground = ({
 
         ctx.beginPath()
         ctx.arc(s.x + mouseX * s.z, s.y + mouseY * s.z, s.z * 0.8, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${Math.max(0, s.baseAlpha)})`
+        ctx.fillStyle = `rgba(var(--color-white-rgb), ${Math.max(0, s.baseAlpha)})`
         ctx.fill()
       }
 
@@ -157,7 +157,7 @@ const StarBackground = ({
 
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`
+        ctx.fillStyle = `rgba(var(--color-white-rgb), ${s.alpha})`
         ctx.fill()
       }
 
@@ -293,7 +293,7 @@ const StarBackgroundViewport = (props: StarBackgroundProps) => {
         if (s.baseAlpha > 1 || s.baseAlpha < 0.2) s.twinkle *= -1
         ctx.beginPath()
         ctx.arc(s.x + mouseX * s.z, s.y + mouseY * s.z, s.z * 0.8, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${Math.max(0, s.baseAlpha)})`
+        ctx.fillStyle = `rgba(var(--color-white-rgb), ${Math.max(0, s.baseAlpha)})`
         ctx.fill()
       }
       requestId = requestAnimationFrame(animateDrift)
@@ -306,7 +306,7 @@ const StarBackgroundViewport = (props: StarBackgroundProps) => {
         if (s.y < 0) { s.y = height; s.x = Math.random() * width }
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${s.alpha})`
+        ctx.fillStyle = `rgba(var(--color-white-rgb), ${s.alpha})`
         ctx.fill()
       }
       requestId = requestAnimationFrame(animateRise)

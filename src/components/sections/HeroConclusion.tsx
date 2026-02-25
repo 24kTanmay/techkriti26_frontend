@@ -17,14 +17,14 @@ export default function HeroConclusion() {
           transform: 'translateX(-50%)',
           width: '80vw',
           height: '50vh',
-          background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 70%)',
+          background: 'radial-gradient(circle, var(--white-subtle) 0%, rgba(0,0,0,0) 70%)',
           filter: 'blur(100px)',
           pointerEvents: 'none',
         }}
       ></div>
 
       <div className="z-10 max-w-4xl group">
-        <p className="text-[10px] tracking-[0.2em] uppercase text-gray-500 mb-8 font-medium" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
+        <p className="text-[10px] tracking-[0.2em] uppercase text-[var(--text-muted)] mb-8 font-medium" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
           The journey concludes here
         </p>
         
@@ -44,8 +44,8 @@ export default function HeroConclusion() {
           <style dangerouslySetInnerHTML={{ __html: `
             .register-btn-main {
                 position: relative;
-                background: #ffffff;
-                color: #000000;
+                background: var(--color-white);
+                color: var(--color-black);
                 padding: 1.5rem 4.5rem;
                 border-radius: 100px;
                 font-family: var(--font-space-grotesk), sans-serif;
@@ -59,7 +59,7 @@ export default function HeroConclusion() {
                 gap: 1.5rem;
                 transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
                 overflow: hidden;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+                box-shadow: 0 10px 30px rgba(var(--color-black-rgb), 0.4);
             }
 
             /* shine effect */
@@ -70,7 +70,7 @@ export default function HeroConclusion() {
                 background: linear-gradient(
                     90deg,
                     transparent,
-                    rgba(255,255,255,0.8),
+                    rgba(var(--color-white-rgb),0.8),
                     transparent
                 );
                 transform: translateX(-100%);
@@ -80,8 +80,8 @@ export default function HeroConclusion() {
             /* hover */
             .register-btn-main:hover {
                 transform: scale(1.05) translateY(-5px);
-                box-shadow: 0 20px 60px rgba(255,255,255,0.15);
-                background: #ffffff;
+                box-shadow: 0 20px 60px var(--white-strong);
+                background: var(--color-white);
             }
 
             .register-btn-main:hover::before {
@@ -115,7 +115,7 @@ export default function HeroConclusion() {
         <div 
           className="group/footer flex flex-col md:flex-row items-center rounded-[30px] md:rounded-[100px] border border-white/10 backdrop-blur-[50px] px-8 py-8 md:px-16 md:py-12 transition-all duration-500 hover:border-white/20"
           style={{
-            background: 'rgba(255, 255, 255, 0.015)',
+            background: 'var(--white-subtle)',
             boxShadow: '0 30px 60px rgba(0, 0, 0, 0.5)',
           }}
         >
@@ -143,7 +143,7 @@ export default function HeroConclusion() {
                 style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}
               >
                 {label}
-                <span className="absolute -bottom-2 left-1/2 w-0 h-[1.5px] bg-white transition-all duration-300 -translate-x-1/2 group-hover/link:w-[60%]" />
+                <span className="absolute -bottom-2 left-1/2 w-0 h-[1.5px] bg-[var(--text-primary)] transition-all duration-300 -translate-x-1/2 group-hover/link:w-[60%]" />
               </Link>
             ))}
           </div>

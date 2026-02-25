@@ -59,7 +59,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
 
         const draw = () => {
             ctx.clearRect(0,0,w,h)
-            ctx.fillStyle = "rgba(255,255,255,0.2)"
+            ctx.fillStyle = "var(--white-subtle)"
             
             points.forEach((p, i) => {
                 p.x += p.vx; p.y += p.vy
@@ -74,7 +74,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
                     const p2 = points[j]
                     const dist = Math.hypot(p.x - p2.x, p.y - p2.y)
                     if(dist < 150) {
-                        ctx.strokeStyle = `rgba(255,255,255,${(1 - dist/150) * 0.15})`
+                        ctx.strokeStyle = `rgba(var(--color-white-rgb), ${(1 - dist/150) * 0.15})`
                         ctx.lineWidth = 0.5
                         ctx.beginPath()
                         ctx.moveTo(p.x, p.y)
@@ -117,7 +117,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
                     marginTop: '20px', 
                     fontFamily: 'monospace', 
                     fontSize: '13.5px', 
-                    color: '#444',
+                    color: 'var(--text-muted)',
                     letterSpacing: '2px'
                 }}>
                     SYNCING_CORE_NODES_{Math.round(progress)}%

@@ -71,10 +71,10 @@ export default function AboutSection() {
           transform: translateY(-50%);
           width: 32%; 
           padding: 3.5rem;
-          background: rgba(255, 255, 255, 0.03);
+          background: var(--white-subtle);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.1);
+          border: 1px solid var(--border-subtle);
           border-radius: 40px;
           isolation: isolate;
           pointer-events: auto;
@@ -85,7 +85,7 @@ export default function AboutSection() {
 
         .about-heading {
           font-family: var(--font-space-grotesk), sans-serif;
-          background: linear-gradient(to bottom, #fff 60%, rgba(255,255,255,0.4) 100%);
+          background: linear-gradient(to bottom, var(--color-white) 60%, var(--text-muted) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           font-size: 3.5rem;
@@ -145,7 +145,7 @@ export default function AboutSection() {
             position: 'absolute',
             width: '50vw',
             height: '50vw',
-            background: 'radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 70%)',
+            background: 'radial-gradient(circle, var(--white-subtle) 0%, rgba(0,0,0,0) 70%)',
             pointerEvents: 'none',
             zIndex: -1,
             transform: 'translateY(-50%)',
@@ -154,27 +154,27 @@ export default function AboutSection() {
 
         {/* STEP 1: LEFT ALIGNED (Robot) */}
         <div ref={step1Ref} className="about-card invisible" style={{ left: '5%' }}>
-          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_01</span>
+          <span className="text-[var(--text-muted)] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_01</span>
           <h2 className="about-heading">Born at <br />IIT Kanpur</h2>
-          <p className="text-lg text-gray-400 font-light leading-relaxed">
+          <p className="text-lg text-[var(--text-muted)] font-light leading-relaxed">
             Since 1995, Techkriti has sparked innovation and technical interest among students across India.
           </p>
         </div>
 
         {/* STEP 2: RIGHT ALIGNED (DNA) */}
         <div ref={step2Ref} className="about-card invisible" style={{ right: '5%' }}>
-          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_02</span>
+          <span className="text-[var(--text-muted)] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_02</span>
           <h2 className="about-heading">Asia&apos;s <br />Largest Stage</h2>
-          <p className="text-lg text-gray-400 font-light leading-relaxed">
+          <p className="text-lg text-[var(--text-muted)] font-light leading-relaxed">
             In its 32nd edition, Techkriti is one of Asia’s largest technical festivals for young minds.
           </p>
         </div>
 
         {/* STEP 3: LEFT ALIGNED (Space) */}
         <div ref={step3Ref} className="about-card invisible" style={{ left: '5%' }}>
-          <span className="text-[#555] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_03</span>
+          <span className="text-[var(--text-muted)] tracking-[4px] mb-4 block text-[0.75rem]" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>/ PHASE_03</span>
           <h2 className="about-heading">Social <br />Welfare</h2>
-          <p className="text-lg text-gray-400 font-light leading-relaxed">
+          <p className="text-lg text-[var(--text-muted)] font-light leading-relaxed">
             We drive social change and technical excellence through innovation and perseverance.
           </p>
         </div>

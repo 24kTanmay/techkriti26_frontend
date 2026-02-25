@@ -146,7 +146,7 @@ export default function Home() {
   }, [])
 
   return (
-    <main className="relative w-full bg-[#050505]">
+    <main className="relative w-full bg-[var(--bg-primary)]">
       <Preloader onComplete={() => setIsLoading(false)} />
       <Navbar />
       <AmbientAurora />
@@ -173,7 +173,7 @@ export default function Home() {
         
         {/* Summit Visual Preview */}
         <div 
-          className={`absolute right-1/2 translate-x-1/2 md:right-[6%] md:translate-x-0 top-[20%] md:top-1/2 md:-translate-y-1/2 w-[85vw] md:w-[28vw] md:max-w-[520px] md:min-w-[420px] h-[35vh] md:h-auto md:aspect-[4/5] rounded-[30px] md:rounded-[48px] overflow-hidden border border-white/10 z-20 shadow-[0_40px_100px_rgba(0,0,0,0.7)] transition-all duration-1000 ease-out ${
+          className={`absolute right-1/2 translate-x-1/2 md:right-[6%] md:translate-x-0 top-[20%] md:top-1/2 md:-translate-y-1/2 w-[85vw] md:w-[28vw] md:max-w-[520px] md:min-w-[420px] h-[35vh] md:h-auto md:aspect-[4/5] rounded-[30px] md:rounded-[48px] overflow-hidden border border-white/10 z-20 shadow-[0_40px_100px_rgba(var(--color-black-rgb),0.7)] transition-all duration-1000 ease-out ${
             wheelProgress > 0.01 ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
           }`}
         >

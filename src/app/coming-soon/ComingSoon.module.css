@@ -1,12 +1,12 @@
 .container {
-    --bg: #030303;
-    --accent: #cba381;
+    --bg: var(--bg-primary);
+    --accent: var(--color-copper);
     /* Copper/Gold */
     --font-ui: 'Space Grotesk', sans-serif;
     --font-display: var(--font-playfair), "Playfair Display", serif;
 
     background: var(--bg);
-    color: #fff;
+    color: var(--text-primary);
     font-family: var(--font-space-grotesk), sans-serif;
     overflow: hidden;
     height: 100vh;
@@ -22,7 +22,7 @@
     position: fixed;
     width: 60vmax;
     height: 60vmax;
-    background: radial-gradient(circle, rgba(203, 163, 129, 0.08) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--copper-subtle) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 1;
@@ -79,7 +79,7 @@
 .progressLine {
     width: 200px;
     height: 1px;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--white-subtle);
     margin: 3rem auto;
     position: relative;
     overflow: hidden;
@@ -108,7 +108,7 @@
 .status {
     font-family: var(--font-ui);
     font-size: 0.6rem;
-    color: #444;
+    color: var(--text-muted);
     letter-spacing: 3px;
     text-transform: uppercase;
 

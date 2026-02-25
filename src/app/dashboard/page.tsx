@@ -105,7 +105,7 @@ export default function NeuralDashboard() {
 
         ctx.beginPath()
         ctx.arc(s.x, s.y, s.z, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`
+        ctx.fillStyle = `rgba(var(--color-white-rgb), ${s.alpha})`
         ctx.fill()
       })
       animationFrameId = requestAnimationFrame(animateStars)

@@ -1,10 +1,10 @@
 /* --- GALLERY SECTION VARIABLES (scoped) --- */
 #gallery {
-    --gallery-accent: #cba381;
-    --gallery-glass-bg: rgba(255, 255, 255, 0.01);
-    --gallery-glass-border: rgba(255, 255, 255, 0.04);
-    --gallery-glass-highlight: rgba(255, 255, 255, 0.1);
-    --gallery-text-muted: #888890;
+    --gallery-accent: var(--color-copper);
+    --gallery-glass-bg: var(--white-subtle);
+    --gallery-glass-border: var(--border-subtle);
+    --gallery-glass-highlight: var(--white-normal);
+    --gallery-text-muted: var(--text-muted);
     --gallery-font-ui: var(--font-space-grotesk), sans-serif;
     --gallery-font-body: var(--font-space-grotesk), sans-serif;
     --gallery-font-display: var(--font-playfair), "Playfair Display", serif;
@@ -43,7 +43,7 @@
     line-height: 1.1;
     letter-spacing: -0.01em;
     margin-bottom: 1.5rem;
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0;
 }
 
@@ -84,7 +84,7 @@
     content: '';
     position: absolute;
     inset: -20%;
-    background: radial-gradient(1000px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(96, 165, 250, 0.03), transparent 50%);
+    background: radial-gradient(1000px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(var(--color-info-rgb), 0.03), transparent 50%);
     z-index: 0;
     pointer-events: none;
     transition: opacity 0.5s;
@@ -141,9 +141,9 @@
     height: 200%;
     background: linear-gradient(to bottom right,
             transparent,
-            rgba(255, 255, 255, 0.02),
+            rgba(var(--color-white-rgb), 0.02),
             transparent,
-            rgba(96, 165, 250, 0.02),
+            rgba(var(--color-info-rgb), 0.02),
             transparent);
     transform: rotate(30deg);
     animation: galleryDataFlow 8s linear infinite;
@@ -162,7 +162,7 @@
     top: 1rem;
     right: 1.2rem;
     font-family: var(--gallery-font-ui);
-    color: rgba(255, 255, 255, 0.2);
+    color: var(--white-strong);
     font-size: 1.2rem;
     line-height: 1;
 }
@@ -176,7 +176,7 @@
     color: var(--gallery-text-muted);
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border-subtle);
     padding-top: 1rem;
     margin-top: auto;
 }

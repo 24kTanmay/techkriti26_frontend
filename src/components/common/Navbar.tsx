@@ -60,10 +60,10 @@ export default function Navbar() {
         .navbar-hamburger {
           display: none;
           pointer-events: auto;
-          background: rgba(255, 255, 255, 0.02);
+          background: var(--white-subtle);
           backdrop-filter: blur(40px);
           -webkit-backdrop-filter: blur(40px);
-          border: 1px solid rgba(255, 255, 255, 0.08);
+          border: 1px solid var(--border-subtle);
           border-radius: 12px;
           width: 44px;
           height: 44px;
@@ -79,7 +79,7 @@ export default function Navbar() {
           display: block;
           width: 18px;
           height: 1.5px;
-          background: #fff;
+          background: var(--color-white);
           transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
           border-radius: 1px;
         }
@@ -99,7 +99,7 @@ export default function Navbar() {
           position: fixed;
           inset: 0;
           z-index: 999;
-          background: rgba(5, 5, 5, 0.97);
+          background: rgba(var(--color-black-rgb), 0.97);
           backdrop-filter: blur(40px);
           -webkit-backdrop-filter: blur(40px);
           display: flex;
@@ -119,7 +119,7 @@ export default function Navbar() {
 
         .mobile-nav-overlay a {
           text-decoration: none;
-          color: #888;
+          color: var(--text-secondary);
           font-size: 1.875rem;
           font-weight: 500;
           letter-spacing: 0.2em;
@@ -143,13 +143,13 @@ export default function Navbar() {
         .mobile-nav-overlay a:nth-child(6) { transition-delay: 0.35s; }
 
         .mobile-nav-overlay a.is-active-link {
-          color: #ffffff;
-          text-shadow: 0 0 15px rgba(255,255,255,0.5);
+          color: var(--text-primary);
+          text-shadow: 0 0 15px var(--white-strong);
         }
 
         .mobile-nav-overlay a:hover {
-          color: #ffffff;
-          text-shadow: 0 0 15px rgba(255,255,255,0.5);
+          color: var(--text-primary);
+          text-shadow: 0 0 15px var(--white-strong);
         }
 
         .mobile-nav-portal {
@@ -189,23 +189,23 @@ export default function Navbar() {
             <div style={{
             width: '56px',
             height: '56px',
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%)',
+            background: 'linear-gradient(135deg, var(--white-subtle) 0%, transparent 100%)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
+            border: '1px solid var(--border-subtle)',
             borderRadius: '14px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             fontSize: '18px',
             fontWeight: 'bold',
-            color: 'white'
+            color: 'var(--text-primary)'
           }}>
               TK
             </div>
             <div style={{ textAlign: 'left' }} className="hidden sm:block">
-              <p style={{ fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2px', color: 'white' }}>TechKriti</p>
-              <p style={{ fontSize: '12px', color: '#666', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>IIT Kanpur</p>
+              <p style={{ fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2px', color: 'var(--text-primary)' }}>TechKriti</p>
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>IIT Kanpur</p>
             </div>
           </Link>
         </div>
@@ -215,10 +215,10 @@ export default function Navbar() {
           <ul 
             style={{
               gap: '32px',
-            background: 'rgba(255, 255, 255, 0.02)',
+            background: 'var(--white-subtle)',
             backdropFilter: 'blur(40px)',
             WebkitBackdropFilter: 'blur(40px)',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            border: '1px solid var(--border-subtle)',
             padding: '0 44px',
             height: '56px',
             borderRadius: '100px',
@@ -226,7 +226,7 @@ export default function Navbar() {
             margin: 0,
             display: 'flex',
             alignItems: 'center',
-            boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)'
+            boxShadow: '0 20px 40px rgba(var(--color-black-rgb), 0.1)'
           }}
           >
             {navItems.map((item) => (
@@ -241,22 +241,22 @@ export default function Navbar() {
                   }}
                   style={{
                     textDecoration: 'none',
-                    color: (mounted && item.href === pathname) ? '#ffffff' : '#888',
+                    color: (mounted && item.href === pathname) ? 'var(--text-primary)' : 'var(--text-secondary)',
                     fontSize: '16.5px',
                     fontWeight: 500,
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
                     transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
                     fontFamily: "var(--font-space-grotesk), sans-serif",
-                    textShadow: (mounted && item.href === pathname) ? '0 0 15px rgba(255,255,255,0.5)' : 'none'
+                    textShadow: (mounted && item.href === pathname) ? '0 0 15px var(--white-strong)' : 'none'
                   }}
                   onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    e.currentTarget.style.color = '#ffffff';
-                    e.currentTarget.style.textShadow = '0 0 15px rgba(255,255,255,0.5)';
+                    e.currentTarget.style.color = 'var(--text-primary)';
+                    e.currentTarget.style.textShadow = '0 0 15px var(--white-strong)';
                   }}
                   onMouseOut={(e: React.MouseEvent<HTMLAnchorElement>) => {
                     if (!(mounted && item.href === pathname)) {
-                      e.currentTarget.style.color = '#888';
+                      e.currentTarget.style.color = 'var(--text-secondary)';
                       e.currentTarget.style.textShadow = 'none';
                     }
                   }}

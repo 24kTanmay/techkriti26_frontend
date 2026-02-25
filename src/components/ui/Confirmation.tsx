@@ -78,7 +78,7 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
             stars.forEach(s => {
                 ctx.beginPath()
                 ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`
+                ctx.fillStyle = `rgba(var(--color-white-rgb), ${s.alpha})`
                 ctx.fill()
             })
             animationFrameId = requestAnimationFrame(draw)
@@ -139,7 +139,7 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                                 <label htmlFor="file-upload" style={{ cursor: 'pointer' }}>
                                     <span className="upload-label-gateway">Upload Payment Receipt</span>
                                     <input type="file" id="file-upload" style={{ display: 'none' }} onChange={handleFileUpload} />
-                                    <p style={{ fontSize: '0.6rem', color: '#888890', marginTop: '8px' }}>PDF / Image Format</p>
+                                    <p style={{ fontSize: '0.6rem', color: 'var(--text-muted)', marginTop: '8px' }}>PDF / Image Format</p>
                                 </label>
                             )}
 
@@ -165,8 +165,8 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                                 <div className="upload-success">
                                     <div className="mini-check">✓</div>
                                     <div style={{ flex: 1 }}>
-                                        <span className="upload-label-gateway" style={{ color: '#4ade80' }}>Upload Complete</span>
-                                        <p style={{ fontSize: '0.55rem', color: '#888890', marginTop: '2px' }}>{fileName} Attached</p>
+                                        <span className="upload-label-gateway" style={{ color: 'var(--color-success)' }}>Upload Complete</span>
+                                        <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '2px' }}>{fileName} Attached</p>
                                     </div>
                                     <button 
                                         className="change-btn-gateway"
@@ -220,7 +220,7 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                 {/* STATE: THANK YOU (SUBMITTED) */}
                 <div className={`state-gateway ${state === 'submitted' ? 'active' : ''}`}>
                     <div className="success-icon-gateway">✓</div>
-                    <span className="status-tag-gateway" style={{ color: '#4ade80' }}>Submitted</span>
+                    <span className="status-tag-gateway" style={{ color: 'var(--color-success)' }}>Submitted</span>
                     <h2 className="modal-title-gateway">Registration <i>Received</i></h2>
                     <p className="modal-desc-gateway">
                         Your payment details have been submitted. Our team will verify the payment and confirm your registration soon.

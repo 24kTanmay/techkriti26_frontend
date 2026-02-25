@@ -2,7 +2,7 @@
     position: relative;
     padding: 15vh 2rem;
     background: transparent;
-    color: #fff;
+    color: var(--text-primary);
     z-index: 10;
     max-width: 1000px;
     margin: 0 auto;
@@ -40,8 +40,8 @@
 }
 
 .faq-item {
-    background: rgba(255, 255, 255, 0.015);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: var(--white-subtle);
+    border: 1px solid var(--border-subtle);
     border-radius: 20px;
     overflow: hidden;
     cursor: pointer;
@@ -54,7 +54,7 @@
     position: absolute;
     inset: 0;
     background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-            rgba(203, 163, 129, 0.08),
+            var(--copper-subtle),
             transparent 40%);
     opacity: 0;
     transition: opacity 0.5s ease;
@@ -67,9 +67,9 @@
 }
 
 .faq-item:hover {
-    border-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--border-normal);
     transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.025);
+    background: var(--white-subtle);
 }
 
 .faq-trigger {
@@ -96,7 +96,7 @@
     font-weight: 400;
     letter-spacing: -0.01em;
     flex: 1;
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--text-primary);
 }
 
 .faq-icon {
@@ -110,7 +110,7 @@
 .faq-icon::after {
     content: '';
     position: absolute;
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--white-strong);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -129,8 +129,8 @@
 
 /* Active State */
 .faq-item.is-active {
-    border-color: #cba381;
-    background: rgba(203, 163, 129, 0.03);
+    border-color: var(--color-copper);
+    background: var(--copper-subtle);
 }
 
 .faq-item.is-active .faq-icon {
@@ -139,11 +139,11 @@
 
 .faq-item.is-active .faq-icon::before,
 .faq-item.is-active .faq-icon::after {
-    background: #cba381;
+    background: var(--color-copper);
 }
 
 .faq-item.is-active .faq-question {
-    color: #fff;
+    color: var(--text-primary);
 }
 
 /* Content Panel */
@@ -162,7 +162,7 @@
 
 .faq-answer {
     padding-bottom: 2.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     line-height: 1.8;
     font-size: 1.05rem;
     font-weight: 300;

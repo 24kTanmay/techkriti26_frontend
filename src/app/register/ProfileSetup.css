@@ -6,7 +6,7 @@
     justify-content: center;
     padding: 4rem 2rem;
     position: relative;
-    background: #050505;
+    background: var(--bg-primary);
     overflow-y: auto;
     font-family: var(--font-space-grotesk), sans-serif;
 }
@@ -46,13 +46,13 @@
     z-index: 5;
     width: 100%;
     max-width: 600px;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--white-subtle);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-subtle);
     border-radius: 32px;
     padding: 3rem;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 40px 100px rgba(var(--color-black-rgb), 0.6);
     overflow: hidden;
     animation: cardAppear 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -77,10 +77,10 @@
 .status-tag {
     display: inline-block;
     padding: 6px 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--white-subtle);
+    border: 1px solid var(--border-subtle);
     border-radius: 100px;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.15em;
@@ -91,7 +91,7 @@
 .profile-title {
     font-family: var(--font-playfair), serif;
     font-size: clamp(2rem, 5vw, 2.8rem);
-    color: #fff;
+    color: var(--text-primary);
     margin-bottom: 0.75rem;
     line-height: 1.2;
 }
@@ -100,12 +100,12 @@
     font-style: italic;
     font-weight: 300;
     opacity: 0.8;
-    color: #cba381;
+    color: var(--text-accent);
     /* Copper accent */
 }
 
 .profile-desc {
-    color: rgba(255, 255, 255, 0.4);
+    color: var(--text-muted);
     font-size: 1rem;
     letter-spacing: 0.02em;
 }
@@ -129,7 +129,7 @@
 }
 
 .form-label {
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--text-secondary);
     font-size: 0.8rem;
     font-weight: 500;
     letter-spacing: 0.1em;
@@ -138,11 +138,11 @@
 }
 
 .form-input {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--white-subtle);
+    border: 1px solid var(--border-subtle);
     border-radius: 12px;
     padding: 1rem 1.2rem;
-    color: #fff;
+    color: var(--text-primary);
     font-family: var(--font-space-grotesk), sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -151,24 +151,24 @@
 }
 
 .form-input:focus {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(203, 163, 129, 0.4);
-    box-shadow: 0 0 20px rgba(203, 163, 129, 0.1);
+    background: var(--white-subtle);
+    border-color: var(--copper-strong);
+    box-shadow: 0 0 20px var(--copper-subtle);
 }
 
 .form-input::placeholder {
-    color: rgba(255, 255, 255, 0.15);
+    color: var(--white-normal);
 }
 
 .form-input.read-only {
-    background: rgba(255, 255, 255, 0.01);
-    border-color: rgba(255, 255, 255, 0.04);
-    color: rgba(255, 255, 255, 0.4);
+    background: rgba(var(--color-white-rgb), 0.01);
+    border-color: rgba(var(--color-white-rgb), 0.04);
+    color: var(--text-muted);
     cursor: not-allowed;
 }
 
 .form-input.read-only:focus {
-    border-color: rgba(255, 255, 255, 0.04);
+    border-color: rgba(var(--color-white-rgb), 0.04);
     box-shadow: none;
 }
 
@@ -178,7 +178,7 @@
     left: 12px;
     right: 12px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(203, 163, 129, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, var(--copper-strong), transparent);
     transform: scaleX(0);
     transition: transform 0.4s ease;
 }
@@ -190,8 +190,8 @@
 .submit-btn {
     grid-column: span 2;
     margin-top: 1.5rem;
-    background: #fff;
-    color: #000;
+    background: var(--color-white);
+    color: var(--color-black);
     border: none;
     border-radius: 100px;
     padding: 1.25rem;
@@ -211,7 +211,7 @@
 
 .submit-btn:hover {
     transform: translateY(-4px);
-    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 40px rgba(var(--color-white-rgb), 0.1);
 }
 
 .submit-btn:active {
@@ -222,7 +222,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    background: linear-gradient(90deg, transparent, rgba(var(--color-white-rgb), 0.6), transparent);
     transform: translateX(-100%);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -242,8 +242,8 @@
 }
 
 .form-select option {
-    background: #0a0a0a;
-    color: #fff;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
 }
 
 @media (max-width: 600px) {

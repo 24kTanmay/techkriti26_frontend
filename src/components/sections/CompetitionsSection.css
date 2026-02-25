@@ -1,16 +1,16 @@
 :root {
-    --comp-bg-base: #020202;
-    --comp-text-main: #ffffff;
-    --comp-text-muted: #888890;
-    --comp-accent: #cba381;
+    --comp-bg-base: var(--bg-primary);
+    --comp-text-main: var(--text-primary);
+    --comp-text-muted: var(--text-secondary);
+    --comp-accent: var(--color-copper);
 
-    --comp-card-surface: rgba(255, 255, 255, 0.015);
-    --comp-card-border: rgba(255, 255, 255, 0.05);
+    --comp-card-surface: var(--white-subtle);
+    --comp-card-border: var(--border-subtle);
 
-    --comp-sub-bg: #101014;
-    --comp-sub-border: rgba(255, 255, 255, 0.04);
-    --comp-btn-bg: rgba(203, 163, 129, 0.15);
-    --comp-btn-text: #cba381;
+    --comp-sub-bg: var(--bg-secondary);
+    --comp-sub-border: var(--border-subtle);
+    --comp-btn-bg: var(--copper-normal);
+    --comp-btn-text: var(--color-copper);
 
     --comp-font-ui: var(--font-space-grotesk), sans-serif;
     --comp-font-body: 'Space Grotesk', sans-serif;
@@ -125,7 +125,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.06), transparent 40%);
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--white-normal), transparent 40%);
     opacity: 0;
     transition: opacity 0.5s;
     pointer-events: none;
@@ -137,15 +137,15 @@
 }
 
 .main-card:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--border-normal);
+    background: var(--white-subtle);
     transform: scale(1.005);
 }
 
 /* Active State */
 .comp-group.is-active .main-card {
-    border-color: rgba(203, 163, 129, 0.4);
-    background: rgba(203, 163, 129, 0.03);
+    border-color: var(--copper-strong);
+    background: var(--copper-subtle);
 }
 
 .card-info {
@@ -174,22 +174,22 @@
     width: 52px;
     height: 52px;
     border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--white-normal);
+    background: var(--white-subtle);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.5s var(--comp-ease-out-expo);
     font-size: 1.7rem;
     line-height: 1;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 20px rgba(var(--color-black-rgb), 0.2);
 }
 
 .main-card:hover .expand-icon {
     border-color: var(--comp-text-main);
     background: var(--comp-text-main);
     color: var(--comp-bg-base);
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 25px var(--white-strong);
 }
 
 .comp-group.is-active .expand-icon {
@@ -197,13 +197,13 @@
     background: var(--comp-accent);
     border-color: var(--comp-accent);
     color: var(--comp-bg-base);
-    box-shadow: 0 0 25px rgba(203, 163, 129, 0.3);
+    box-shadow: 0 0 25px var(--copper-strong);
 }
 
 .main-card:active .expand-icon {
     transform: scale(0.85);
-    background: #fff;
-    color: #000;
+    background: var(--color-white);
+    color: var(--color-black);
 }
 
 .comp-group.is-active .main-card:active .expand-icon {
@@ -273,7 +273,7 @@
     position: absolute;
     inset: 0;
     border-radius: 16px;
-    background: radial-gradient(circle at var(--mouseX, 50%) var(--mouseY, 50%), rgba(255, 255, 255, 0.08), transparent 50%);
+    background: radial-gradient(circle at var(--mouseX, 50%) var(--mouseY, 50%), var(--white-normal), transparent 50%);
     opacity: 0;
     transition: opacity 0.3s;
     pointer-events: none;
@@ -285,8 +285,8 @@
 }
 
 .tilt-card:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    border-color: var(--white-normal);
+    box-shadow: 0 20px 40px rgba(var(--color-black-rgb), 0.5);
     z-index: 10;
 }
 
@@ -308,7 +308,7 @@
     height: 56px;
     border-radius: 12px;
     object-fit: cover;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--white-normal);
 }
 
 .sub-title {
@@ -319,7 +319,7 @@
 
 .sub-desc {
     font-size: 0.95rem;
-    color: #94949e;
+    color: var(--text-muted);
     line-height: 1.6;
     flex-grow: 1;
     display: -webkit-box;
@@ -352,9 +352,9 @@
 }
 
 .sub-btn:hover {
-    background: rgba(203, 163, 129, 0.3);
-    border-color: rgba(203, 163, 129, 0.3);
-    color: #fff;
+    background: var(--copper-strong);
+    border-color: var(--copper-strong);
+    color: var(--color-white);
 }
 
 .sub-btn:hover span {

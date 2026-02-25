@@ -45,7 +45,7 @@ export default function CreateTeam({ onClose }: CreateTeamProps) {
             stars.forEach(s => {
                 ctx.beginPath()
                 ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`
+                ctx.fillStyle = `rgba(var(--color-white-rgb), ${s.alpha})`
                 ctx.fill()
             })
             animationFrameId = requestAnimationFrame(draw)
@@ -146,7 +146,7 @@ export default function CreateTeam({ onClose }: CreateTeamProps) {
                 {/* STATE: SUCCESS */}
                 <div className={`state-createteam ${state === 'success' ? 'active' : ''}`}>
                     <div className="success-icon-createteam">✓</div>
-                    <span className="status-tag-createteam" style={{ color: '#4ade80' }}>Success</span>
+                    <span className="status-tag-createteam" style={{ color: 'var(--color-success)' }}>Success</span>
                     <h2 className="modal-title-createteam">Team <i>Created</i></h2>
                     <p className="modal-desc-createteam">
                         Your team <b>{teamName}</b> has been registered successfully.

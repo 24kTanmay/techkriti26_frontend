@@ -150,9 +150,9 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
 
                     // Smoother active state transition
                     if (d < 4) {
-                        textWrapper.style.color = "#FFFFFF";
+                        textWrapper.style.color = "var(--text-primary)";
                         textWrapper.style.fontWeight = "400";
-                        textWrapper.style.textShadow = "0 0 30px rgba(203, 163, 129, 0.8)";
+                        textWrapper.style.textShadow = "0 0 30px var(--copper-strong)";
                     } else {
                         textWrapper.style.color = "var(--wheel-text-muted)";
                         textWrapper.style.fontWeight = "200";

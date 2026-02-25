@@ -1,11 +1,11 @@
 :root {
-    --gateway-bg: #020205;
-    --gateway-text: #ffffff;
-    --gateway-muted: #888890;
-    --gateway-accent: #cba381;
-    --gateway-accent-glow: rgba(203, 163, 129, 0.15);
-    --gateway-glass: rgba(255, 255, 255, 0.02);
-    --gateway-border: rgba(255, 255, 255, 0.08);
+    --gateway-bg: var(--bg-primary);
+    --gateway-text: var(--text-primary);
+    --gateway-muted: var(--text-secondary);
+    --gateway-accent: var(--text-accent);
+    --gateway-accent-glow: var(--copper-normal);
+    --gateway-glass: var(--white-subtle);
+    --gateway-border: var(--border-normal);
 
     --gateway-font-ui: var(--font-space-grotesk), sans-serif;
     --gateway-font-display: var(--font-playfair), serif;
@@ -44,7 +44,7 @@
 .gateway-container {
     width: 90%;
     max-width: 540px;
-    background: rgba(10, 10, 15, 0.8);
+    background: var(--bg-overlay);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     border: 1px solid var(--gateway-border);
@@ -52,7 +52,7 @@
     padding: 3.5rem;
     position: relative;
     z-index: 3;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 40px 100px rgba(var(--color-black-rgb), 0.8);
     animation: systemWake 1.2s var(--gateway-ease) forwards;
 }
 
@@ -76,7 +76,7 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--border-normal);
     border-style: solid;
     pointer-events: none;
 }
@@ -119,7 +119,7 @@
     margin-bottom: 1.5rem;
     letter-spacing: -0.02em;
     font-weight: 400;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .modal-title-gateway i {
@@ -158,19 +158,19 @@
 }
 
 .btn-secondary-gateway {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--white-subtle);
     border-color: var(--gateway-border);
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .btn-secondary-gateway:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #fff;
+    background: var(--white-normal);
+    border-color: var(--color-white);
 }
 
 .btn-primary-gateway {
-    background: #fff;
-    color: #000;
+    background: var(--color-white);
+    color: var(--color-black);
 }
 
 .btn-primary-gateway:hover {
@@ -182,7 +182,7 @@
 .loader-ring-gateway {
     width: 80px;
     height: 80px;
-    border: 1px solid rgba(203, 163, 129, 0.1);
+    border: 1px solid var(--copper-normal);
     border-top: 2px solid var(--gateway-accent);
     border-radius: 50%;
     animation: gatewaySpin 1.2s linear infinite;
@@ -199,9 +199,9 @@
 .success-icon-gateway {
     width: 64px;
     height: 64px;
-    background: rgba(74, 222, 128, 0.1);
-    border: 1px solid #4ade80;
-    color: #4ade80;
+    background: rgba(var(--color-success-rgb), 0.1);
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -218,8 +218,8 @@
 }
 
 .payment-cta-gateway {
-    background: #fff;
-    color: #000;
+    background: var(--color-white);
+    color: var(--color-black);
     text-decoration: none;
     padding: 1.2rem;
     border-radius: 12px;
@@ -242,7 +242,7 @@
     color: var(--gateway-accent);
     text-decoration: none;
     letter-spacing: 2px;
-    border-bottom: 1px solid rgba(203, 163, 129, 0.2);
+    border-bottom: 1px solid var(--copper-normal);
     transition: all 0.4s var(--gateway-ease);
     padding: 8px 0;
     display: inline-block;
@@ -251,9 +251,9 @@
 }
 
 .sub-link-gateway:hover {
-    color: #fff;
-    border-color: #fff;
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    color: var(--text-primary);
+    border-color: var(--color-white);
+    text-shadow: 0 0 15px var(--white-strong);
     transform: translateY(-1px);
 }
 
@@ -287,7 +287,7 @@
     border: 1px solid var(--gateway-border);
     border-style: dashed;
     border-radius: 16px;
-    background: rgba(255, 255, 255, 0.01);
+    background: var(--white-subtle);
     transition: all 0.5s var(--gateway-ease);
     cursor: pointer;
     text-align: center;
@@ -298,21 +298,21 @@
 
 .upload-shard-gateway.scanning {
     border-color: var(--gateway-accent);
-    background: rgba(203, 163, 129, 0.03);
+    background: var(--copper-subtle);
     border-style: solid;
-    box-shadow: 0 0 20px rgba(203, 163, 129, 0.1);
+    box-shadow: 0 0 20px var(--copper-normal);
 }
 
 .upload-shard-gateway.complete {
-    border-color: #4ade80;
-    background: rgba(74, 222, 128, 0.03);
+    border-color: var(--color-success);
+    background: rgba(var(--color-success-rgb), 0.03);
     border-style: solid;
     cursor: default;
 }
 
 .upload-shard-gateway:hover:not(.scanning):not(.complete) {
     border-color: var(--gateway-accent);
-    background: rgba(203, 163, 129, 0.03);
+    background: var(--copper-subtle);
 }
 
 /* --- HORIZONTAL NEURAL SYNC --- */
@@ -327,8 +327,8 @@
     top: 0;
     width: 100px;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(203, 163, 129, 0.05), transparent);
-    border-right: 1px solid rgba(203, 163, 129, 0.1);
+    background: linear-gradient(90deg, transparent, var(--copper-subtle), transparent);
+    border-right: 1px solid var(--copper-strong);
     animation: sweepGateway 4s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
@@ -370,7 +370,7 @@
     font-family: var(--gateway-font-ui);
     font-size: 0.8rem;
     font-weight: 300;
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0.8;
 }
 
@@ -379,7 +379,7 @@
     font-size: 1.8rem;
     font-weight: 700;
     line-height: 1;
-    color: #fff;
+    color: var(--text-primary);
     font-variant-numeric: tabular-nums;
 }
 
@@ -387,12 +387,12 @@
 .conduit-track-gateway {
     width: 100%;
     height: 6px;
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--white-subtle);
     border-radius: 100px;
     position: relative;
     overflow: hidden;
     margin-bottom: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-subtle);
 }
 
 .conduit-fill-gateway {
@@ -401,7 +401,7 @@
     left: 0;
     height: 100%;
     background: linear-gradient(90deg, #8a6c51, var(--gateway-accent));
-    box-shadow: 0 0 15px rgba(203, 163, 129, 0.3);
+    box-shadow: 0 0 15px var(--copper-strong);
     transition: width 0.4s var(--gateway-ease);
     display: flex;
     align-items: center;
@@ -412,7 +412,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+    background-image: radial-gradient(circle, var(--color-white) 1px, transparent 1px);
     background-size: 15px 100%;
     animation: flowRightGateway 0.8s linear infinite;
     opacity: 0.4;
@@ -434,8 +434,8 @@
     right: 0;
     height: 200%;
     width: 2px;
-    background: #fff;
-    box-shadow: 0 0 10px #fff, 0 0 20px var(--gateway-accent);
+    background: var(--color-white);
+    box-shadow: 0 0 10px var(--color-white), 0 0 20px var(--gateway-accent);
     transform: translateY(0);
 }
 
@@ -460,9 +460,9 @@
 .mini-check {
     width: 24px;
     height: 24px;
-    background: rgba(74, 222, 128, 0.1);
-    border: 1px solid #4ade80;
-    color: #4ade80;
+    background: rgba(var(--color-success-rgb), 0.1);
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -472,7 +472,7 @@
 }
 
 .change-btn-gateway {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--white-subtle);
     border: 1px solid var(--gateway-border);
     color: var(--gateway-muted);
     padding: 4px 10px;
@@ -486,9 +486,9 @@
 }
 
 .change-btn-gateway:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.3);
+    background: var(--white-normal);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
 }
 
 .upload-label-gateway {

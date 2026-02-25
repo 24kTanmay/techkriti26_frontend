@@ -44,7 +44,7 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
             stars.forEach(s => {
                 ctx.beginPath()
                 ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
-                ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`
+                ctx.fillStyle = `rgba(var(--color-white-rgb), ${s.alpha})`
                 ctx.fill()
             })
             animationFrameId = requestAnimationFrame(draw)
@@ -137,7 +137,7 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
                 {/* STATE: SUCCESS */}
                 <div className={`state-createteam active ${state === 'success' ? 'active' : ''}`} style={{ display: state === 'success' ? 'flex' : 'none' }}>
                     <div className="success-icon-createteam">✓</div>
-                    <span className="status-tag-createteam" style={{ color: '#4ade80' }}>Request Sent</span>
+                    <span className="status-tag-createteam" style={{ color: 'var(--color-success)' }}>Request Sent</span>
                     <h2 className="modal-title-createteam">Request <i>Logged</i></h2>
                     <p className="modal-desc-createteam" style={{ maxWidth: '300px' }}>
                         Your request to join <b>{teamId.toUpperCase()}</b> has been sent to the team leader.

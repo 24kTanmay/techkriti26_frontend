@@ -14,7 +14,7 @@
     font-size: 1.25rem;
     font-weight: 500;
     margin-bottom: 0.75rem;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .abstract-title i {
@@ -33,8 +33,8 @@
 .abstract-shard {
     position: relative;
     width: 100%;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px dashed rgba(255, 255, 255, 0.1);
+    background: var(--white-subtle);
+    border: 1px dashed var(--border-subtle);
     border-radius: 16px;
     padding: 2.5rem 2rem;
     transition: all 0.4s var(--event-ease-out);
@@ -44,18 +44,18 @@
 .abstract-shard.scanning {
     border-style: solid;
     border-color: var(--event-accent);
-    background: rgba(203, 163, 129, 0.03);
+    background: var(--copper-subtle);
 }
 
 .abstract-shard.complete {
     border-style: solid;
-    border-color: #22c55e;
-    background: rgba(34, 197, 94, 0.03);
+    border-color: var(--color-success);
+    background: rgba(var(--color-success-rgb), 0.03);
 }
 
 .abstract-shard:hover:not(.scanning):not(.complete) {
     border-color: var(--event-accent);
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--white-subtle);
 }
 
 .upload-trigger {
@@ -69,7 +69,7 @@
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--white-subtle);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -81,15 +81,15 @@
 .upload-trigger:hover .upload-icon {
     transform: translateY(-5px);
     background: var(--event-accent);
-    color: #000;
-    box-shadow: 0 10px 20px rgba(203, 163, 129, 0.2);
+    color: var(--color-black);
+    box-shadow: 0 10px 20px var(--copper-normal);
 }
 
 .upload-text {
     font-family: var(--event-font-ui);
     font-size: 0.95rem;
     font-weight: 500;
-    color: #fff;
+    color: var(--text-primary);
     letter-spacing: 0.5px;
 }
 
@@ -126,7 +126,7 @@
 
 .scanning-file {
     font-size: 0.85rem;
-    color: #fff;
+    color: var(--text-primary);
     opacity: 0.8;
 }
 
@@ -134,12 +134,12 @@
     font-family: var(--event-font-mono);
     font-size: 1.75rem;
     font-weight: 600;
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .scanning-bar-track {
     height: 4px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--white-subtle);
     border-radius: 10px;
     overflow: hidden;
     position: relative;
@@ -159,8 +159,8 @@
     top: 0;
     height: 100%;
     width: 2px;
-    background: #fff;
-    box-shadow: 0 0 10px #fff;
+    background: var(--color-white);
+    box-shadow: 0 0 10px var(--color-white);
 }
 
 /* Success State */
@@ -174,12 +174,12 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid #22c55e;
+    background: rgba(var(--color-success-rgb), 0.1);
+    border: 1px solid var(--color-success);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #22c55e;
+    color: var(--color-success);
 }
 
 .success-details {
@@ -190,7 +190,7 @@
     font-family: var(--event-font-ui);
     font-size: 1rem;
     font-weight: 500;
-    color: #fff;
+    color: var(--text-primary);
     display: block;
 }
 
@@ -201,8 +201,8 @@
 }
 
 .re-upload-btn {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--white-subtle);
+    border: 1px solid var(--border-subtle);
     color: var(--event-muted);
     padding: 6px 14px;
     border-radius: 6px;
@@ -214,17 +214,17 @@
 }
 
 .re-upload-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    border-color: rgba(255, 255, 255, 0.2);
+    background: var(--white-normal);
+    color: var(--text-primary);
+    border-color: var(--border-normal);
 }
 
 .abstract-status-hint {
     margin-top: 1.5rem;
     width: 100%;
     padding: 1rem 1.25rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--white-subtle);
+    border: 1px solid var(--border-subtle);
     border-radius: 10px;
     font-size: 0.85rem;
     color: var(--event-muted);

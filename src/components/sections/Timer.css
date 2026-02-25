@@ -1,9 +1,9 @@
 :root {
-    --timer-bg: #020204;
-    --timer-accent: #cba381;
+    --timer-bg: var(--bg-primary);
+    --timer-accent: var(--color-copper);
     /* Copper Transcendence */
-    --timer-card-bg: rgba(255, 255, 255, 0.015);
-    --timer-border: rgba(255, 255, 255, 0.08);
+    --timer-card-bg: var(--white-subtle);
+    --timer-border: var(--border-subtle);
     --timer-font-display: var(--font-space-grotesk), sans-serif;
     --timer-font-ui: var(--font-space-grotesk), sans-serif;
     --timer-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -30,7 +30,7 @@
     position: relative;
     width: 120px;
     height: 150px;
-    background: rgba(255, 255, 255, 0.04);
+    background: var(--white-subtle);
     border: 1px solid var(--timer-border);
     border-radius: 9px;
     backdrop-filter: blur(40px);
@@ -39,7 +39,7 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 30px 60px rgba(var(--color-black-rgb), 0.5);
 }
 
 /* The Horizontal Neural Slit (Logo Reference) */
@@ -58,7 +58,7 @@
 .glow {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, rgba(203, 163, 129, 0.05), transparent 70%);
+    background: radial-gradient(circle at center, var(--copper-subtle), transparent 70%);
     opacity: 0;
     transition: opacity 0.5s var(--timer-ease);
     z-index: 1;
@@ -68,12 +68,12 @@
     font-family: var(--timer-font-display);
     font-size: 5.25rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--text-primary);
     letter-spacing: -0.05em;
     z-index: 2;
     position: relative;
     /* Text reflection effect */
-    background: linear-gradient(180deg, #fff 45%, #666 50%, #fff 55%);
+    background: linear-gradient(180deg, var(--color-white) 45%, var(--text-muted) 50%, var(--color-white) 55%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -116,7 +116,7 @@
     position: absolute;
     width: 10px;
     height: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--white-normal);
     pointer-events: none;
 }
 

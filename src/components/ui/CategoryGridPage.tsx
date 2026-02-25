@@ -100,7 +100,7 @@ export default function CategoryGridPage({ data }: { data: CategoryGridData }) {
               {crumb.href ? (
                 <Link href={crumb.href}>{crumb.label}</Link>
               ) : i === breadcrumbs.length - 1 ? (
-                <span style={{ color: '#fff' }}>{crumb.label}</span>
+                <span style={{ color: 'var(--text-primary)' }}>{crumb.label}</span>
               ) : (
                 <span>{crumb.label}</span>
               )}

@@ -1,6 +1,6 @@
 :root {
-    --performer-bg: #050507;
-    --performer-accent: #cba381;
+    --performer-bg: var(--bg-primary);
+    --performer-accent: var(--color-copper);
     --performer-font-display: 'Playfair Display', serif;
     --performer-font-ui: 'Space Grotesk', sans-serif;
     --performer-ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -8,7 +8,7 @@
 
 .performer-archive-container {
     background: var(--performer-bg);
-    color: #fff;
+    color: var(--text-primary);
     font-family: var(--font-space-grotesk), sans-serif;
     min-height: 100vh;
     position: relative;
@@ -36,8 +36,8 @@
     opacity: 0;
     transform: scale(0.8) rotate(-5deg);
     transition: opacity 0.4s var(--performer-ease), transform 0.6s var(--performer-ease);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #000;
+    border: 1px solid var(--border-subtle);
+    background: var(--color-black);
 }
 
 .hover-preview-performer.active {
@@ -99,7 +99,7 @@
 
 .archive-item-performer {
     padding: 3.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border-subtle);
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -123,7 +123,7 @@
     font-weight: 400;
     line-height: 1;
     transition: transform 0.4s var(--performer-ease), color 0.4s var(--performer-ease);
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .item-role-performer {
@@ -131,7 +131,7 @@
     font-size: 0.7rem;
     letter-spacing: 3px;
     text-transform: uppercase;
-    color: #555;
+    color: var(--text-muted);
     transition: color 0.4s var(--performer-ease);
 }
 

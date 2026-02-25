@@ -148,7 +148,7 @@ export default function ArchivesSection() {
 
         ctx.beginPath()
         ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(138, 43, 226, ${alpha * 0.5})`
+        ctx.fillStyle = `rgba(var(--color-violet-rgb), ${alpha * 0.5})`
         ctx.fill()
       })
 

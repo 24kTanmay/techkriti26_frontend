@@ -1,11 +1,11 @@
 :root {
-    --ct-bg: #020205;
-    --ct-text: #ffffff;
-    --ct-muted: #888890;
-    --ct-accent: #cba381;
-    --ct-accent-glow: rgba(203, 163, 129, 0.15);
-    --ct-glass: rgba(255, 255, 255, 0.02);
-    --ct-border: rgba(255, 255, 255, 0.08);
+    --ct-bg: var(--bg-primary);
+    --ct-text: var(--text-primary);
+    --ct-muted: var(--text-secondary);
+    --ct-accent: var(--text-accent);
+    --ct-accent-glow: var(--copper-normal);
+    --ct-glass: var(--white-subtle);
+    --ct-border: var(--border-normal);
 
     --ct-font-ui: var(--font-space-grotesk), sans-serif;
     --ct-font-display: var(--font-playfair), serif;
@@ -44,7 +44,7 @@
 .createteam-container {
     width: 95%;
     max-width: 500px;
-    background: rgba(10, 10, 15, 0.8);
+    background: var(--bg-overlay);
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     border: 1px solid var(--ct-border);
@@ -52,7 +52,7 @@
     padding: 3rem;
     position: relative;
     z-index: 3;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 40px 100px rgba(var(--color-black-rgb), 0.8);
     animation: ctWake 1s var(--ct-ease) forwards;
 }
 
@@ -129,11 +129,11 @@
 
 .text-input-createteam {
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--white-subtle);
     border: 1px solid var(--ct-border);
     border-radius: 12px;
     padding: 1.2rem;
-    color: #fff;
+    color: var(--text-primary);
     font-family: var(--ct-font-ui);
     font-size: 1rem;
     outline: none;
@@ -141,9 +141,9 @@
 }
 
 .text-input-createteam:focus {
-    background: rgba(255, 255, 255, 0.06);
+    background: var(--white-normal);
     border-color: var(--ct-accent);
-    box-shadow: 0 0 20px rgba(203, 163, 129, 0.1);
+    box-shadow: 0 0 20px var(--copper-normal);
 }
 
 .input-field-createteam:focus-within .input-glow {
@@ -177,19 +177,19 @@
 }
 
 .btn-secondary-createteam {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--white-subtle);
     border-color: var(--ct-border);
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .btn-secondary-createteam:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: #fff;
+    background: var(--white-normal);
+    border-color: var(--color-white);
 }
 
 .btn-primary-createteam {
-    background: #fff;
-    color: #000;
+    background: var(--color-white);
+    color: var(--color-black);
 }
 
 .btn-primary-createteam:hover:not(:disabled) {
@@ -241,7 +241,7 @@
 .progress-conduit-createteam {
     width: 100%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--white-subtle);
     border-radius: 100px;
     overflow: hidden;
     margin-bottom: 1rem;
@@ -266,9 +266,9 @@
 .success-icon-createteam {
     width: 60px;
     height: 60px;
-    background: rgba(74, 222, 128, 0.1);
-    border: 1px solid #4ade80;
-    color: #4ade80;
+    background: rgba(var(--color-success-rgb), 0.1);
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -279,8 +279,8 @@
 
 .team-id-card-createteam {
     width: 100%;
-    background: rgba(203, 163, 129, 0.05);
-    border: 1px solid rgba(203, 163, 129, 0.2);
+    background: var(--copper-subtle);
+    border: 1px solid var(--copper-strong);
     border-radius: 16px;
     padding: 2rem;
     margin-bottom: 2.5rem;
@@ -300,8 +300,8 @@
     font-weight: 700;
     letter-spacing: 3px;
     margin-bottom: 1rem;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    text-shadow: 0 0 20px var(--white-normal);
 }
 
 .id-hint-createteam {
