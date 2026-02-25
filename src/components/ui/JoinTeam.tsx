@@ -3,14 +3,21 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './JoinTeam.css'
 
-type JoinTeamState = 'input' | 'processing' | 'success'
+import { useAuth } from '../../context/AuthContext'
+import { requestToJoinTeam } from '../../services/eventService'
+
+type JoinTeamState = 'input' | 'processing' | 'success' | 'error'
 
 interface JoinTeamProps {
     onClose: () => void;
+    eventId: string;
+    competitionName: string;
 }
 
-export default function JoinTeam({ onClose }: JoinTeamProps) {
+export default function JoinTeam({ onClose, eventId, competitionName }: JoinTeamProps) {
     const [state, setState] = useState<JoinTeamState>('input')
+    const [errorMsg, setErrorMsg] = useState<string>('')
+    const { currentUser } = useAuth()
     const [teamId, setTeamId] = useState('')
     const [progress, setProgress] = useState(0)
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -60,26 +67,31 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
         }
     }, [])
 
-    const handleConfirm = () => {
-        if (!teamId.trim()) return
+    const handleConfirm = async () => {
+        if (!teamId.trim() || !currentUser) return
         
         setState('processing')
         setProgress(0)
 
+        // Give UI time to show processing text
         let currentProgress = 0
         const interval = setInterval(() => {
-            const increment = Math.random() * 12
-            currentProgress += increment
-
-            if (currentProgress >= 100) {
-                currentProgress = 100
-                setProgress(100)
-                clearInterval(interval)
-                setTimeout(() => setState('success'), 600)
-            } else {
-                setProgress(currentProgress)
-            }
+            currentProgress += Math.random() * 20
+            if (currentProgress < 90) setProgress(currentProgress)
         }, 120)
+
+        try {
+            await requestToJoinTeam(currentUser.uid, eventId, teamId);
+            
+            clearInterval(interval);
+            setProgress(100);
+            setTimeout(() => setState('success'), 600)
+        } catch (error: any) {
+            clearInterval(interval);
+            console.error(error);
+            setErrorMsg(error.message || "Failed to join team.");
+            setState('error');
+        }
     }
 
     return (
@@ -99,7 +111,7 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
                         <input 
                             type="text" 
                             id="team-id"
-                            placeholder="e.g. TK26-XYZ123"
+                            placeholder="e.g. event1234"
                             value={teamId}
                             onChange={(e) => setTeamId(e.target.value)}
                             className="text-input-jointeam"
@@ -146,7 +158,20 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
                         You will be notified once they approve your request.
                     </p>
                     <button className="btn-createteam btn-secondary-createteam" style={{ width: '100%' }} onClick={onClose}>
-                        Return to Dashboard
+                        Return to Event
+                    </button>
+                </div>
+
+                {/* STATE: ERROR */}
+                <div className={`state-createteam active ${state === 'error' ? 'active' : ''}`} style={{ display: state === 'error' ? 'flex' : 'none' }}>
+                    <div className="success-icon-createteam" style={{ color: '#ef4444', borderColor: '#ef4444' }}>!</div>
+                    <span className="status-tag-createteam" style={{ color: '#ef4444' }}>Error</span>
+                    <h2 className="modal-title-createteam">Request <i>Failed</i></h2>
+                    <p className="modal-desc-createteam" style={{ color: '#ef4444', maxWidth: '300px' }}>
+                        {errorMsg}
+                    </p>
+                    <button className="btn-createteam btn-secondary-createteam" style={{ width: '100%', marginTop: '1rem' }} onClick={onClose}>
+                        Close
                     </button>
                 </div>
             </div>

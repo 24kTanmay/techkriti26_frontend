@@ -64,9 +64,25 @@
     font-weight: 400;
 }
 
-.dash-title i {
+.dash-logout-btn {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
     color: var(--text-muted);
-    font-style: italic;
+    padding: 0.6rem 1.8rem;
+    border-radius: 100px;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dash-logout-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .status-badge {
@@ -108,14 +124,38 @@
 }
 
 /* --- THE IDENTITY SHARD --- */
-.section-label {
+/* --- SECTION TITLES (Tagline Style) --- */
+.dash-section-title {
     font-family: var(--font-ui);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.6em;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    color: var(--text-muted);
-    margin-bottom: 2rem;
-    display: block;
+    color: var(--accent-cyan);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 500;
+}
+
+.dash-section-title i {
+    font-style: normal;
+    font-family: inherit;
+    color: inherit;
+    opacity: 1;
+}
+
+.title-num {
+    font-family: inherit;
+    font-size: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    opacity: 1;
+}
+
+.registrations-section,
+.dashboard-sub-section {
+    margin-top: 8rem;
 }
 
 .identity-card {
@@ -195,18 +235,241 @@
     margin-top: 6rem;
 }
 
-.empty-state {
-    border: 1px dashed var(--glass-border);
+.registrations-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.reg-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--glass-border);
     border-radius: 20px;
-    padding: 5rem;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.01);
+    padding: 2.5rem;
     transition: all 0.4s var(--ease-out-expo);
 }
 
-.empty-state:hover {
-    background: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.2);
+.reg-card:hover {
+    background: rgba(255, 255, 255, 0.035);
+    border-color: rgba(203, 163, 129, 0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.reg-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.reg-event-name {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.reg-team-info {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+}
+
+.reg-team-info span {
+    color: var(--accent-cyan);
+    font-weight: 500;
+}
+
+.reg-team-id {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.share-hint {
+    font-size: 0.7rem;
+    opacity: 0.5;
+    margin-left: 8px;
+}
+
+.withdraw-btn {
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.withdraw-btn:hover {
+    background: #ef4444;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+.team-members-box {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.members-label {
+    font-family: var(--font-ui);
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.members-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.member-tag {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-family: var(--font-ui);
+}
+
+/* --- DASHBOARD SUB SECTIONS --- */
+.dashboard-sub-section {
+    margin-top: 6rem;
+}
+
+.requests-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.request-strip {
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.request-title {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.request-title span {
+    color: var(--accent-cyan);
+}
+
+.request-event {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+.status-pill {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.status-pill.pending {
+    background: rgba(203, 163, 129, 0.1);
+    border: 1px solid rgba(203, 163, 129, 0.3);
+    color: var(--accent-cyan);
+}
+
+/* Join Request Card */
+.join-request-card {
+    background: rgba(255, 255, 255, 0.015);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: all 0.4s;
+}
+
+.jr-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.jr-name {
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+.jr-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.jr-btn {
+    padding: 0.6rem 1.6rem;
+    border-radius: 6px;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.jr-btn.accept {
+    background: #3b82f6;
+    border: 1px solid #3b82f6;
+    color: #fff;
+}
+
+.jr-btn.accept:hover {
+    background: #2563eb;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+.jr-btn.reject {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.jr-btn.reject:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.jr-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.jr-detail {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.jr-detail span {
+    color: var(--text-muted);
+    margin-right: 8px;
 }
 
 /* Premium Edit Button */
@@ -248,6 +511,13 @@
 .edit-btn:hover svg {
     transform: rotate(90deg);
     filter: invert(1);
+}
+
+.dash-title i {
+    font-family: var(--font-playfair), serif;
+    color: var(--text-muted);
+    font-style: italic;
+    opacity: 0.8;
 }
 
 .empty-text {

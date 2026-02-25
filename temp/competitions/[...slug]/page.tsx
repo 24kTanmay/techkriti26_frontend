@@ -7,25 +7,19 @@ import eventsDataRaw from '../../../data/events.json';
 // Type assertion for the imported JSON
 const eventsData = eventsDataRaw as Record<string, any>;
 
-export default async function DynamicEventPage({ params }: { params: Promise<{ slug: string[] }> }) {
-  const resolvedParams = await params;
-  
-  if (!resolvedParams.slug || resolvedParams.slug.length < 2) {
+export default function DynamicEventPage({ params }: { params: { slug: string[] } }) {
+  if (!params.slug || params.slug.length < 2) {
     notFound();
   }
 
-  const domainSlug = resolvedParams.slug[0];
-  const categorySlug = resolvedParams.slug[1];
+  const domainSlug = params.slug[0];
+  const categorySlug = params.slug[1];
 
-  const categoryKey = Object.keys(eventsData).find((key) => {
-    // Normalizing slugs logic
-    const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, '');
-    const normalizedSlug = categorySlug.toLowerCase().replace(/[^a-z0-9]/g, '');
-    return normalizedKey.includes(normalizedSlug) || normalizedSlug.includes(normalizedKey);
-  });
+  const categoryKey = Object.keys(eventsData).find(
+    (key) => key.toLowerCase() === categorySlug.toLowerCase()
+  );
 
   if (!categoryKey || !eventsData[categoryKey]) {
-    console.log(`Failed to find category for slug part: ${categorySlug}. Available keys:`, Object.keys(eventsData));
     notFound();
   }
 
@@ -46,7 +40,7 @@ export default async function DynamicEventPage({ params }: { params: Promise<{ s
   const finalCanvasId = canvasIds[domainSlug.toLowerCase()] || 'star-canvas-robowar';
 
   // --- CATEGORY GRID PAGE (e.g. /competitions/technical/robogames) ---
-  if (resolvedParams.slug.length === 2) {
+  if (params.slug.length === 2) {
     const overviewItem = itemsArray.find((item: any) => item.flag?.content === 'overview');
     const overviewText = overviewItem?.desc?.content || '';
 
@@ -81,8 +75,8 @@ export default async function DynamicEventPage({ params }: { params: Promise<{ s
   }
 
   // --- EVENT DETAIL PAGE (e.g. /competitions/technical/robogames/robowar) ---
-  if (resolvedParams.slug.length === 3) {
-    const eventSlug = resolvedParams.slug[2];
+  if (params.slug.length === 3) {
+    const eventSlug = params.slug[2];
     
     // Find the specific competition block within this category's data array
     const compItem = itemsArray.find((item: any) => {
@@ -96,9 +90,9 @@ export default async function DynamicEventPage({ params }: { params: Promise<{ s
       notFound();
     }
 
-    // Find overview text (prioritizing the specific competition's description)
+    // Find overview text
     const overviewItem = itemsArray.find((item: any) => item.flag?.content === 'overview');
-    const overviewText = compItem.desc?.content || overviewItem?.desc?.content || '';
+    const overviewText = overviewItem?.desc?.content || compItem.desc?.content || '';
 
     // Find problem statement link
     const problemStatementItem = itemsArray.find((item: any) => item.flag?.content === 'problem_statement');
@@ -110,8 +104,7 @@ export default async function DynamicEventPage({ params }: { params: Promise<{ s
       const lines = contactsItem.desc.content.split('\n');
       for (const line of lines) {
         if (line.trim().length === 0) continue;
-        // Match something like "**Karan:** +91 97984 76475" or "**Karan** : +91 97984 76475"
-        const match = line.match(/\*\*([^*]+)\*\*\s*:\s*(.+)/) || line.match(/\*\*([^*:]+):\*\*\s*(.+)/);
+        const match = line.match(/\*\*([^*]+)\*\*:\s*(.+)/);
         if (match) {
           extractedContacts.push({ name: match[1].trim(), number: match[2].trim() });
         }
@@ -119,13 +112,10 @@ export default async function DynamicEventPage({ params }: { params: Promise<{ s
     }
 
     // Constructing the final EventDetailData object expected by the UI template
-    const resolvedImg = compItem.image || 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1000&auto=format&fit=crop';
-    
     const finalData: EventDetailData = {
       title: compItem.title?.content || 'Event Title',
       breadcrumb: `${domainFormatted} / ${categoryFormatted} / ${compItem.title?.content || eventSlug}`,
       canvasId: finalCanvasId,
-      image: resolvedImg,
       tabs: [
         { id: 'overview', label: 'Overview' },
         { id: 'problem', label: 'Problem Statement' },

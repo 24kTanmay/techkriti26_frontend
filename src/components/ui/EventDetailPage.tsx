@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StarBackgroundViewport } from '../common/StarBackground'
 import Navbar from '../common/Navbar'
 import { useTabIndicator } from '../../hooks/useTabIndicator'
@@ -9,6 +9,8 @@ import './EventDetailPage.css'
 import Confirmation from './Confirmation'
 import CreateTeam from './CreateTeam'
 import JoinTeam from './JoinTeam'
+import { useAuth } from '../../context/AuthContext'
+import { getUserRegistrations } from '../../services/eventService'
 
 /**
  * Shared template for all competition detail pages.
@@ -33,6 +35,31 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
   const [showCreateTeam, setShowCreateTeam] = useState(false)
   const [showJoinTeam, setShowJoinTeam] = useState(false)
   const { indicatorRef, tabsContainerRef } = useTabIndicator(activeTab)
+  const { currentUser, userData } = useAuth()
+
+  const eventId = data.title.toLowerCase().replace(/\s+/g, '_')
+  const competitionName = data.title
+
+  const [isRegistered, setIsRegistered] = useState(false)
+  const [registrationType, setRegistrationType] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (currentUser?.uid && eventId) {
+      getUserRegistrations(currentUser.uid).then((regs: any[]) => {
+        const reg = regs.find((r) => r.eventId === eventId);
+        if (reg) {
+          setIsRegistered(true);
+          setRegistrationType(reg.type === 'individual' ? 'Individual' : 'Team');
+        } else {
+          setIsRegistered(false);
+          setRegistrationType(null);
+        }
+      }).catch(console.error);
+    } else {
+      setIsRegistered(false);
+      setRegistrationType(null);
+    }
+  }, [currentUser, eventId])
 
   return (
     <div className="event-detail-page">
@@ -58,7 +85,13 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
           <div className="event-panel-image">
             <div
               className="event-image-bg"
-              style={imageFallbackGradient ? { background: imageFallbackGradient } : undefined}
+              style={
+                data.image
+                  ? { backgroundImage: `url(${data.image})` }
+                  : imageFallbackGradient
+                  ? { background: imageFallbackGradient }
+                  : undefined
+              }
             />
             <div className="event-image-overlay" />
           </div>
@@ -118,27 +151,51 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
                 </div>
 
                 <div className="event-action-group">
-                  <button 
-                    className="event-btn-action primary" 
-                    aria-label="Register as Individual"
-                    onClick={() => setShowConfirmation(true)}
-                  >
-                    Individual
-                  </button>
-                  <button 
-                    className="event-btn-action" 
-                    aria-label="Create a new team"
-                    onClick={() => setShowCreateTeam(true)}
-                  >
-                    Create Team
-                  </button>
-                  <button 
-                    className="event-btn-action" 
-                    aria-label="Join an existing team"
-                    onClick={() => setShowJoinTeam(true)}
-                  >
-                    Join Team
-                  </button>
+                  {isRegistered ? (
+                    <button 
+                      className="event-btn-action primary" 
+                      disabled
+                      style={{ opacity: 0.5, cursor: 'not-allowed' }}
+                    >
+                      Already Registered ({registrationType})
+                    </button>
+                  ) : (
+                    <>
+                      <button 
+                        className="event-btn-action primary" 
+                        aria-label="Register as Individual"
+                        onClick={() => {
+                          if (!currentUser) return alert("Please sign in to register.");
+                          if (!userData?.profileCompleted) return alert("Please register first to complete your profile.");
+                          setShowConfirmation(true)
+                        }}
+                      >
+                        Individual
+                      </button>
+                      <button 
+                        className="event-btn-action" 
+                        aria-label="Create a new team"
+                        onClick={() => {
+                          if (!currentUser) return alert("Please sign in to create a team.");
+                          if (!userData?.profileCompleted) return alert("Please register first to complete your profile.");
+                          setShowCreateTeam(true)
+                        }}
+                      >
+                        Create Team
+                      </button>
+                      <button 
+                        className="event-btn-action" 
+                        aria-label="Join an existing team"
+                        onClick={() => {
+                          if (!currentUser) return alert("Please sign in to join a team.");
+                          if (!userData?.profileCompleted) return alert("Please register first to complete your profile.");
+                          setShowJoinTeam(true)
+                        }}
+                      >
+                        Join Team
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -189,15 +246,27 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
       </div>
 
       {showConfirmation && (
-        <Confirmation onClose={() => setShowConfirmation(false)} />
+        <Confirmation 
+          onClose={() => setShowConfirmation(false)} 
+          eventId={eventId} 
+          competitionName={competitionName} 
+        />
       )}
 
       {showCreateTeam && (
-        <CreateTeam onClose={() => setShowCreateTeam(false)} />
+        <CreateTeam 
+          onClose={() => setShowCreateTeam(false)} 
+          eventId={eventId} 
+          competitionName={competitionName} 
+        />
       )}
 
       {showJoinTeam && (
-        <JoinTeam onClose={() => setShowJoinTeam(false)} />
+        <JoinTeam 
+          onClose={() => setShowJoinTeam(false)} 
+          eventId={eventId} 
+          competitionName={competitionName} 
+        />
       )}
     </div>
   )

@@ -3,14 +3,21 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './CreateTeam.css'
 
-type CreateTeamState = 'input' | 'processing' | 'success'
+import { useAuth } from '../../context/AuthContext'
+import { createTeam } from '../../services/eventService'
+
+type CreateTeamState = 'input' | 'processing' | 'success' | 'error'
 
 interface CreateTeamProps {
     onClose: () => void;
+    eventId: string;
+    competitionName: string;
 }
 
-export default function CreateTeam({ onClose }: CreateTeamProps) {
+export default function CreateTeam({ onClose, eventId, competitionName }: CreateTeamProps) {
     const [state, setState] = useState<CreateTeamState>('input')
+    const [errorMsg, setErrorMsg] = useState<string>('')
+    const { currentUser } = useAuth()
     const [teamName, setTeamName] = useState('')
     const [progress, setProgress] = useState(0)
     const [teamId, setTeamId] = useState('')
@@ -61,30 +68,32 @@ export default function CreateTeam({ onClose }: CreateTeamProps) {
         }
     }, [])
 
-    const handleConfirm = () => {
-        if (!teamName.trim()) return
+    const handleConfirm = async () => {
+        if (!teamName.trim() || !currentUser) return
         
         setState('processing')
         setProgress(0)
 
-        // Mock Team ID generation
-        const randomId = `tk26-${Math.random().toString(36).substr(2, 6).toUpperCase()}`
-        setTeamId(randomId)
-
+        // Give UI time to show processing text
         let currentProgress = 0
         const interval = setInterval(() => {
-            const increment = Math.random() * 10
-            currentProgress += increment
-
-            if (currentProgress >= 100) {
-                currentProgress = 100
-                setProgress(100)
-                clearInterval(interval)
-                setTimeout(() => setState('success'), 600)
-            } else {
-                setProgress(currentProgress)
-            }
+            currentProgress += Math.random() * 20
+            if (currentProgress < 90) setProgress(currentProgress)
         }, 150)
+
+        try {
+            const newTeamId = await createTeam(currentUser.uid, eventId, competitionName, teamName);
+            setTeamId(newTeamId);
+            
+            clearInterval(interval);
+            setProgress(100);
+            setTimeout(() => setState('success'), 600)
+        } catch (error: any) {
+            clearInterval(interval);
+            console.error(error);
+            setErrorMsg(error.message || "Failed to create team.");
+            setState('error');
+        }
     }
 
     return (
@@ -159,7 +168,20 @@ export default function CreateTeam({ onClose }: CreateTeamProps) {
                     </div>
 
                     <button className="btn-createteam btn-secondary-createteam" style={{ width: '100%' }} onClick={onClose}>
-                        Return to Dashboard
+                        Return to Event
+                    </button>
+                </div>
+
+                {/* STATE: ERROR */}
+                <div className={`state-createteam ${state === 'error' ? 'active' : ''}`}>
+                    <div className="success-icon-createteam" style={{ color: '#ef4444', borderColor: '#ef4444' }}>!</div>
+                    <span className="status-tag-createteam" style={{ color: '#ef4444' }}>Error</span>
+                    <h2 className="modal-title-createteam">Creation <i>Failed</i></h2>
+                    <p className="modal-desc-createteam" style={{ color: '#ef4444' }}>
+                        {errorMsg}
+                    </p>
+                    <button className="btn-createteam btn-secondary-createteam" style={{ width: '100%', marginTop: '1rem' }} onClick={onClose}>
+                        Close
                     </button>
                 </div>
             </div>

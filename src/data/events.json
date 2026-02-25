@@ -35,7 +35,7 @@
         "desc": {
           "content": "Think you can outsmart the market? **Beat the Market** tests your trading acumen and financial analysis skills. Analyze market trends, manage a virtual portfolio, and maximize your returns in this high-stakes simulation game."
         },
-        "image": "/BeatTheMarket.jpeg",
+        "image": "/Events/BeatTheMarket.jpeg",
         "prizeMoney": "INR 35,000"
       },
       {
@@ -48,10 +48,9 @@
         "desc": {
           "content": "Master the art of trading with **Trade Quest**. This competition involves high-frequency trading simulations and strategy development for various asset classes."
         },
-        "image": "/TradeQuest.jpeg",
+        "image": "/Events/TradeQuest.jpeg",
         "prizeMoney": "INR 35,000"
       },
-
       {
         "flag": {
           "content": "contacts"
@@ -113,7 +112,7 @@
         "desc": {
           "content": "**Strategy Sprint** at Techkriti’26 challenges participants to develop a five-year strategic roadmap for an Indian AI startup. Focused on sustainable growth, participants must address challenges like scaling, technology innovation, funding, and talent acquisition. Teams will design actionable strategies backed by research, creativity, and clear success metrics"
         },
-        "image": "/StrategySprint.png",
+        "image": "/Events/StrategySprint.png",
         "prizeMoney": "INR 25,000"
       },
       {
@@ -126,7 +125,7 @@
         "desc": {
           "content": "Step into the future of global retail with Quick-Com Evolution, the ultimate challenge to re-engineer the next generation of hyper-local commerce. This competition dares you to dive into the heart of the industry, identifying emerging market trends to architect scalable solutions—from hyper-personalized user experiences to revolutionary logistics roadmaps. Your mission is to turn visionary ideas into practical, high-impact innovations that solve complex delivery puzzles and redefine consumer convenience. Gear up to outpace the competition and leave a permanent mark on the evolution of digital trade!"
         },
-        "image": "/ProductShowdown.png",
+        "image": "/Events/ProductShowdown.png",
         "prizeMoney": "INR 25,000"
       },
       {
@@ -136,7 +135,7 @@
         "title": {
           "content": "Pitch Premier"
         },
-        "image": "/PitchPremier.png",
+        "image": "/Events/PitchPremier.png",
         "prizeMoney": "INR 30,000",
         "desc": {
           "content": "**Pitch Premier** provides UG and PG students a platform to transform innovations, like summer projects or research, into entrepreneurial ventures. It evaluates market analysis, customer needs, product usability, intellectual property strategies, and plans for future growth, empowering participants to turn ideas into impactful, sustainable businesses."
@@ -203,7 +202,7 @@
         "desc": {
           "content": "Join IARC, the ultimate autonomous robotics challenge at Techkriti' 25! Design and build bots to solve intricate mazes, decode nodes, and tackle speed and angle tasks with precision. Showcase your innovation, engineering, and coding skills. Compete with top teams globally and achieve robotic glory."
         },
-        "image": "/iarc.png"
+        "image": "/Events/iarc.png"
       },
       {
         "flag": {
@@ -215,7 +214,7 @@
         "desc": {
           "content": "Techkriti's flagship event, **Robowars**, is a thrilling battleground of engineering brilliance, strategy, and innovation. Robots in 8 kg, 15 kg, and 30 kg categories engage in intense one-on-one combat, showcasing powerful weapons and robust designs. Compete to claim glory, pride, and the ultimate title in this electrifying robotic showdown!"
         },
-        "image": "/robowar.jpeg",
+        "image": "/Events/robowar.jpeg",
         "prizeMoney": "INR 4,25,000"
       },
       {
@@ -228,7 +227,7 @@
         "desc": {
           "content": "Participants must build a four-wheeled gripper robot within specified dimensions, capable of navigating diverse terrains and performing tasks like grabbing and moving objects. Gameplay involves two robots working together to transport, arrange, and stack blocks or special objects in patterns, earning points through coordination and precision in task execution."
         },
-        "image": "/manoeuvre.jpeg",
+        "image": "/Events/manoeuvre.jpeg",
         "prizeMoney": "INR 65,000"
       },
       {
@@ -241,7 +240,7 @@
         "desc": {
           "content": "Gear up for **Techkriti Grand Prix**, the ultimate RC car showdown! Design and race custom-built IC enginepowered RC cars on dynamic tracks. Showcase innovation, engineering, and precision to outshine competitors. Compete in thrilling rounds, tackle challenging terrains, and aim for glory"
         },
-        "image": "/tgp.png",
+        "image": "/Events/tgp.png",
         "prizeMoney": "INR 75,000"
       },
       {
@@ -306,7 +305,7 @@
           "content": "Get ready for the ultimate high-octane spectacle with **IDRL Drone Racing**, the next frontier of high-speed sports where elite pilots navigate custom nano-drones at blistering speeds of over 140 km/hr! As India’s first and largest drone racing league with a massive community of over 13,000 pilots, IDRL brings an adrenaline-pumping experience that puts you right in the cockpit through immersive FPV (First Person View) technology. Whether it's the thrill of the chase through a professionally designed 3D obstacle course or the glowing intensity of a specially constructed Night Drone Racing Arena, this competition promises an unforgettable fusion of cutting-edge innovation and world-class engineering."
         },
         "prizeMoney": "INR 1,50,000",
-        "image": "/idrl.png"
+        "image": "/Events/idrl.png"
       },
       {
         "flag": {
@@ -318,7 +317,7 @@
         "desc": {
           "content": "**Multirotor** aircraft hobby is rapidly growing, offering a unique opportunity to compete with the nation’s best pilots, technicians, inventors, and enthusiasts. Showcase your flying skills and bot stability, and be part of a dynamic community reshaping the future of model aviation."
         },
-        "image": "/multirotor.jpeg",
+        "image": "/Events/multirotor.jpeg",
         "prizeMoney": "INR 65,000"
       },
       {
@@ -331,7 +330,7 @@
         "desc": {
           "content": "**Skysparks** Techkriti's new version of the competition offers aerospace enthusiasts the chance to showcase their skills in flying manoeuvres such payload dropping, limbo flying, and on-thespot landing at Skysparks, the Boeing National Aeromodelling Competition's North Zone."
         },
-        "image": "/skysparks.jpeg"
+        "image": "/Events/skysparks.jpeg"
       },
       {
         "flag": {
@@ -344,7 +343,7 @@
           "content": "**Hovermania** 2026 challenges teams to design and build lightweight, agile hovercrafts for knockout and racing rounds. Competing in a thrilling arena, teams must demonstrate battle prowess and navigate complex tracks. Emphasizing autonomy, innovation, and technical skill, participants aim to be crowned Hovermania Champions by excelling in design and performance."
         },
         "prizeMoney": "INR 50,000",
-        "image": "/hovermania.jpeg"
+        "image": "/Events/hovermania.jpeg"
       },
       {
         "flag": {
@@ -419,7 +418,7 @@
         "desc": {
           "content": "Showcase your coding brilliance at **Code N Compete**, Techkriti' 26’s ultimate programming battle! Tackle challenging problems, strategize as a team, and rise to the top. Compete in two intense rounds, testing your algorithmic skills and problem-solving finesse."
         },
-        "image": "/CodeNCompete.jpeg",
+        "image": "/Events/CodeNCompete.jpeg",
         "prizeMoney": "INR 35,000"
       },
       {
@@ -432,7 +431,7 @@
         "desc": {
           "content": "**Capture The Flag (CTF)** is a cybersecurity competition where participants solve challenges in cryptography, web, and network security to find hidden flags. Simulating real-world scenarios, it tests skills like penetration testing and cryptographic analysis. Participants compete in teams or individually, striving for maximum points within a six-hour time frame."
         },
-        "image": "/ctf.jpeg",
+        "image": "/Events/ctf.jpeg",
         "prizeMoney": "INR 35,000"
       },
       {
@@ -496,7 +495,7 @@
         "desc": {
           "content": "You now have a platform thanks to **Galactic Dodger** where you can channel your love of all things electrical into making a new video game hero. There is no such thing as trying. This year, Electromania offers you the chance to explore your interest with video games by creating your own portable gaming system."
         },
-        "image": "/GalacticDodger.jpeg",
+        "image": "/Events/GalacticDodger.jpeg",
         "prizeMoney": "INR 15,000"
       },
       {
@@ -560,7 +559,7 @@
         "desc": {
           "content": "The only place where dreams become impossible is in your dreams.” **Techkriti Innovation Challenge (TIC)** invites creators worldwide to showcase groundbreaking ideas as models, prototypes, patents, apps, or software before a distinguished panel. Unleash your imagination, think beyond limits, and seize this platform to shape the future of technology!"
         },
-        "image": "/TIC.png",
+        "image": "/Events/TIC.png",
         "prizeMoney": "INR 90,000"
       },
       {
@@ -573,7 +572,7 @@
         "desc": {
           "content": "A stronger collaboration between technical institutions and industry is essential to enhance engineering curricula, expose students to industrial environments, and improve placements. With globalization intensifying competition, industries seek academic support for solutions, while students need exposure to advanced technologies and methodologies to prepare for multinational careers, bridging the industryacademia gap effectively"
         },
-        "image": "/III.png",
+        "image": "/Events/III.png",
         "prizeMoney": "INR 25,000"
       },
       {
@@ -637,7 +636,7 @@
         "desc": {
           "content": "The **AutoCAD Design Challenge** offers a platform to showcase innovative, unconventional design ideas. Participants will have the chance to demonstrate their creativity and technical skills, with their work evaluated by a panel of industry experts. This competition encourages unique solutions and provides valuable feedback from professionals."
         },
-        "image": "/AutodeskDesignChallenge.png"
+        "image": "/Events/AutodeskDesignChallenge.png"
       },
       {
         "flag": {
@@ -650,7 +649,7 @@
           "content": "This competition invites participants to design a popsicle stick truss bridge that can bear the heaviest load. It’s a chance to showcase engineering prowess, creativity, and innovation by building a strong, efficient bridge. Compete for the top spot and demonstrate your design expertise in this thrilling challenge."
         },
         "prizeMoney": "INR 25,000",
-        "image": "/BridgeDesign.png"
+        "image": "/Events/BridgeDesign.png"
       },
       {
         "flag": {
@@ -713,7 +712,7 @@
         "desc": {
           "content": "Prepare to embark on a celestial journey with **Astro Quiz**, the ultimate challenge for space enthusiasts and cosmic explorers! This event invites you to test your knowledge of stars, the universe, and the fascinating science behind the cosmos through a series of intriguing and thought-provoking questions."
         },
-        "image": "/AstroQuiz.png",
+        "image": "/Events/AstroQuiz.png",
         "prizeMoney": "INR 20,000"
       },
       {
@@ -726,7 +725,7 @@
         "desc": {
           "content": "**Observe Analyse & Solve:** This is an event where you can put your knowledge of astronomy and mythology to the test by solving creatively crafted riddles and coming up with amazing solutions."
         },
-        "image": "/OAS.png",
+        "image": "/Events/OAS.png",
         "prizeMoney": "INR 15,000"
       },
       {
@@ -790,7 +789,7 @@
         "desc": {
           "content": "The **United Nations Human Rights Council (UNHRC)**, based in Geneva, Switzerland, promotes and protects global human rights. Comprising 47 members serving staggered three-year terms, it addresses breaches of human rights in UN member states and key issues like freedom of expression, women’s rights, LGBT rights, and minority rights."
         },
-        "image": "/UNHRC.png",
+        "image": "/Events/UNHRC.png",
         "prizeMoney": "INR 10,000"
       },
       {
@@ -803,7 +802,7 @@
         "desc": {
           "content": "The **Lok Sabha**, India’s lower parliamentary house, has 543 elected members, with seats based on population. Its five-year term can extend during emergencies. The 106th Amendment (2023) reserves 33% seats for women post-2026 delimitation. The 104th Amendment (2020) reduced the maximum strength to 550, abolishing AngloIndian nominations."
         },
-        "image": "/LokSabha.png",
+        "image": "/Events/LokSabha.png",
         "prizeMoney": "INR 10,000"
       },
       {
@@ -816,7 +815,7 @@
         "desc": {
           "content": "The **United Nations Security Council (UNSC)**, a principal UN organ, ensures global peace and security, admits new members, and approves charter amendments. It authorizes peacekeeping, sanctions, and military actions through binding resolutions, uniquely among UN bodies. The council convened its inaugural session on January 17, 1946."
         },
-        "image": "/UNSC.png",
+        "image": "/Events/UNSC.png",
         "prizeMoney": "INR 10,000"
       },
       {
@@ -880,7 +879,7 @@
         "desc": {
           "content": "**Cubing Extravaganza** is a speedcubing competition which brings together hundreds of speedcubers from all around the world to showcase their abilities. The competition will follow the rules provided by the World Cube Association(WCA) . Cubing Extravaganza is an esteemed event aimed at offering a premier-level competition experience. This competition features events that are in line with the World Cube Association (WCA) rules and regulations, as well as additional challenging puzzles. Our goal is to utilize the opportunities presented by our independence and cultivate a competitive and enjoyable atmosphere for all participants"
         },
-        "image": "/cubing.jpeg"
+        "image": "/Events/cubing.jpeg"
       },
       {
         "flag": {

@@ -224,7 +224,7 @@ export default function NeuralDashboard() {
             <div className="status-badge">
               <div className="status-dot"></div> Singularity Synchronized
             </div>
-            <h1 className="dash-title">Neural <i>Dashboard</i></h1>
+            <h1 className="dash-title">Neural <i>Identity</i></h1>
           </div>
           <button 
             className="dash-logout-btn" 

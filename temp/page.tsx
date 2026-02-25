@@ -10,7 +10,6 @@ import { useAuth } from '../../context/AuthContext';
 
 export default function AdminPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const auraRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState('');
   const [columnFilters, setColumnFilters] = useState<Record<string, string>>({
     id: '',
@@ -271,41 +270,41 @@ export default function AdminPage() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!auraRef.current) return;
-      
-      const x = e.clientX;
-      const y = e.clientY;
-      
-      const relX = x - window.innerWidth / 2;
-      const relY = y - window.innerHeight / 2;
-      
-      auraRef.current.style.transform = `translate(${relX}px, ${relY}px)`;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   return (
     <div className="admin-body">
       {/* Overlays */}
       <div className="admin-noise" />
       <div className="admin-ambient" />
-      <div ref={auraRef} className="admin-aura" />
       <canvas id="admin-bg-canvas" ref={canvasRef} />
 
       {/* Nav */}
-      <Navbar />
+      <nav className="admin-nav">
+        <div className="admin-nav-brand">
+          TECHKRITI&nbsp;<span>26</span>&nbsp;// COMMAND
+        </div>
+        <div className="admin-nav-right">
+          <div className="admin-status">
+            <div className="admin-pulse" />
+            Singularity_Core: Online
+          </div>
+          <button className="admin-btn">Export .XLSX</button>
+        </div>
+      </nav>
 
-      <main style={{ marginTop: '100px' }}>
-        {/* ── Stats ── */}
+      <main>
+        {/* ── Stats & Dialer ── */}
         <section className="admin-nexus-container">
-          <div style={{ width: '100%', gridColumn: '1 / -1' }}>
-             <h2 className="admin-section-title">
-               <span className="title-num">01 //</span> Operational <i>Metrics.</i>
-             </h2>
+
+          {/* Left shards */}
+          <div className="admin-shard-col">
+            <div className="admin-shard">
+              <span className="admin-shard-label">Total Registrants</span>
+              <div className="admin-shard-value">1,254</div>
+            </div>
+            <div className="admin-shard">
+              <span className="admin-shard-label">Node Efficiency</span>
+              <div className="admin-shard-value">98.4%</div>
+            </div>
           </div>
           <div className="admin-shard">
             <div className="admin-shard-sweep" />
@@ -324,33 +323,9 @@ export default function AdminPage() {
           </div>
         </section>
 
-        {/* ── View Switcher Toggle ── */}
-        <div className="admin-toggle-container">
-          <div className="admin-toggle-track">
-            <button 
-              className={`admin-toggle-btn ${activeTab === 'users' ? 'is-active' : ''}`}
-              onClick={() => setActiveTab('users')}
-            >
-              View Users
-            </button>
-            <button 
-              className={`admin-toggle-btn ${activeTab === 'registrations' ? 'is-active' : ''}`}
-              onClick={() => setActiveTab('registrations')}
-            >
-              View Registrations
-            </button>
-            <div 
-              className="admin-toggle-slider" 
-              style={{ transform: `translateX(${activeTab === 'users' ? '0' : '100'}%)` }} 
-            />
-          </div>
-        </div>
-
         {/* ── Data Table ── */}
         <section className="admin-data-section">
-          <h2 className="admin-section-title">
-            <span className="title-num">02 //</span> {activeTab === 'users' ? 'Global User Directory' : 'Event Registration Feed'} <i>Node.</i>
-          </h2>
+          <p className="admin-section-label">Registrant Feed</p>
 
           <div className="admin-filter-console">
             <input
@@ -360,8 +335,7 @@ export default function AdminPage() {
               value={query}
               onChange={e => setQuery(e.target.value)}
             />
-            <button className="admin-btn primary">Execute Search</button>
-            <button className="admin-btn" onClick={handleExportCSV}>Export .CSV</button>
+            <button className="admin-btn">Execute Search</button>
           </div>
 
           {activeTab === 'registrations' && (

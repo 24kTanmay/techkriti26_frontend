@@ -47,6 +47,8 @@ export interface EventDetailData {
     ambientGradient?: string
     /** Optional: image background gradient for terminal theme (no image URL) */
     imageFallbackGradient?: string
+    /** Optional: image URL to display */
+    image?: string
 }
 
 /* ─── Category Grid Types ─── */

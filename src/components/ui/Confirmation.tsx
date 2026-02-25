@@ -4,14 +4,21 @@ import React, { useState, useEffect, useRef } from 'react'
 import './Confirmation.css'
 import PaymentInstructions from './PaymentInstructions'
 
-type GatewayState = 'confirm' | 'hub' | 'submitted'
+import { useAuth } from '../../context/AuthContext'
+import { registerAsIndividual } from '../../services/eventService'
+
+type GatewayState = 'confirm' | 'hub' | 'submitted' | 'processing' | 'error'
 
 interface ConfirmationProps {
     onClose: () => void;
+    eventId: string;
+    competitionName: string;
 }
 
-export default function Confirmation({ onClose }: ConfirmationProps) {
+export default function Confirmation({ onClose, eventId, competitionName }: ConfirmationProps) {
     const [state, setState] = useState<GatewayState>('confirm')
+    const [errorMsg, setErrorMsg] = useState<string>('')
+    const { currentUser } = useAuth()
     const [showInstructions, setShowInstructions] = useState(false)
     const [uploadStatus, setUploadStatus] = useState<'idle' | 'scanning' | 'complete'>('idle')
     const [fileName, setFileName] = useState<string>('')
@@ -94,6 +101,23 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
         }
     }, [])
 
+    const handleConfirm = async () => {
+        if (!currentUser) return;
+        
+        // We bypass the hub layer for free individual registration
+        setState('processing');
+        setErrorMsg('');
+        
+        try {
+            await registerAsIndividual(currentUser.uid, eventId);
+            setState('submitted');
+        } catch (error: any) {
+            console.error(error);
+            setErrorMsg(error.message || "Registration failed");
+            setState('error');
+        }
+    }
+
     const transition = (to: GatewayState) => {
         setState(to)
     }
@@ -107,11 +131,31 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                 <div className={`state-gateway ${state === 'confirm' ? 'active' : ''}`}>
                     <span className="status-tag-gateway">Registration</span>
                     <h2 className="modal-title-gateway">Register for <i>Participation?</i></h2>
-                    <p className="modal-desc-gateway">You are about to register for individual participation in this event.</p>
+                    <p className="modal-desc-gateway">You are about to register for individual participation in <b>{competitionName}</b>.</p>
                     <div className="btn-group-gateway">
-                        <button className="btn-gateway btn-primary-gateway" onClick={() => transition('hub')}>Confirm</button>
+                        <button className="btn-gateway btn-primary-gateway" onClick={handleConfirm}>Confirm</button>
                         <button className="btn-gateway btn-secondary-gateway" onClick={onClose}>Cancel</button>
                     </div>
+                </div>
+
+                {/* STATE: PROCESSING */}
+                <div className={`state-gateway ${state === 'processing' ? 'active' : ''}`}>
+                    <div className="hologram-scan-gateway" style={{ marginBottom: '1rem' }}></div>
+                    <h2 className="modal-title-gateway">Processing <i>Registration</i></h2>
+                    <p className="modal-desc-gateway">Please wait while we secure your spot...</p>
+                </div>
+
+                {/* STATE: ERROR */}
+                <div className={`state-gateway ${state === 'error' ? 'active' : ''}`}>
+                    <div className="success-icon-gateway" style={{ color: '#ef4444', borderColor: '#ef4444' }}>!</div>
+                    <span className="status-tag-gateway" style={{ color: '#ef4444' }}>Error</span>
+                    <h2 className="modal-title-gateway">Registration <i>Failed</i></h2>
+                    <p className="modal-desc-gateway" style={{ color: '#ef4444' }}>
+                        {errorMsg}
+                    </p>
+                    <button className="btn-gateway btn-secondary-gateway" style={{ width: '100%', marginTop: '1rem' }} onClick={onClose}>
+                        Close
+                    </button>
                 </div>
 
                 {/* STATE: HUB (PAYMENT & UPLOAD) */}

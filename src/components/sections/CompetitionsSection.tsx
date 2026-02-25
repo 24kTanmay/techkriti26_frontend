@@ -23,31 +23,47 @@ interface CompetitionGroupProps {
   events: EventCardProps[]
 }
 
-/* ─── Static Data (hoisted — allocated once, not per render) ─── */
+import eventsDataRaw from '@/data/events.json'
 
-const TECHNICAL_EVENTS = [
-  { title: 'Robogames', href: '/competitions/technical/robogames', desc: "Techkriti's flagship robotics basket, bringing together innovation, engineering, and adrenaline-fueled combat.", image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Takeoff', href: '/competitions/technical/takeoff', desc: 'Celebrate flight and futuristic mobility, uniting aeromodelling aircraft, multirotors, and hovercrafts.', image: 'https://images.unsplash.com/photo-1559297434-fae8a1916a79?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Software Corner', href: '/competitions/technical/software-corner', desc: 'Rapid quantitative problem-solving and team-based programming battles focusing on reasoning and strategy.', image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=150&q=80' },
-  { title: 'ECDC', href: '/competitions/technical/ecdc', desc: 'Blends electronics, creativity, and gaming into one exciting challenge. Design and build real-world circuits.', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Technovation', href: '/competitions/technical/technovation', desc: 'The ultimate innovation challenge where bold ideas transform into reality through engineering and design excellence.', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=150&q=80' },
-] as const
+const eventsData = eventsDataRaw as Record<string, any>;
 
-const ENTREPRENEURIAL_EVENTS = [
-  { title: 'Upstart', href: '/competitions/entrepreneurial/upstart', desc: 'The ultimate search for the next big unicorn. Pitch your startup to elite VCs and secure seed funding and expert mentorship.', image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=150&q=80' },
-  { title: 'BizSim', href: '/competitions/entrepreneurial/bizsim', desc: 'Step into the shoes of a CEO. Navigate the complexities of a multi-million dollar corporation in this high-fidelity business simulation.', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Pitch Premier', href: '/competitions/entrepreneurial/pitch-premier', desc: 'An elite stage for bright minds to pitch their vision. Stand face-to-face with investors and turn your startup into a reality.', image: 'https://images.unsplash.com/photo-1475721027187-402ad2989a3b?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Social Track', href: '/competitions/entrepreneurial/social-track', desc: 'Transforming lives through innovation. A dedicated track for startups creating high-impact solutions for social challenges.', image: 'https://images.unsplash.com/photo-1542601906-973ad1ee5f5e?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Elevator Pitch', href: '/competitions/entrepreneurial/elevator-pitch', desc: '60 seconds to change everything. A high-pressure pitching arena where you present your vision in the time it takes to ride an elevator.', image: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Finsearch', href: '/competitions/entrepreneurial/finsearch', desc: 'Dive deep into the world of quantitative finance, portfolio management, and algorithmic trading strategies.', image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=150&q=80' },
-] as const
+const categoryImages: Record<string, string> = {
+  'robogames': 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=150&q=80',
+  'takeoff': 'https://images.unsplash.com/photo-1559297434-fae8a1916a79?auto=format&fit=crop&w=150&q=80',
+  'software': 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=150&q=80',
+  'ecdc': 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=150&q=80',
+  'technovation': 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=150&q=80',
+  'fintech': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=150&q=80',
+  'business': 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=150&q=80',
+  'design-events': 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&w=150&q=80',
+  'mandakini': 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=150&q=80',
+  'mun': 'https://images.unsplash.com/photo-1521791136064-7986c29535a7?auto=format&fit=crop&w=150&q=80',
+  'cubing-events': 'https://images.unsplash.com/photo-1591991731833-b4807cf7ef94?auto=format&fit=crop&w=150&q=80',
+};
 
-const MISCELLANEOUS_EVENTS = [
-  { title: 'Design Events', href: '/competitions/miscellaneous/design', desc: 'Design comes alive when creativity is guided by structure. Participants explore the balance between strength and elegance by transforming simple materials into masterpieces.', image: 'https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Mandakini', href: '/competitions/miscellaneous/mandakini', desc: 'Step into a domain where curiosity drives competition and the universe becomes the playing field. Mandakini challenges participants to think beyond textbooks.', image: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Model United Nations', href: '/competitions/miscellaneous/mun', desc: 'Experience how major international institutions function. Delegates discuss governance, security, and human rights in an interactive and engaging setting.', image: 'https://images.unsplash.com/photo-1521791136064-7986c29535a7?auto=format&fit=crop&w=150&q=80' },
-  { title: 'Cubing Events', href: '/competitions/miscellaneous/cubing', desc: 'Get ready to twist, turn, and solve! Techkriti brings you the ultimate cubing challenge where speed, precision, and strategy come together.', image: 'https://images.unsplash.com/photo-1591991731833-b4807cf7ef94?auto=format&fit=crop&w=150&q=80' },
-] as const
+const defaultImage = 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=150&q=80';
+
+const getCategoryEvents = (domain: string) => {
+  return Object.keys(eventsData)
+    .filter((key) => eventsData[key]?.category === domain)
+    .map((key) => {
+      const cat = eventsData[key];
+      const overviewItem = (cat.data || []).find((item: any) => item.flag?.content === 'overview');
+      const descText = overviewItem?.desc?.content || '';
+      const shortDesc = descText.length > 120 ? descText.substring(0, 117) + '...' : descText;
+      
+      return {
+        title: cat.title || key,
+        href: `/competitions/${domain.toLowerCase()}/${key}`,
+        desc: shortDesc,
+        image: categoryImages[key.toLowerCase()] || defaultImage,
+      };
+    });
+};
+
+const TECHNICAL_EVENTS = getCategoryEvents('Technical');
+const ENTREPRENEURIAL_EVENTS = getCategoryEvents('Entrepreneurial');
+const MISCELLANEOUS_EVENTS = getCategoryEvents('Miscellaneous');
 
 /* ─── Sub-Components ─── */
 
