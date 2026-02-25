@@ -7,8 +7,8 @@
     --ct-glass: var(--white-subtle);
     --ct-border: var(--border-normal);
 
-    --ct-font-ui: var(--font-space-grotesk), sans-serif;
-    --ct-font-display: var(--font-playfair), serif;
+    --ct-font-ui: var(--font-ui);
+    --ct-font-display: var(--font-display);
     --ct-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

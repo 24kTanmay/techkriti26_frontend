@@ -1,73 +1,138 @@
+/**
+ * globals.css — Semantic Alias + Utility Layer
+ *
+ * Responsibilities:
+ *  1. Import design tokens from tokens.css
+ *  2. Map raw tokens → semantic role aliases (background, text, border, font)
+ *  3. Global resets and base styles
+ *  4. Utility animations
+ *
+ * This file must NOT contain raw hex/rgb values — those live in tokens.css.
+ */
+
 @import "tailwindcss";
+@import "../styles/tokens.css";
 
 :root {
 
-  /* Core */
-  --color-black: #050505;
-  --color-black-rgb: 5, 5, 5;
-  --color-white: #ffffff;
-  --color-white-rgb: 255, 255, 255;
-
-  --color-copper: #cba381;
-  --color-copper-rgb: 203, 163, 129;
-
-  /* Celestial Palette */
-  --color-violet: #7c3aed;
-  --color-violet-rgb: 124, 58, 237;
-  --color-orange: #ea580c;
-  --color-orange-rgb: 234, 88, 12;
-  --color-amber: #f59e0b;
-  --color-amber-rgb: 245, 158, 11;
-
-  /* Utility Roles */
-  --color-success: #4ade80;
-  --color-success-rgb: 74, 222, 128;
-  --color-danger: #f87171;
-  --color-danger-rgb: 248, 113, 113;
-  --color-info: #3b82f6;
-  --color-info-rgb: 59, 130, 246;
-  --color-neutral: #888890;
-  --color-neutral-rgb: 136, 136, 144;
-
-  /* Backgrounds */
+  /* ─── SEMANTIC: BACKGROUNDS ───────────────────────────────────────────────── */
   --bg-primary: #050505;
+  /* Near-black canvas      */
   --bg-secondary: #0d0c0a;
+  /* Slightly lifted surface */
   --bg-surface: #1a1815;
+  /* Elevated card surface   */
   --bg-overlay: rgba(15, 15, 20, 0.4);
 
-  /* Text */
+  /* ─── SEMANTIC: TEXT ──────────────────────────────────────────────────────── */
   --text-primary: var(--color-white);
   --text-secondary: rgba(var(--color-white-rgb), 0.7);
   --text-muted: rgba(var(--color-white-rgb), 0.5);
   --text-accent: var(--color-copper);
 
-  /* Copper Levels */
-  --copper-subtle: rgba(var(--color-copper-rgb), 0.05);
-  --copper-normal: rgba(var(--color-copper-rgb), 0.15);
-  --copper-strong: rgba(var(--color-copper-rgb), 0.30);
-  --copper-glow: rgba(var(--color-copper-rgb), 0.50);
+  /* ─── SEMANTIC: COPPER LEVELS ─────────────────────────────────────────────── */
+  --copper-subtle: rgba(var(--color-copper-rgb), var(--opacity-subtle));
+  --copper-normal: rgba(var(--color-copper-rgb), var(--opacity-low));
+  --copper-strong: rgba(var(--color-copper-rgb), var(--opacity-mid));
+  --copper-glow: rgba(var(--color-copper-rgb), var(--opacity-high));
 
-  /* White Levels */
-  --white-subtle: rgba(var(--color-white-rgb), 0.05);
-  --white-normal: rgba(var(--color-white-rgb), 0.15);
-  --white-strong: rgba(var(--color-white-rgb), 0.30);
+  /* ─── SEMANTIC: WHITE LEVELS ──────────────────────────────────────────────── */
+  --white-subtle: rgba(var(--color-white-rgb), var(--opacity-subtle));
+  --white-normal: rgba(var(--color-white-rgb), var(--opacity-low));
+  --white-strong: rgba(var(--color-white-rgb), var(--opacity-mid));
 
-  /* Borders */
+  /* ─── SEMANTIC: BORDERS ───────────────────────────────────────────────────── */
   --border-subtle: var(--white-subtle);
   --border-normal: var(--white-normal);
   --border-strong: var(--white-strong);
 
-  /* Legacy / Compatibility */
+  /* ─── SEMANTIC: FONTS ─────────────────────────────────────────────────────── */
+  /* Maps token primitives → semantic role aliases consumed by all components.   */
+  --font-ui: var(--token-font-sans), sans-serif;
+  --font-display: var(--token-font-serif), serif;
+  --font-mono: var(--token-font-mono), monospace;
+
+  /* ─── LEGACY / COMPATIBILITY  ─────────────────────────────────────────────── */
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 5, 5, 5;
   --background-end-rgb: 5, 5, 5;
 }
+
+/* ─── RESET ──────────────────────────────────────────────────────────────────── */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+/* ─── BASE STYLES ────────────────────────────────────────────────────────────── */
+
+body {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  font-family: var(--font-ui);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Film grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Global copper ambient light */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: -20vh;
+  width: 80vh;
+  height: 100vh;
+  background: radial-gradient(ellipse at left center, var(--copper-subtle) 0%, transparent 70%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 9998;
+}
+
+/* ─── LENIS SMOOTH SCROLL ────────────────────────────────────────────────────── */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+/* ─── UTILITY ANIMATIONS ─────────────────────────────────────────────────────── */
 
 @keyframes fadeIn {
   from {
@@ -94,73 +159,10 @@
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fadeIn 0.8s var(--ease-premium) both;
 }
 
-/* Reduced delay and smoother reveal for preview text */
 .animate-text-reveal {
   opacity: 0;
-  animation: textReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-body {
-  color: var(--text-primary);
-  background: var(--bg-primary);
-  font-family: var(--font-space-grotesk), sans-serif;
-  overflow-x: hidden;
-  position: relative;
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-/* Global Copper Ambient Light */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: -20vh;
-  width: 80vh;
-  height: 100vh;
-  background: radial-gradient(ellipse at left center, var(--copper-subtle) 0%, transparent 70%);
-  pointer-events: none;
-  mix-blend-mode: screen;
-  z-index: 9998;
-}
-
-/* Lenis recommended styles */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
-.no-scroll {
-  overflow: hidden !important;
-  height: 100vh !important;
+  animation: textReveal 0.6s var(--ease-premium) both;
 }

@@ -5,9 +5,9 @@
     --accent-cyan: var(--text-accent);
     --accent-purple: var(--text-accent);
     --glass-border: var(--border-normal);
-    --font-ui: 'Space Grotesk', sans-serif;
-    --font-body: 'Space Grotesk', sans-serif;
-    --font-display: var(--font-playfair), serif;
+    --font-ui: var(--font-ui);
+    --font-body: var(--font-ui);
+    --font-display: var(--font-display);
     --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
@@ -584,7 +584,7 @@
 }
 
 .dash-title i {
-    font-family: var(--font-playfair), serif;
+    font-family: var(--font-display);
     color: var(--text-muted);
     font-style: italic;
     opacity: 0.8;

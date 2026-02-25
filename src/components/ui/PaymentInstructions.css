@@ -3,8 +3,8 @@
     --pi-accent: var(--color-copper);
     --pi-muted: var(--text-secondary);
     --pi-border: var(--border-normal);
-    --pi-font-ui: var(--font-space-grotesk), sans-serif;
-    --pi-font-display: 'Playfair Display', serif;
+    --pi-font-ui: var(--font-ui);
+    --pi-font-display: var(--font-display);
     --pi-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

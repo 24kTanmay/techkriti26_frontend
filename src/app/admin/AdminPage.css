@@ -24,9 +24,8 @@ body {
     --border-hover: var(--border-normal);
     --text-main: var(--text-primary);
     --text-muted: var(--text-secondary);
-    --font-ui: var(--font-space-grotesk), sans-serif;
-    --font-display: var(--font-space-grotesk), sans-serif;
-    --font-mono: var(--font-jetbrains-mono), monospace;
+    --font-ui: var(--font-ui);
+    --font-display: var(--font-display);
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
 

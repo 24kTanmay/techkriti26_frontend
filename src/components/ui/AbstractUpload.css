@@ -18,7 +18,7 @@
 }
 
 .abstract-title i {
-    font-family: var(--font-playfair), serif;
+    font-family: var(--event-font-display);
     font-style: italic;
     color: var(--event-accent);
 }

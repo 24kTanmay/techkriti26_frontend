@@ -1,3 +1,8 @@
+:root {
+    --faq-font-ui: var(--font-ui);
+    --faq-font-display: var(--font-display);
+}
+
 .faq-section {
     position: relative;
     padding: 15vh 2rem;
@@ -9,7 +14,7 @@
 }
 
 .faq-tag {
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--faq-font-ui);
     font-size: 0.7rem;
     letter-spacing: 0.5em;
     text-transform: uppercase;
@@ -21,7 +26,7 @@
 }
 
 .faq-title {
-    font-family: var(--font-playfair), serif;
+    font-family: var(--faq-font-display);
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 400;
     line-height: 1.1;
@@ -82,7 +87,7 @@
 }
 
 .faq-index {
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--faq-font-ui);
     font-size: 0.85rem;
     color: #cba381;
     opacity: 0.5;
@@ -91,7 +96,7 @@
 }
 
 .faq-question {
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--faq-font-ui);
     font-size: 1.25rem;
     font-weight: 400;
     letter-spacing: -0.01em;
@@ -167,7 +172,7 @@
     font-size: 1.05rem;
     font-weight: 300;
     max-width: 750px;
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--faq-font-ui);
 }
 
 /* --- RESPONSIVE OVERRIDES --- */

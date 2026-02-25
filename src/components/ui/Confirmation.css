@@ -7,8 +7,8 @@
     --gateway-glass: var(--white-subtle);
     --gateway-border: var(--border-normal);
 
-    --gateway-font-ui: var(--font-space-grotesk), sans-serif;
-    --gateway-font-display: var(--font-playfair), serif;
+    --gateway-font-ui: var(--font-ui);
+    --gateway-font-display: var(--font-display);
     --gateway-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -17,7 +17,7 @@
     inset: 0;
     background-color: var(--gateway-bg);
     color: var(--gateway-text);
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--gateway-font-ui);
     display: flex;
     justify-content: center;
     align-items: center;

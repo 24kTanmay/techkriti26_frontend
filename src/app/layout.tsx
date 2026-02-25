@@ -1,37 +1,19 @@
+/**
+ * layout.tsx — App Shell
+ *
+ * Responsibilities:
+ *  - Import global styles
+ *  - Apply font class names from fonts.ts (injects CSS variables into <body>)
+ *  - Define page metadata
+ *
+ * Font loading logic lives in: src/styles/fonts.ts
+ * Design tokens live in:       src/styles/tokens.css
+ * Semantic aliases live in:    src/app/globals.css
+ */
+
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Space_Grotesk, Space_Mono, JetBrains_Mono } from "next/font/google";
+import { fontClassNames } from "@/styles/fonts";
 import "./globals.css";
-
-const interFont = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700"],
-});
-
-const playfairFont = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["400", "600", "700"],
-  style: ["normal", "italic"],
-});
-
-const spaceGroteskFont = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-});
-
-const spaceMonoFont = Space_Mono({
-  variable: "--font-space-mono",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
-
-const jetbrainsMonoFont = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  weight: ["400", "700"],
-});
 
 export const metadata: Metadata = {
   title: "Neo-Nous Singularita | The Awakening",
@@ -50,7 +32,7 @@ export default function RootLayout({
           #spline-watermark { display: none !important; }
         `}</style>
       </head>
-      <body className={`${interFont.variable} ${playfairFont.variable} ${spaceGroteskFont.variable} ${spaceMonoFont.variable} ${jetbrainsMonoFont.variable} antialiased`} suppressHydrationWarning>
+      <body className={`${fontClassNames} antialiased`} suppressHydrationWarning>
         {children}
       </body>
     </html>

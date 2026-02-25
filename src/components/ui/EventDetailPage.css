@@ -8,10 +8,10 @@
     --event-panel-bg: var(--bg-overlay);
     --event-panel-border: var(--border-subtle);
 
-    --event-font-ui: var(--font-space-grotesk), sans-serif;
-    --event-font-body: var(--font-space-grotesk), sans-serif;
-    --event-font-display: var(--font-space-grotesk), sans-serif;
-    --event-font-mono: var(--font-jetbrains-mono), monospace;
+    --event-font-ui: var(--font-ui);
+    --event-font-body: var(--font-ui);
+    --event-font-display: var(--font-display);
+    --event-font-mono: var(--font-mono);
 
     --event-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --event-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);

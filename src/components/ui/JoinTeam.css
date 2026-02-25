@@ -4,8 +4,8 @@
     --jt-muted: var(--text-secondary);
     --jt-accent: var(--text-accent);
     --jt-border: var(--border-normal);
-    --jt-font-ui: var(--font-space-grotesk), sans-serif;
-    --jt-font-display: var(--font-playfair), serif;
+    --jt-font-ui: var(--font-ui);
+    --jt-font-display: var(--font-display);
     --jt-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

@@ -115,7 +115,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
                 
                 <div style={{ 
                     marginTop: '20px', 
-                    fontFamily: 'monospace', 
+                    fontFamily: 'var(--font-mono)', 
                     fontSize: '13.5px', 
                     color: 'var(--text-muted)',
                     letterSpacing: '2px'

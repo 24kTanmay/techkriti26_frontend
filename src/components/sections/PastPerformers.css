@@ -1,15 +1,15 @@
 :root {
     --performer-bg: var(--bg-primary);
     --performer-accent: var(--color-copper);
-    --performer-font-display: 'Playfair Display', serif;
-    --performer-font-ui: 'Space Grotesk', sans-serif;
+    --performer-font-display: var(--font-display);
+    --performer-font-ui: var(--font-ui);
     --performer-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .performer-archive-container {
     background: var(--performer-bg);
     color: var(--text-primary);
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--performer-font-ui);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;

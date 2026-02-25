@@ -190,7 +190,7 @@
     transition: color 0.4s ease, text-shadow 0.4s ease, font-weight 0.4s ease;
     will-change: transform, opacity, filter;
     transform: translateZ(40px);
-    font-family: var(--font-space-grotesk), sans-serif;
+    font-family: var(--font-ui);
     text-align: left;
     white-space: normal;
     max-width: 450px;

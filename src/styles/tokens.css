@@ -1,0 +1,72 @@
+/**
+ * tokens.css — Design Token Layer
+ *
+ * Single responsibility: define every raw design value.
+ * No semantic aliases, no utility classes — just raw tokens.
+ *
+ * Tokens are consumed by globals.css which maps them to semantic names.
+ *
+ * Font tokens reference variables injected by next/font via fonts.ts + layout.tsx.
+ * All other tokens are raw values.
+ */
+
+:root {
+
+    /* ─── FONT PRIMITIVES ─────────────────────────────────────────────────────────
+     Runtime-injected by next/font via fonts.ts + layout.tsx.
+     These token aliases bridge the loader layer into the token layer.
+  ─────────────────────────────────────────────────────────────────────────── */
+    --token-font-sans: var(--font-space-grotesk);
+    /* Space Grotesk  */
+    --token-font-serif: var(--font-playfair);
+    /* Playfair Display */
+    --token-font-mono: var(--font-jetbrains-mono);
+    /* JetBrains Mono */
+
+
+    /* ─── COLOUR PRIMITIVES ───────────────────────────────────────────────────── */
+
+    /* Absolute */
+    --color-black: #050505;
+    --color-black-rgb: 5, 5, 5;
+    --color-white: #ffffff;
+    --color-white-rgb: 255, 255, 255;
+
+    /* Brand */
+    --color-copper: #cba381;
+    --color-copper-rgb: 203, 163, 129;
+
+    /* Celestial Palette */
+    --color-violet: #7c3aed;
+    --color-violet-rgb: 124, 58, 237;
+    --color-orange: #ea580c;
+    --color-orange-rgb: 234, 88, 12;
+    --color-amber: #f59e0b;
+    --color-amber-rgb: 245, 158, 11;
+
+    /* Utility */
+    --color-success: #4ade80;
+    --color-success-rgb: 74, 222, 128;
+    --color-danger: #f87171;
+    --color-danger-rgb: 248, 113, 113;
+    --color-info: #3b82f6;
+    --color-info-rgb: 59, 130, 246;
+    --color-neutral: #888890;
+    --color-neutral-rgb: 136, 136, 144;
+
+
+    /* ─── OPACITY SCALE ───────────────────────────────────────────────────────── */
+
+    --opacity-subtle: 0.05;
+    --opacity-low: 0.15;
+    --opacity-mid: 0.30;
+    --opacity-high: 0.50;
+    --opacity-strong: 0.70;
+
+
+    /* ─── EASING ──────────────────────────────────────────────────────────────── */
+
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+
+}
