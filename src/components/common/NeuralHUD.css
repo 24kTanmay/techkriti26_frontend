@@ -1,6 +1,6 @@
 :root {
     --hud-dim: var(--white-normal);
-    --hud-font: var(--font-ui);
+    --hud-font: var(--font-space-grotesk), sans-serif;
     --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

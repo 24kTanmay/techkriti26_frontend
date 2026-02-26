@@ -1,8 +1,3 @@
-:root {
-    --profile-font-ui: var(--font-ui);
-    --profile-font-display: var(--font-display);
-}
-
 .profile-setup-container {
     min-height: 100vh;
     width: 100%;
@@ -13,7 +8,7 @@
     position: relative;
     background: var(--bg-primary);
     overflow-y: auto;
-    font-family: var(--profile-font-ui);
+    font-family: var(--font-space-grotesk), sans-serif;
 }
 
 .profile-setup-background {
@@ -94,7 +89,7 @@
 }
 
 .profile-title {
-    font-family: var(--profile-font-display);
+    font-family: var(--font-playfair), serif;
     font-size: clamp(2rem, 5vw, 2.8rem);
     color: var(--text-primary);
     margin-bottom: 0.75rem;
@@ -148,7 +143,7 @@
     border-radius: 12px;
     padding: 1rem 1.2rem;
     color: var(--text-primary);
-    font-family: var(--profile-font-ui);
+    font-family: var(--font-space-grotesk), sans-serif;
     font-size: 1rem;
     transition: all 0.3s ease;
     width: 100%;

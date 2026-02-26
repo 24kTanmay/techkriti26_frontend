@@ -2,15 +2,15 @@
     --team-bg: var(--bg-primary);
     --team-accent: var(--color-copper);
     /* Copper Transcendence */
-    --team-font-ui: var(--font-ui);
-    --team-font-display: var(--font-display);
+    --team-font-ui: 'Space Grotesk', sans-serif;
+    --team-font-display: var(--font-playfair), serif;
     --team-ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .team-container {
     background: var(--team-bg);
     color: var(--text-primary);
-    font-family: var(--team-font-ui);
+    font-family: var(--font-space-grotesk), sans-serif;
     overflow: hidden;
     min-height: 100vh;
     width: 100%;

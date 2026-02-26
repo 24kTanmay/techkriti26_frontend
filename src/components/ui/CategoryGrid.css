@@ -7,9 +7,8 @@
     --card-bg-grid: var(--bg-overlay);
     --card-border-grid: var(--border-subtle);
 
-    --font-ui-grid: var(--font-ui);
-    --font-body-grid: var(--font-ui);
-    --font-display-grid: var(--font-display);
+    --font-ui-grid: var(--font-space-grotesk), sans-serif;
+    --font-body-grid: var(--font-space-grotesk), sans-serif;
     --font-mono-grid: var(--font-mono);
 }
 
@@ -90,7 +89,7 @@
 }
 
 .hero-title-grid {
-    font-family: var(--font-display-grid);
+    font-family: var(--font-playfair), serif;
     font-size: 6.5rem;
     font-weight: 600;
     letter-spacing: -0.02em;

@@ -2,12 +2,12 @@
     --bg: var(--bg-primary);
     --accent: var(--color-copper);
     /* Copper/Gold */
-    --font-ui: var(--font-ui);
-    --font-display: var(--font-display);
+    --font-ui: 'Space Grotesk', sans-serif;
+    --font-display: var(--font-playfair), "Playfair Display", serif;
 
     background: var(--bg);
     color: var(--text-primary);
-    font-family: var(--font-ui);
+    font-family: var(--font-space-grotesk), sans-serif;
     overflow: hidden;
     height: 100vh;
     width: 100vw;
@@ -69,7 +69,7 @@
 }
 
 .title i {
-    font-family: var(--font-display);
+    font-family: var(--font-playfair), serif;
     font-style: italic;
     font-weight: 400;
     opacity: 0.6;

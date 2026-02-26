@@ -5,9 +5,9 @@
     --gallery-glass-border: var(--border-subtle);
     --gallery-glass-highlight: var(--white-normal);
     --gallery-text-muted: var(--text-muted);
-    --gallery-font-ui: var(--font-ui);
-    --gallery-font-body: var(--font-ui);
-    --gallery-font-display: var(--font-display);
+    --gallery-font-ui: var(--font-space-grotesk), sans-serif;
+    --gallery-font-body: var(--font-space-grotesk), sans-serif;
+    --gallery-font-display: var(--font-playfair), "Playfair Display", serif;
     --gallery-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 

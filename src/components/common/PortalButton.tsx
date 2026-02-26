@@ -24,7 +24,7 @@ export default function PortalButton() {
         fontWeight: 500,
         letterSpacing: '0.1em',
         textTransform: 'uppercase',
-        fontFamily: "var(--font-ui)",
+        fontFamily: "var(--font-space-grotesk), sans-serif",
         transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
         boxShadow: '0 20px 40px rgba(var(--color-black-rgb), 0.1)',
         pointerEvents: 'auto'

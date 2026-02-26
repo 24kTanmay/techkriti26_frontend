@@ -2,9 +2,9 @@
     --archive-gold: var(--color-copper);
     --archive-blue: var(--color-copper);
     --archive-muted: var(--text-muted);
-    --archive-font-ui: var(--font-ui);
-    --archive-font-body: var(--font-ui);
-    --archive-font-display: var(--font-display);
+    --archive-font-ui: var(--font-space-grotesk), sans-serif;
+    --archive-font-body: var(--font-space-grotesk), sans-serif;
+    --archive-font-display: var(--font-playfair), serif;
 }
 
 .archives-section {
