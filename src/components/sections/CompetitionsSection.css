@@ -173,7 +173,7 @@
     z-index: 2;
     width: 52px;
     height: 52px;
-    border-radius: var(--radius-lg);
+    border-radius: 50%;
     border: 1px solid var(--white-normal);
     background: var(--white-subtle);
     display: flex;

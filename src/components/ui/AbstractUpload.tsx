@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { UploadIcon, CheckIcon, InfoIcon } from '../common/Icons'
 import '@/components/ui/AbstractUpload.css'
 
 interface AbstractUploadProps {
@@ -57,7 +58,7 @@ export default function AbstractUpload({ eventTitle }: AbstractUploadProps) {
                 {uploadStatus === 'idle' && (
                     <label htmlFor="abstract-file" className="upload-trigger">
                         <div className="upload-icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                            <UploadIcon />
                         </div>
                         <span className="upload-text">Upload Abstract Document</span>
                         <p className="upload-hint">PDF, PNG or JPG (Max 10MB)</p>
@@ -91,7 +92,7 @@ export default function AbstractUpload({ eventTitle }: AbstractUploadProps) {
                 {uploadStatus === 'complete' && (
                     <div className="upload-success-state">
                         <div className="success-icon-wrap">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            <CheckIcon size={20} strokeWidth={3} />
                         </div>
                         <div className="success-details">
                             <span className="success-msg">Upload Successful</span>
@@ -104,7 +105,7 @@ export default function AbstractUpload({ eventTitle }: AbstractUploadProps) {
 
             {uploadStatus === 'complete' && (
                 <div className="abstract-status-hint">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight: '12px', flexShrink: 0, marginTop: '2px'}}><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    <InfoIcon size={14} style={{ marginRight: '12px', flexShrink: 0, marginTop: '2px' }} />
                     <div>
                         The abstract is being processed. Check your <b>Dashboard</b> for real-time status updates.
                     </div>

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import { PortalArrowIcon } from './Icons'
 
 export default function PortalButton() {
   return (
@@ -30,9 +31,7 @@ export default function PortalButton() {
           transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
         }}
       >
-        <svg style={{ width: '20px', height: '20px' }} viewBox="0 0 24 24">
-          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="var(--color-black)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-        </svg>
+        <PortalArrowIcon size={20} stroke="var(--color-black)" />
       </div>
     </Link>
   )

@@ -3,6 +3,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/common/Navbar'
+import { EditIcon, UploadIcon, EyeIcon } from '@/components/common/Icons'
+import Button from '@/components/ui/Button'
+import Card from '@/components/ui/Card'
 import './Dashboard.css'
 
 const MY_REGISTRATIONS = [
@@ -163,9 +166,9 @@ export default function NeuralDashboard() {
             </div>
             <h1 className="dash-title">Neural <i>Dashboard</i></h1>
           </div>
-          <button className="btn btn-secondary">
+          <Button variant="secondary" onClick={() => {}}>
             Logout
-          </button>
+          </Button>
         </header>
 
         <section className="dashboard-section">
@@ -173,18 +176,16 @@ export default function NeuralDashboard() {
             <span className="title-num">01 //</span> Personal <i>Details.</i>
           </h2>
           
-          <div 
-            className="identity-card"
+          <Card 
+            variant="glass"
+            interactive
+            className="identity-card p-10 flex flex-col gap-6"
             ref={cardRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
           >
-            <div className="card-glow"></div>
-
-            <button className="btn btn-secondary" style={{ position: 'absolute', top: '35px', right: '40px', padding: '6px 16px', fontSize: '0.65rem' }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '12px', height: '12px', marginRight: '8px' }}><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <Button variant="secondary" className="absolute top-[35px] right-[40px] px-4 py-1.5 text-[0.65rem]">
+              <EditIcon size={12} style={{ marginRight: '8px' }} />
               Modify Parameters
-            </button>
+            </Button>
             
             <div className="detail-item">
               <span className="detail-label">Designation // Full Name</span>
@@ -225,7 +226,7 @@ export default function NeuralDashboard() {
               <span className="detail-label">Phenotype // Gender</span>
               <div className="detail-value">Male</div>
             </div>
-          </div>
+          </Card>
         </section>
 
         <section className="registrations-section">
@@ -235,7 +236,7 @@ export default function NeuralDashboard() {
           {MY_REGISTRATIONS.length > 0 ? (
             <div className="registrations-grid">
               {MY_REGISTRATIONS.map(reg => (
-                <div key={reg.id} className="reg-card">
+                <Card key={reg.id} className="reg-card p-8">
                   <div className="reg-card-header">
                     <div>
                       <h3 className="reg-event-name">{reg.event}</h3>
@@ -244,36 +245,30 @@ export default function NeuralDashboard() {
                       <div className="reg-status-container" style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <div className={`status-pill ${reg.status.toLowerCase()}`}>{reg.status}</div>
                         {reg.status === 'Unpaid' ? (
-                          <button className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.65rem' }}>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '6px' }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                          <Button variant="primary" className="px-3 py-1.5 text-[0.65rem]">
+                            <UploadIcon size={12} style={{ marginRight: '6px' }} />
                             Upload
-                          </button>
+                          </Button>
                         ) : (
-                          <button className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.65rem' }}>
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '6px' }}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                          <Button variant="secondary" className="px-3 py-1.5 text-[0.65rem]">
+                            <EyeIcon size={12} style={{ marginRight: '6px' }} />
                             View
-                          </button>
+                          </Button>
                         )}
                       </div>
                     </div>
-                    <button className="btn btn-secondary" style={{ background: 'rgba(var(--color-danger-rgb), 0.1)', color: 'var(--color-danger)', borderColor: 'rgba(var(--color-danger-rgb), 0.2)' }}>Withdraw</button>
+                    <Button variant="secondary" className="bg-red-500/10 text-red-500 border-red-500/20 hover:bg-red-500/20">Withdraw</Button>
                   </div>
                   
-                  <div className="team-members-box">
-                    <span className="members-label">TEAM MEMBERS</span>
-                    <div className="members-list">
-                      {reg.members.map((m, i) => (
-                        <div key={i} className="member-tag">{m}</div>
-                      ))}
                     </div>
                   </div>
-                </div>
+                </Card>
               ))}
             </div>
           ) : (
             <div className="empty-state">
               <p className="empty-text">No active event registrations detected in the current sector.</p>
-              <Link href="/competitions" className="btn btn-primary btn-shine" style={{ borderRadius: '50px' }}>Initiate Discovery →</Link>
+              <Button href="/competitions" variant="primary" showShine className="rounded-full">Initiate Discovery →</Button>
             </div>
           )}
         </section>
@@ -292,9 +287,9 @@ export default function NeuralDashboard() {
                 </div>
                 <div className="status-group-sync" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div className={`status-pill ${abs.status.toLowerCase()}`}>{abs.status}</div>
-                    <button className="btn btn-secondary" style={{ padding: '4px 8px' }}>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    </button>
+                    <Button variant="secondary" className="p-2">
+                        <EyeIcon size={12} />
+                    </Button>
                 </div>
               </div>
             ))}
@@ -326,12 +321,12 @@ export default function NeuralDashboard() {
           </h2>
           <div className="requests-container">
             {JOIN_REQUESTS.map(req => (
-              <div key={req.id} className="join-request-card">
+              <Card key={req.id} className="join-request-card p-6">
                 <div className="jr-header">
                   <h4 className="jr-name">{req.name}</h4>
-                  <div className="jr-actions">
-                    <button className="btn btn-primary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Accept</button>
-                    <button className="btn btn-secondary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Reject</button>
+                  <div className="jr-actions flex gap-3">
+                    <Button variant="primary" className="px-5 py-2.5 text-[0.7rem]">Accept</Button>
+                    <Button variant="secondary" className="px-5 py-2.5 text-[0.7rem]">Reject</Button>
                   </div>
                 </div>
                 <div className="jr-details">
@@ -344,11 +339,8 @@ export default function NeuralDashboard() {
                   <div className="jr-detail">
                     <span>Event:</span> {req.event}
                   </div>
-                  <div className="jr-detail">
-                    <span>Team ID:</span> {req.teamId}
-                  </div>
                 </div>
-              </div>
+              </Card>
             ))}
           </div>
         </section>
