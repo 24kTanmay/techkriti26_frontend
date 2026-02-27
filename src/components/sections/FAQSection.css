@@ -42,7 +42,7 @@
 .faq-item {
     background: var(--white-subtle);
     border: 1px solid var(--border-subtle);
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     cursor: pointer;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);

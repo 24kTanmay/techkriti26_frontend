@@ -102,7 +102,7 @@
 /* --- THE FRAMES (BLANK DATA SLABS) --- */
 .gallery-frame {
     position: relative;
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     background: var(--gallery-glass-bg);
     border: 1px solid var(--gallery-glass-border);

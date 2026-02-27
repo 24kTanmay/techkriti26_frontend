@@ -6,7 +6,7 @@ import Timer from './Timer'
 
 export default function HeroConclusion() {
   return (
-    <section className="relative h-screen z-[70] flex flex-col items-center justify-center text-center px-6 pb-20 overflow-hidden bg-transparent text-white">
+    <section className="relative min-h-screen z-[70] flex flex-col items-center justify-between text-center px-6 pb-20 overflow-hidden bg-transparent text-white">
       
       {/* Background Glow (Aura) */}
       <div 
@@ -23,7 +23,7 @@ export default function HeroConclusion() {
         }}
       ></div>
 
-      <div className="z-10 max-w-4xl group">
+      <div className="z-10 max-w-4xl group flex-1 flex flex-col justify-center">
         <p className="text-[10px] tracking-[0.2em] uppercase text-[var(--text-muted)] mb-8 font-medium" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
           The journey concludes here
         </p>
@@ -40,7 +40,7 @@ export default function HeroConclusion() {
         </div>
 
         {/* Register Button - Shine & Slide Animation */}
-        <div className="relative inline-block mt-24">
+        <div className="relative inline-block mt-8">
           <style dangerouslySetInnerHTML={{ __html: `
             .register-btn-main {
                 position: relative;
@@ -111,7 +111,7 @@ export default function HeroConclusion() {
       </div>
 
       {/* Premium Footer Section - Absolute Bottom to use below space */}
-      <div className="w-full max-w-7xl z-20 px-6 md:px-12 space-y-4 mb-12 md:mb-0 relative md:absolute md:bottom-12">
+      <div className="w-full max-w-7xl z-20 px-6 md:px-12 flex flex-col gap-6 mb-4">
         <div 
           className="group/footer flex flex-col md:flex-row items-center rounded-[30px] md:rounded-[100px] border border-white/10 backdrop-blur-[50px] px-8 py-8 md:px-16 md:py-12 transition-all duration-500 hover:border-white/20"
           style={{
@@ -167,7 +167,8 @@ export default function HeroConclusion() {
           </div>
         </div>
         
-        <p className="copyright mt-12 md:mt-[200px] text-center text-[7.5px] tracking-[0.4em] text-gray-400 uppercase pb-8" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
+        <p className="text-center text-[9px] pb-8 tracking-[0.4em] text-gray-400 uppercase"
+         style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>
           © 2026 All Rights Reserved. IIT Kanpur.
         </p>
       </div>

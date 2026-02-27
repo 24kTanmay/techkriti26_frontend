@@ -36,6 +36,15 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
   const [showJoinTeam, setShowJoinTeam] = useState(false)
   const { indicatorRef, tabsContainerRef } = useTabIndicator(activeTab)
 
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('team')) {
+        setShowJoinTeam(true)
+      }
+    }
+  }, [])
+
   return (
     <div className="event-detail-page">
       <StarBackgroundViewport mode="rise" count={200} canvasId={canvasId} />

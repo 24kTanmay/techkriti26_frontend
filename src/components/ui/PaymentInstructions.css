@@ -27,7 +27,7 @@
     max-width: 500px;
     background: var(--pi-bg);
     border: 1px solid var(--pi-border);
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     padding: 3rem;
     box-shadow: 0 50px 100px rgba(var(--color-black-rgb), 0.8);
     animation: piFadeIn 0.5s var(--pi-ease) forwards;
@@ -89,7 +89,7 @@
     height: 28px;
     background: var(--white-subtle);
     border: 1px solid var(--pi-border);
-    border-radius: 50%;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,7 +109,7 @@
 @media (max-width: 600px) {
     .instr-container.simple {
         padding: 2rem 1.5rem;
-        border-radius: 16px;
+        border-radius: var(--radius-lg);
     }
 
     .modal-title-instr {

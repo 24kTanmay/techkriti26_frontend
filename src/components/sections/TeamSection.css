@@ -93,7 +93,7 @@
     flex: 0 0 400px;
     height: 550px;
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
     background: var(--color-black);
     transition: border-color 0.5s var(--team-ease);

@@ -153,10 +153,32 @@ export default function CreateTeam({ onClose }: CreateTeamProps) {
                     </p>
                     
                     <div className="team-id-card-createteam">
-                        <span className="id-label-createteam">Team Access ID</span>
-                        <div className="id-value-createteam">{teamId}</div>
-                        <p className="id-hint-createteam">Share this ID with your members so they can join your team.</p>
+                        <span className="id-label-createteam">Invite Link</span>
+                        <div className="id-value-createteam" style={{ fontSize: '0.85rem', wordBreak: 'break-all' }}>
+                            {typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}?team=${teamId}` : `https://techkriti.org/competitions?team=${teamId}`}
+                        </div>
+                        <button 
+                            className="btn btn-primary btn-shine" 
+                            style={{ marginTop: '1rem', padding: '0.6rem 1.2rem', fontSize: '0.85rem', width: '100%' }}
+                            onClick={() => {
+                                const link = typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}?team=${teamId}` : `https://techkriti.org/competitions?team=${teamId}`;
+                                navigator.clipboard.writeText(link);
+                                const btn = document.getElementById('copy-invite-btn');
+                                if (btn) {
+                                    const originalText = btn.innerHTML;
+                                    btn.innerHTML = 'Copied! ✓';
+                                    setTimeout(() => btn.innerHTML = originalText, 2000);
+                                }
+                            }}
+                            id="copy-invite-btn"
+                        >
+                            Copy Invite Link
+                        </button>
                     </div>
+
+                    <p className="id-hint-createteam" style={{ marginTop: '0.5rem', marginBottom: '1.5rem', textAlign: 'center' }}>
+                        Send this link to anyone so they can join your team instantly.
+                    </p>
 
                     <button className="btn btn-secondary" style={{ width: '100%' }} onClick={onClose}>
                         Return to Dashboard

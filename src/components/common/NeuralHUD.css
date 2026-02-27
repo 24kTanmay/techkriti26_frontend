@@ -134,7 +134,7 @@
     width: 8px;
     height: 8px;
     background: white;
-    border-radius: 50%;
+    border-radius: var(--radius-lg);
     pointer-events: none;
     z-index: 10000;
     mix-blend-mode: difference;
@@ -147,7 +147,7 @@
     width: 30px;
     height: 30px;
     border: 1px solid var(--border-normal);
-    border-radius: 50%;
+    border-radius: var(--radius-lg);
     pointer-events: none;
     z-index: 9999;
     transition: all 0.3s var(--ease-premium);

@@ -48,7 +48,7 @@
     backdrop-filter: blur(40px);
     -webkit-backdrop-filter: blur(40px);
     border: 1px solid var(--ct-border);
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     padding: 3rem;
     position: relative;
     z-index: 3;
@@ -131,7 +131,7 @@
     width: 100%;
     background: var(--white-subtle);
     border: 1px solid var(--ct-border);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     padding: 1.2rem;
     color: var(--text-primary);
     font-family: var(--ct-font-ui);
@@ -174,7 +174,7 @@
     position: absolute;
     inset: 0;
     border: 2px solid transparent;
-    border-radius: 50%;
+    border-radius: var(--radius-lg);
 }
 
 .ring-1 {
@@ -207,7 +207,7 @@
     width: 100%;
     height: 4px;
     background: var(--white-subtle);
-    border-radius: 100px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     margin-bottom: 1rem;
     position: relative;
@@ -234,7 +234,7 @@
     background: rgba(var(--color-success-rgb), 0.1);
     border: 1px solid var(--color-success);
     color: var(--color-success);
-    border-radius: 50%;
+    border-radius: var(--radius-lg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -246,7 +246,7 @@
     width: 100%;
     background: var(--copper-subtle);
     border: 1px solid var(--copper-strong);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
     padding: 2rem;
     margin-bottom: 2.5rem;
 }
@@ -279,7 +279,7 @@
 @media (max-width: 600px) {
     .createteam-container {
         padding: 2rem 1.5rem;
-        border-radius: 16px;
+        border-radius: var(--radius-lg);
     }
 
     .modal-title-createteam {

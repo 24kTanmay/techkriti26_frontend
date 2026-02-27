@@ -142,7 +142,7 @@
     .shard {
         width: 64px;
         height: 90px;
-        border-radius: 6px;
+        border-radius: var(--radius-lg);
     }
 
     .number-display {

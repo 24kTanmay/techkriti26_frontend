@@ -60,6 +60,16 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
         }
     }, [])
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search)
+            const team = params.get('team')
+            if (team) {
+                setTeamId(team)
+            }
+        }
+    }, [])
+
     const handleConfirm = () => {
         if (!teamId.trim()) return
         

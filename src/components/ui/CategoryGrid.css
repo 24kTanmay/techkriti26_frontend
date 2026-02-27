@@ -127,7 +127,7 @@
     height: 450px;
     background: var(--card-bg-grid);
     border: 1px solid var(--card-border-grid);
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     text-decoration: none;
     display: flex;

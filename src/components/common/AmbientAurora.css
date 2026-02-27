@@ -9,7 +9,7 @@
 
 .light-node {
     position: absolute;
-    border-radius: 50%;
+    border-radius: var(--radius-lg);
     opacity: 0.4;
     /* Increased visibility */
     mix-blend-mode: screen;
