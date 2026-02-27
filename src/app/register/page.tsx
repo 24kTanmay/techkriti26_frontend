@@ -104,10 +104,10 @@ export default function ProfileSetupPage() {
                 {/* Ambient Copper Light */}
                 <div style={{
                     position: 'absolute',
-                    top: '10%',
-                    right: '10%',
-                    width: '600px',
-                    height: '600px',
+                    top: '5%',
+                    right: '5%',
+                    width: 'clamp(300px, 40vw, 600px)',
+                    height: 'clamp(300px, 40vw, 600px)',
                     background: 'radial-gradient(circle, rgba(203, 163, 129, 0.05) 0%, transparent 70%)',
                     filter: 'blur(100px)',
                     pointerEvents: 'none',
@@ -118,6 +118,7 @@ export default function ProfileSetupPage() {
             {/* Success Notification */}
             {showSuccess && (
                 <div 
+                    className="success-notif"
                     style={{
                         position: 'fixed',
                         top: '2rem',
@@ -309,8 +310,8 @@ export default function ProfileSetupPage() {
 
                     <button 
                         type="submit" 
-                        className="btn btn-primary btn-shine" 
-                        style={{ width: '100%', padding: '1.25rem', marginTop: '1.5rem', borderRadius: '100px' }}
+                        className="btn btn-primary btn-shine submit-profile-btn" 
+                        style={{ width: '100%', borderRadius: '100px' }}
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Syncing...' : (

@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react'
 import Lenis from 'lenis'
+import { StarBackgroundViewport } from '@/components/common/StarBackground'
 import Navbar from '@/components/common/Navbar'
 import GallerySection from '@/components/sections/GallerySection'
 import ArchivesSection from '@/components/sections/ArchivesSection'
@@ -24,9 +25,10 @@ export default function ArchivesPage() {
   }, [])
 
   return (
-    <main className="relative w-full bg-[#020202]">
+    <main className="relative w-full bg-[var(--bg-primary)]">
+      <StarBackgroundViewport count={300} mode="drift" />
       <Navbar />
-      <div className="pt-20"> {/* Offset for Fixed Navbar */}
+      <div className="pt-20 relative z-10"> {/* Offset for Fixed Navbar */}
         <GallerySection />
         <ArchivesSection />
         <PastPerformers />

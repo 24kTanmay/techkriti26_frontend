@@ -46,12 +46,14 @@
 }
 
 .preloader-progress-bar {
-    width: 700px;
-    height: 1px;
-    background: var(--white-subtle);
-    margin-top: 1rem;
+    width: 300px;
+    max-width: 80vw;
+    height: 2px;
+    background: rgba(var(--color-white-rgb), 0.05);
+    margin: 2rem auto 0;
     position: relative;
     overflow: hidden;
+    border-radius: 4px;
 }
 
 .preloader-progress-fill {
@@ -59,7 +61,44 @@
     top: 0;
     left: 0;
     height: 100%;
-    background: var(--color-white);
-    box-shadow: 0 0 10px var(--color-white);
-    transition: width 0.3s ease-out;
+    background: linear-gradient(90deg, transparent, var(--color-white), transparent);
+    background-size: 200% 100%;
+    box-shadow: 0 0 15px var(--color-white);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.preloader-percentage {
+    margin-top: 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .preloader-progress-bar {
+        width: 200px;
+    }
+
+    .preloader-meta {
+        font-size: 11px;
+        letter-spacing: 0.4em;
+        max-width: 280px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    .preloader-percentage {
+        font-size: 10px;
+        letter-spacing: 2px;
+    }
+}
+
+@media (max-width: 480px) {
+    .preloader-progress-bar {
+        width: 160px;
+    }
 }

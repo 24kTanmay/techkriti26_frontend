@@ -185,7 +185,18 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
 
                         <button 
                             className="btn btn-secondary" 
-                            style={{ border: 'none', background: 'none', cursor: 'pointer', textAlign: 'center', width: '100%', opacity: 0.7 }}
+                            style={{ 
+                                border: 'none', 
+                                background: 'none', 
+                                cursor: 'pointer', 
+                                textAlign: 'center', 
+                                width: '100%', 
+                                opacity: 0.7,
+                                whiteSpace: 'normal',
+                                height: 'auto',
+                                padding: '0.8rem 1rem',
+                                lineHeight: '1.4'
+                            }}
                             onClick={() => transition('pay_later')}
                         >
                             Complete Registration & Pay Later

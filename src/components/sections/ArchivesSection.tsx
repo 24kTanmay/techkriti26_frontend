@@ -1,7 +1,15 @@
 'use client'
 
-import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useGSAP } from '@gsap/react'
+import StarBackground from '../common/StarBackground'
 import './ArchivesSection.css'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 /* ─── Types ─── */
 
@@ -21,9 +29,9 @@ interface Particle {
 /* ─── Static Data ─── */
 
 const ARCHIVE_EVENTS: ArchiveEvent[] = [
-  { year: "2019", title: "Genesis Code", desc: "The initiation of new intelligence. Algorithmic foundations laid." },
-  { year: "2020", title: "Virtual Horizon", desc: "Digital transcendence. The entire festival mapped to a virtual matrix." },
-  { year: "2021", title: "Neural Link", desc: "Connecting minds globally. Unprecedented synchronous problem solving." },
+  // { year: "2019", title: "Genesis Code", desc: "The initiation of new intelligence. Algorithmic foundations laid." },
+  // { year: "2020", title: "Virtual Horizon", desc: "Digital transcendence. The entire festival mapped to a virtual matrix." },
+  // { year: "2021", title: "Neural Link", desc: "Connecting minds globally. Unprecedented synchronous problem solving." },
   { year: "2022", title: "Quantum Shift", desc: "Breaking computational barriers. Introduction of quantum ideation." },
   { year: "2023", title: "Cosmic Resonance", desc: "Aligning technology with universal frequencies." },
   { year: "2024", title: "The Awakening", desc: "Inner awareness realized. Machines adapting to human intuition." },
@@ -59,13 +67,13 @@ const MemorySlab = ({ event, index, currentScroll, mouseX, mouseY }: MemorySlabP
       opacity = Math.max(0, 1 - offset * 0.3)
       blur = offset * 4
     } else if (offset < 0) {
-      opacity = Math.max(0, 1 + offset * 2)
-      blur = Math.abs(offset) * 10
+      opacity = Math.max(0, 1 + offset * 1.5)
+      blur = Math.abs(offset) * 15
     }
 
     const isActive = Math.abs(offset) < 0.3
-    const rotateX = -mouseY * 10 * Math.max(0, 1 - Math.abs(offset))
-    const rotateY = mouseX * 10 * Math.max(0, 1 - Math.abs(offset))
+    const rotateX = -mouseY * 8 * Math.max(0, 1 - Math.abs(offset))
+    const rotateY = mouseX * 8 * Math.max(0, 1 - Math.abs(offset))
 
     slab.style.transform = `translateZ(${zPos}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
     slab.style.opacity = opacity.toString()
@@ -91,7 +99,6 @@ const MemorySlab = ({ event, index, currentScroll, mouseX, mouseY }: MemorySlabP
 /* ─── Main Component ─── */
 
 export default function ArchivesSection() {
-  const [targetScroll, setTargetScroll] = useState(0)
   const [currentScroll, setCurrentScroll] = useState(0)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   
@@ -100,7 +107,42 @@ export default function ArchivesSection() {
   const requestRef = useRef<number>(null)
   const lastScrollRef = useRef(0)
 
-  // ── 1. Warp Particles Logic ──
+  // ── 1. Scroll-Locking PROGRESS (GSAP) ──
+  useGSAP(() => {
+    const N = ARCHIVE_EVENTS.length;
+    
+    // Create a proxy to lerp between ScrollTrigger and state
+    const proxy = { value: 0 };
+
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: 'top top',
+      end: '+=600%', // Increased weight for 4 cards to feel like the original 7
+      pin: true,
+      scrub: 1,
+      onUpdate: (self) => {
+        // Reaching the last card (N-1) at ~85% of the scroll for "dwell time"
+        proxy.value = Math.min(N - 1, self.progress * (N * 1.15));
+      }
+    });
+
+    const renderLoop = () => {
+      // Smoothly approach the proxy value
+      setCurrentScroll(prev => {
+        const diff = proxy.value - prev;
+        if (Math.abs(diff) < 0.0001) return proxy.value;
+        return prev + diff * 0.1;
+      });
+      requestRef.current = requestAnimationFrame(renderLoop);
+    };
+
+    renderLoop();
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+  }, { scope: sectionRef });
+
+  // ── 2. Warp Particles Logic ──
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -126,13 +168,13 @@ export default function ArchivesSection() {
     const animate = () => {
       ctx.clearRect(0, 0, width, height)
       
-      const velocity = (lastScrollRef.current - currentScroll) * 50 // Inverted velocity for warp direction
+      const velocity = (lastScrollRef.current - currentScroll) * 50
       lastScrollRef.current = currentScroll
       
       const baseSpeed = 2
 
       particles.forEach(p => {
-        p.z -= (baseSpeed - velocity) // Minus velocity because scrolling forward decreases Z-index of slabs
+        p.z -= (baseSpeed - velocity)
 
         if (p.z <= 0) {
           Object.assign(p, createParticle())
@@ -148,7 +190,7 @@ export default function ArchivesSection() {
 
         ctx.beginPath()
         ctx.arc(x2d, y2d, p.size * scale, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(var(--color-violet-rgb), ${alpha * 0.5})`
+        ctx.fillStyle = `rgba(180, 150, 255, ${alpha * 0.4})`
         ctx.fill()
       })
 
@@ -165,56 +207,16 @@ export default function ArchivesSection() {
     }
   }, [currentScroll])
 
-  // ── 2. Scroll & Lerp Logic ──
+  // ── 3. Mouse Interaction ──
   useEffect(() => {
-    const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor
-    
-    let frameId: number
-    const update = () => {
-      setCurrentScroll(prev => {
-        const next = lerp(prev, targetScroll, 0.07)
-        return Math.abs(next - targetScroll) < 0.001 ? targetScroll : next
-      })
-      frameId = requestAnimationFrame(update)
-    }
-    frameId = requestAnimationFrame(update)
-    return () => cancelAnimationFrame(frameId)
-  }, [targetScroll])
-
-  // ── 3. Event Listeners ──
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      // If the mouse is NOT over this section, or section is not visible, we could ignore?
-      // Since it's a dedicated page part, we'll let it handle wheel.
-      // But we should only block default if we want to "lock" the page.
-      // For now, let's keep it section-based.
-      const rect = sectionRef.current?.getBoundingClientRect()
-      if (!rect) return
-      
-      // Only process wheel if section is in viewport center-ish
-      if (rect.top < window.innerHeight && rect.bottom > 0) {
-        // Option: preventDefault here would lock the whole page.
-        // If we want it as a section, maybe we don't preventDefault.
-        // But the original design is a dedicated "dive".
-        // Let's just track target scroll.
-        const speed = 0.002
-        setTargetScroll(prev => Math.max(0, Math.min(ARCHIVE_EVENTS.length - 1, prev + e.deltaY * speed)))
-      }
-    }
-
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({
         x: (e.clientX / window.innerWidth - 0.5) * 2,
         y: (e.clientY / window.innerHeight - 0.5) * 2
       })
     }
-
-    window.addEventListener('wheel', handleWheel, { passive: false })
     window.addEventListener('mousemove', handleMouseMove)
-    return () => {
-      window.removeEventListener('wheel', handleWheel)
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
+    return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   return (
@@ -222,7 +224,6 @@ export default function ArchivesSection() {
       <div className="warp-canvas-container">
         <canvas ref={canvasRef} />
       </div>
-      <div className="archive-noise" />
       <div className="singularity-core" />
       <div className="archive-reticle" />
 
@@ -233,13 +234,12 @@ export default function ArchivesSection() {
 
       <div className="archive-timeline">
         {ARCHIVE_EVENTS.map((event, i) => (
-          <button
+          <div
             key={event.year}
-            className={`time-node ${Math.abs(i - currentScroll) < 0.3 ? 'active' : ''}`}
-            onClick={() => setTargetScroll(i)}
+            className={`time-node ${Math.abs(i - currentScroll) < 0.4 ? 'active' : ''}`}
           >
             {event.year}
-          </button>
+          </div>
         ))}
       </div>
 
@@ -262,7 +262,7 @@ export default function ArchivesSection() {
         <div className="archive-mouse-icon">
           <div className="archive-mouse-wheel" />
         </div>
-        <span className="archive-tagline" style={{ margin: 0, letterSpacing: '0.2em' }}>Scroll to Dive</span>
+        <span className="archive-tagline" style={{ margin: 0, letterSpacing: '0.2em' }}>Vertical Stretch to Dive</span>
       </div>
     </section>
   )

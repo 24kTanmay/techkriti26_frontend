@@ -113,16 +113,11 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
                     <div className="preloader-progress-fill" style={{ width: `${progress}%` }} />
                 </div>
                 
-                <div style={{ 
-                    marginTop: '20px', 
-                    fontFamily: 'var(--font-mono)', 
-                    fontSize: '13.5px', 
-                    color: 'var(--text-muted)',
-                    letterSpacing: '2px'
-                }}>
+                <div className="preloader-percentage">
                     SYNCING_CORE_NODES_{Math.round(progress)}%
                 </div>
             </div>
         </div>
     )
 }
+

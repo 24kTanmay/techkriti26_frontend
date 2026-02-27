@@ -107,28 +107,28 @@ export default function AboutSection() {
         @media (max-width: 1024px) {
           .about-card {
             width: 85%;
-            padding: 2.5rem;
+            padding: 2rem;
             left: 50% !important;
             right: auto !important;
             transform: translate(-50%, -50%);
             border-radius: 30px;
           }
           .about-heading {
-            font-size: 2.5rem;
+            font-size: 2rem;
           }
         }
 
         @media (max-width: 640px) {
           .about-card {
             width: 90%;
-            padding: 2rem;
+            padding: 1.5rem;
           }
           .about-heading {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.6rem;
+            margin-bottom: 0.75rem;
           }
           .about-card p {
-            font-size: 1rem;
+            font-size: 0.9rem;
           }
           .about-card {
             font-family: var(--font-space-grotesk), sans-serif;

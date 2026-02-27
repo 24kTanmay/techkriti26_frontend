@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Card Stack Scrolling UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: #f0f0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Mobile Phone Mockup Container */
+        .phone {
+            width: 390px;
+            height: 844px;
+            background-color: #ffffff;
+            border-radius: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15), inset 0 0 0 8px #e0e0e0;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            touch-action: none; /* Prevents default page scroll on mobile */
+        }
+
+        /* Header Section */
+        .header {
+            padding: 50px 30px 20px;
+            position: relative;
+            z-index: 2000;
+            background: linear-gradient(180deg, #fff 80%, rgba(255,255,255,0));
+            pointer-events: none;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            pointer-events: auto;
+        }
+
+        h1 {
+            font-size: 42px;
+            line-height: 0.9;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            color: #111;
+        }
+
+        .filters-btn {
+            background: #f4f4f4;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .subtitle {
+            text-align: right;
+            font-size: 11px;
+            color: #888;
+            margin-top: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* 3D Stack Container */
+        .stack-container {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .card {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            width: 330px;
+            height: 420px;
+            border-radius: 40px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -15px 25px rgba(0,0,0,0.06);
+            transform-origin: bottom center;
+            margin-left: -165px; /* Half of width to center */
+            will-change: transform, opacity;
+            cursor: grab;
+        }
+
+        .phone:active .card {
+            cursor: grabbing;
+        }
+
+        /* Card Content Styling */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: auto;
+        }
+
+        .logo-circle {
+            width: 45px;
+            height: 45px;
+            background: #111;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .icon-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .icon-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(0,0,0,0.6);
+            font-size: 14px;
+        }
+
+        .icon-circle svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .card-body {
+            color: #111;
+        }
+
+        .company-name {
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.6;
+            margin-bottom: 5px;
+        }
+
+        .job-title {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            white-space: pre-line;
+        }
+
+        .salary {
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .see-details {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 800;
+            opacity: 0.5;
+            margin-top: 30px;
+        }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 40px;
+            background: #111;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            z-index: 2000;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #555;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .dot.active {
+            background: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="phone" id="phoneContainer">
+        <div class="header">
+            <div class="header-top">
+                <h1>Current<br>Vacancies</h1>
+                <button class="filters-btn">
+                    <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1H13M3 5H11M5 9H9" stroke="black" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    Filters
+                </button>
+            </div>
+            <div class="subtitle">Information<br>Technologies</div>
+        </div>
+
+        <div class="stack-container" id="stack">
+            <!-- Cards injected via JS -->
+        </div>
+
+        <div class="bottom-nav" id="dots">
+            <!-- Dots injected via JS -->
+        </div>
+    </div>
+
+    <script>
+        const cardData = [
+            { bg: '#8CE82B', company: 'Hinge Health', title: 'Senior Product\nManager', salary: '$158K — $287K', logo: '⌘' },
+            { bg: '#40C2D6', company: 'Salesforce', title: 'Regional Vice\nPresident', salary: '$158K — $287K', logo: '☁' },
+            { bg: '#FFB6B6', company: 'Klarna', title: 'Sales\nmanager', salary: '$159K — $201K', logo: 'K.' },
+            { bg: '#E4D5C7', company: 'Figma', title: 'Product\nDesigner', salary: '$140K — $190K', logo: 'F' },
+            { bg: '#D3E6C8', company: 'Spotify', title: 'Data\nScientist', salary: '$130K — $180K', logo: 'S' }
+        ];
+
+        const N = cardData.length;
+        const stackContainer = document.getElementById('stack');
+        const dotsContainer = document.getElementById('dots');
+        let cardElements = [];
+        let dotElements = [];
+
+        // Interaction Variables
+        let progress = 0;
+        let targetProgress = 0;
+        let isDragging = false;
+        let startY = 0;
+        let snapTimeout = null;
+
+        // Heart Icon SVG string for reusability
+        const heartSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
+        const shareSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>`;
+
+        function initUI() {
+            // Create Cards
+            cardData.forEach((data, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.style.backgroundColor = data.bg;
+                
+                card.innerHTML = `
+                    <div class="card-header">
+                        <div class="logo-circle">${data.logo}</div>
+                        <div class="icon-group">
+                            <div class="icon-circle">${shareSvg}</div>
+                            <div class="icon-circle">${heartSvg}</div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="company-name">${data.company}</div>
+                        <div class="job-title">${data.title}</div>
+                        <div class="salary">${data.salary}</div>
+                        <div class="see-details">See details</div>
+                    </div>
+                `;
+                
+                stackContainer.appendChild(card);
+                cardElements.push(card);
+
+                // Create Dot
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if(index === 0) dot.classList.add('active');
+                dotsContainer.appendChild(dot);
+                dotElements.push(dot);
+            });
+
+            requestAnimationFrame(renderLoop);
+        }
+
+        // --- Interaction Logic ---
+
+        const phone = document.getElementById('phoneContainer');
+
+        // Handles touch & mouse drag
+        phone.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            startY = e.clientY;
+            clearTimeout(snapTimeout);
+            phone.setPointerCapture(e.pointerId);
+        });
+
+        phone.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            let deltaY = e.clientY - startY;
+            // Dragging down (positive delta) moves progress forward pulling card offscreen
+            targetProgress += deltaY * 0.0025; 
+            startY = e.clientY;
+        });
+
+        phone.addEventListener('pointerup', () => {
+            isDragging = false;
+            // Snap to closest integer
+            targetProgress = Math.round(targetProgress);
+        });
+
+        // Handles scroll wheel
+        window.addEventListener('wheel', (e) => {
+            targetProgress += e.deltaY * 0.002;
+            clearTimeout(snapTimeout);
+            
+            // Snap after user stops scrolling
+            snapTimeout = setTimeout(() => {
+                targetProgress = Math.round(targetProgress);
+            }, 150);
+        });
+
+        // Math utilities
+        function lerp(start, end, factor) {
+            return start + (end - start) * factor;
+        }
+
+        // Render Loop for perfectly smooth hardware-accelerated 3D effects
+        function renderLoop() {
+            // Spring interpolation
+            progress = lerp(progress, targetProgress, 0.08);
+
+            // Update active dot indicator based on the current front card
+            let frontIndex = (Math.round(progress) % N + N) % N;
+            dotElements.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === frontIndex);
+            });
+
+            cardElements.forEach((card, index) => {
+                // Calculate continuous relative offset
+                let p = (index - progress) % N;
+                
+                // Wrap logically to a positive index scale 0 to N
+                p = ((p % N) + N) % N; 
+                
+                // Shift range so one card is permitted to drop downwards (-1 to N-1)
+                if (p >= N - 1) p -= N;
+
+                let y = 0;
+                let scale = 1;
+                let opacity = 1;
+                
+                // Z-index calculation ensures proper overlap
+                let zIndex = 1000 - Math.round(p * 100);
+
+                if (p < 0) {
+                    // Card is flying OFF the screen downwards
+                    y = -p * 800; // Multiplier maps drop distance visually
+                    scale = 1;
+                    opacity = 1; 
+                } else {
+                    // Card is stacked BEHIND the front card
+                    y = p * -65;
+                    scale = 1 - (p * 0.05);
+                    
+                    // Smoothly fade out the very back of the stack
+                    if (p > N - 3) {
+                        opacity = Math.max(0, 1 - (p - (N - 3))); 
+                    }
+                }
+
+                card.style.transform = `translateY(${y}px) scale(${scale})`;
+                card.style.zIndex = zIndex;
+                card.style.opacity = opacity;
+                
+                // Dimming cards behind to enhance depth
+                card.style.filter = `brightness(${1 - Math.max(0, p) * 0.06})`;
+            });
+
+            requestAnimationFrame(renderLoop);
+        }
+
+        // Start
+        initUI();
+    </script>
+</body>
+</html>

@@ -182,8 +182,8 @@ export default function NeuralDashboard() {
           >
             <div className="card-glow"></div>
 
-            <button className="btn btn-secondary" style={{ position: 'absolute', top: '35px', right: '40px', padding: '6px 16px', fontSize: '0.65rem' }}>
-              <EditIcon size={12} style={{ marginRight: '8px' }} />
+            <button className="btn btn-secondary edit-btn">
+              <EditIcon size={12} />
               Modify Parameters
             </button>
             

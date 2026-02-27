@@ -145,14 +145,14 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
                 </div>
 
                 {/* STATE: SUCCESS */}
-                <div className={`state-createteam active ${state === 'success' ? 'active' : ''}`} style={{ display: state === 'success' ? 'flex' : 'none' }}>
-                    <div className="success-icon-createteam">✓</div>
-                    <span className="status-tag-createteam" style={{ color: 'var(--color-success)' }}>Request Sent</span>
-                    <h2 className="modal-title-createteam">Request <i>Logged</i></h2>
-                    <p className="modal-desc-createteam" style={{ maxWidth: '300px' }}>
+                <div className={`state-jointeam ${state === 'success' ? 'active' : ''}`}>
+                    <div className="success-icon-jointeam">✓</div>
+                    <span className="status-tag-jointeam" style={{ color: 'var(--color-success)' }}>Request Sent</span>
+                    <h2 className="modal-title-jointeam">Request <i>Logged</i></h2>
+                    <p className="modal-desc-jointeam">
                         Your request to join <b>{teamId.toUpperCase()}</b> has been sent to the team leader.
                     </p>
-                    <p className="modal-desc-createteam" style={{ fontSize: '0.75rem', marginTop: '-1rem', opacity: 0.7 }}>
+                    <p style={{ fontSize: '0.75rem', marginTop: '-1.5rem', opacity: 0.7, color: 'var(--jt-muted)', marginBottom: '2rem' }}>
                         You will be notified once they approve your request.
                     </p>
                     <button className="btn btn-secondary" style={{ width: '100%' }} onClick={onClose}>

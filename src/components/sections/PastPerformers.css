@@ -7,7 +7,7 @@
 }
 
 .performer-archive-container {
-    background: var(--performer-bg);
+    background: transparent;
     color: var(--text-primary);
     font-family: var(--font-space-grotesk), sans-serif;
     min-height: 100vh;

@@ -464,14 +464,44 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .gateway-container {
-        padding: 2rem 1.5rem;
-        border-radius: var(--radius-lg);
+        padding: 3rem 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .confirmation-overlay {
+        padding: 1.5rem;
+        align-items: flex-start;
+        /* Start from top on mobile to allow scrolling */
+        overflow-y: auto;
+    }
+
+    .gateway-container {
+        padding: 2.5rem 1.5rem;
+        margin-top: 2rem;
+        /* Give some top breathing room */
+        margin-bottom: 2rem;
     }
 
     .modal-title-gateway {
-        font-size: 1.8rem;
+        font-size: 2rem;
+    }
+
+    .btn-group-gateway {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .gateway-container {
+        padding: 2rem 1.25rem;
+    }
+
+    .modal-title-gateway {
+        font-size: 1.75rem;
     }
 
     .modal-desc-gateway {
@@ -479,14 +509,9 @@
         margin-bottom: 1.5rem;
     }
 
-    .btn-group-gateway {
-        flex-direction: column;
-        gap: 0.8rem;
-    }
-
-    .btn-gateway {
-        padding: 1rem;
-        width: 100%;
+    .status-tag-gateway {
+        letter-spacing: 2px;
+        margin-bottom: 1rem;
     }
 
     .percentage-sync {
@@ -499,6 +524,24 @@
     }
 
     .upload-shard-gateway {
-        padding: 1.2rem;
+        padding: 1.25rem 1rem;
+    }
+
+    .upload-success {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.8rem;
+    }
+
+    .upload-success .btn {
+        width: 100%;
+    }
+
+    .filename-sync {
+        font-size: 0.7rem;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }

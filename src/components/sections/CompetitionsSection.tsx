@@ -149,9 +149,7 @@ export default function CompetitionsSection() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
 
   return (
-    <section id="competitions" className="relative w-full bg-[var(--bg-primary)] overflow-hidden min-h-screen">
-      <StarBackground mode="drift" count={400} sizing="container" />
-      <div className="noise-overlay" />
+    <section id="competitions" className="relative w-full bg-transparent overflow-hidden min-h-screen">
 
       <div className="competitions-container">
         <div className="hero-text">

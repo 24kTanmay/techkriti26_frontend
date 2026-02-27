@@ -114,16 +114,21 @@
 
 }
 
+@media (max-width: 768px) {
+    .title {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+    }
+}
+
 @media (max-width: 640px) {
     .tag {
-        letter-spacing: 0.25em;
-        font-size: 0.6rem;
+        letter-spacing: 0.4em;
+        font-size: 0.65rem;
     }
 
     .title {
-        font-size: 3.2rem;
         line-height: 1.1;
-        max-width: 300px;
+        max-width: 280px;
         margin: 0 auto;
     }
 
@@ -133,6 +138,22 @@
     }
 
     .status {
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tag {
+        letter-spacing: 0.25em;
+        margin-bottom: 1.5rem;
+    }
+
+    .title {
+        font-size: 2.25rem;
+    }
+
+    .progressLine {
+        width: 100px;
     }
 }

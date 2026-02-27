@@ -1,13 +1,17 @@
 .signin-container {
     position: relative;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: var(--bg-primary);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 60px 0;
 }
+
+
 
 /* Background Glowing Orbs for depth */
 .signin-container::before,
@@ -177,19 +181,101 @@
 }
 
 /* Specific button styling requested: use existing font colors and triggers only on click */
-.btn-google {
+.back-link {
+    position: absolute;
+    top: -55px;
+    left: 24px;
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
     font-family: var(--font-ui);
-    font-weight: var(--fw-semibold);
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0.7;
 }
 
-/* Mobile adjustments */
-@media (max-width: 480px) {
+.back-link:hover {
+    color: var(--text-primary);
+    transform: translateX(-4px);
+    opacity: 1;
+}
+
+
+@media (max-width: 768px) {
     .signin-card {
-        padding: 40px 24px;
-        border-radius: var(--radius-lg);
+        padding: 48px 32px;
     }
 
     .signin-title {
-        font-size: 2rem;
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .signin-content {
+        padding: 20px;
+        margin-top: 40px;
+        /* Space for back link */
+    }
+
+    .back-link {
+        top: -48px !important;
+        left: 24px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .signin-card {
+        padding: 40px 24px;
+        gap: 32px;
+    }
+
+    .signin-title {
+        font-size: 2.25rem;
+        letter-spacing: -1px;
+    }
+
+    .signin-header {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .signin-card {
+        padding: 32px 20px;
+        border-radius: 24px;
+        gap: 28px;
+    }
+
+    .signin-title {
+        font-size: 1.85rem;
+    }
+
+    .btn-google {
+        height: 54px;
+        font-size: 0.95rem;
+        gap: 12px;
+    }
+
+    .google-icon-wrapper svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    .signin-title {
+        font-size: 1.6rem;
+    }
+
+    .signin-subtitle {
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+    }
+
+    .terms-text {
+        font-size: 0.7rem;
     }
 }

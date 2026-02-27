@@ -81,7 +81,6 @@ export default function PastPerformers() {
 
     return (
         <div id="performers" className="performer-archive-container">
-            <div className="noise-performer"></div>
 
             {/* The Floating Preview Slab */}
             <div 

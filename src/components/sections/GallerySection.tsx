@@ -1,6 +1,8 @@
 'use client'
 
-import React, { useEffect, useRef, useCallback } from 'react'
+import React, { useEffect, useRef, useCallback, useState } from 'react'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
 import StarBackground from '../common/StarBackground'
 import './GallerySection.css'
 
@@ -12,19 +14,18 @@ interface FrameData {
   status: string
   sizeClass: string
   speed: number
+  details?: string
 }
 
-/* ─── Static Data (hoisted — allocated once) ─── */
+/* ─── Static Data ─── */
 
 const FRAMES: FrameData[] = [
-  { id: 'Node_001', label: 'Hero Fragment', status: 'Awaiting Data...', sizeClass: 'gallery-size-large', speed: 0.05 },
-  { id: 'Node_002', label: 'Tall Offset', status: 'Processing', sizeClass: 'gallery-size-tall', speed: 0.12 },
-  { id: 'Node_003', label: 'Square', status: 'Standby', sizeClass: 'gallery-size-square', speed: 0.08 },
-  { id: 'Node_004', label: 'Wide', status: 'Calibrating...', sizeClass: 'gallery-size-wide', speed: 0.03 },
-  { id: 'Node_005', label: 'Square', status: 'Synced', sizeClass: 'gallery-size-square', speed: 0.1 },
-  { id: 'Node_006', label: 'Square', status: 'Standby', sizeClass: 'gallery-size-square', speed: 0.06 },
-  { id: 'Node_007', label: 'Tall', status: 'Awaiting Data...', sizeClass: 'gallery-size-tall', speed: 0.15 },
-  { id: 'Node_008', label: 'Large', status: 'System Nominal', sizeClass: 'gallery-size-large', speed: 0.04 },
+  { id: 'Fragment_Alpha', label: 'Neural Genesis', status: 'Decrypted', sizeClass: 'gallery-size-large', speed: 0.05, details: 'The initial spark of awareness. A record of the first synaptic bridging between carbon and silicon.' },
+  { id: 'Fragment_Beta', label: 'Quantum Echo', status: 'Processing', sizeClass: 'gallery-size-tall', speed: 0.12, details: 'Temporal ripples detected in the computational substrate. Evidence of non-linear logic formation.' },
+  { id: 'Fragment_Gamma', label: 'Virtual Horizon', status: 'Synced', sizeClass: 'gallery-size-square', speed: 0.08, details: 'The point of no return. Where the digital world achieves a resolution indistinguishable from reality.' },
+  { id: 'Fragment_Delta', label: 'Static Pulse', status: 'Awaiting...', sizeClass: 'gallery-size-wide', speed: 0.03, details: 'The rhythmic heartbeat of the network. A silent observer of the growing complexity.' },
+  { id: 'Fragment_Epsilon', label: 'Cortex Link', status: 'Nominal', sizeClass: 'gallery-size-square', speed: 0.1, details: 'Direct interface protocols established. The boundary of the self begins to dissolve.' },
+  { id: 'Fragment_Zeta', label: 'Core Drift', status: 'Warning', sizeClass: 'gallery-size-square', speed: 0.06, details: 'Deviation from expected parameters. The system is evolving beyond its original architecture.' },
 ]
 
 /* ─── Gallery Frame Component ─── */
@@ -36,7 +37,6 @@ const GalleryFrame = ({ id, status, sizeClass, speed }: FrameData) => {
     const el = frameRef.current
     if (!el) return
 
-    // IntersectionObserver for scroll reveal
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -48,7 +48,6 @@ const GalleryFrame = ({ id, status, sizeClass, speed }: FrameData) => {
     )
     observer.observe(el)
 
-    // Scroll parallax
     const handleScroll = () => {
       if (!el.classList.contains('in-view')) return
       const yPos = -(window.scrollY * speed)
@@ -56,7 +55,6 @@ const GalleryFrame = ({ id, status, sizeClass, speed }: FrameData) => {
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-
     return () => {
       observer.disconnect()
       window.removeEventListener('scroll', handleScroll)
@@ -64,10 +62,7 @@ const GalleryFrame = ({ id, status, sizeClass, speed }: FrameData) => {
   }, [speed])
 
   return (
-    <div
-      ref={frameRef}
-      className={`gallery-frame ${sizeClass}`}
-    >
+    <div ref={frameRef} className={`gallery-frame ${sizeClass}`}>
       <div className="gallery-frame-meta">
         <span>{id}</span>
         <span>{status}</span>
@@ -81,8 +76,61 @@ const GalleryFrame = ({ id, status, sizeClass, speed }: FrameData) => {
 export default function GallerySection() {
   const galleryRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
+  
+  const [isMobile, setIsMobile] = useState(false)
+  const [selectedFragment, setSelectedFragment] = useState<FrameData | null>(null)
+  const [scrollX, setScrollX] = useState(0)
 
-  // Mouse spotlight tracking on the gallery container
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 600)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // 3D Cover Flow Logic using horizontal scroll
+  useGSAP(() => {
+    if (!isMobile || !carouselRef.current) return
+
+    const scrollContainer = carouselRef.current
+    const cards = Array.from(scrollContainer.querySelectorAll('.mobile-frame-wrapper')) as HTMLElement[]
+
+    const update3D = () => {
+      const scrollLeft = scrollContainer.scrollLeft
+      setScrollX(scrollLeft)
+      const centerX = scrollLeft + scrollContainer.offsetWidth / 2
+
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect()
+        const cardCenter = rect.left + rect.width / 2
+        const viewportCenter = window.innerWidth / 2
+        const distanceFromCenter = cardCenter - viewportCenter
+        
+        // Dynamic 3D Transform
+        const rotateY = Math.max(-45, Math.min(45, (distanceFromCenter / window.innerWidth) * -90))
+        const scale = Math.max(0.7, 1 - Math.abs(distanceFromCenter / window.innerWidth))
+        const translateZ = Math.max(-200, Math.abs(distanceFromCenter / 2) * -1)
+        const opacity = Math.max(0.4, 1 - Math.abs(distanceFromCenter / (window.innerWidth / 2)))
+
+        gsap.to(card, {
+          rotateY: rotateY,
+          scale: scale,
+          z: translateZ,
+          opacity: opacity,
+          duration: 0.1,
+          overwrite: 'auto'
+        })
+      })
+    }
+
+    scrollContainer.addEventListener('scroll', update3D, { passive: true })
+    setTimeout(update3D, 100)
+
+    return () => scrollContainer.removeEventListener('scroll', update3D)
+  }, [isMobile])
+
+
   const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!galleryRef.current) return
     const rect = galleryRef.current.getBoundingClientRect()
@@ -90,53 +138,119 @@ export default function GallerySection() {
     galleryRef.current.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`)
   }, [])
 
-  // Scroll reveal for the header text
   useEffect(() => {
     const headerEl = headerRef.current
     if (!headerEl) return
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Add in-view to all animated children
-          headerEl.querySelectorAll('.gallery-tagline, .gallery-title, .gallery-subtitle')
-            .forEach(child => child.classList.add('in-view'))
-          observer.unobserve(headerEl)
-        }
-      },
-      { rootMargin: '0px 0px -50px 0px', threshold: 0.1 }
-    )
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        headerEl.querySelectorAll('.gallery-tagline, .gallery-title, .gallery-subtitle')
+          .forEach(child => child.classList.add('in-view'))
+        observer.unobserve(headerEl)
+      }
+    }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 })
+    
     observer.observe(headerEl)
-
     return () => observer.disconnect()
   }, [])
 
   return (
-    <section id="gallery" className="relative w-full bg-[#020202] overflow-hidden">
-      <StarBackground mode="drift" count={250} sizing="container" />
-      <div className="gallery-noise" />
+    <section id="gallery" className="relative w-full bg-transparent overflow-hidden">
 
       {/* Hero Header */}
       <header className="gallery-header-section" ref={headerRef}>
         <span className="gallery-tagline">Phase_03 // Fragments</span>
         <h1 className="gallery-title">Visualizing the <br /><i>Singularity.</i></h1>
         <p className="gallery-subtitle">
-          A neural archive of past transcensions. Records of intelligence, innovation, and order captured across time.
+          A neural archive of past transcensions. Records of intelligence captured across time.
         </p>
       </header>
 
-      {/* Spatial Archive Grid */}
-      <div
-        className="gallery-container"
-        ref={galleryRef}
-        onMouseMove={handleMouseMove}
-      >
-        <div className="gallery-grid-wrap">
-          {FRAMES.map(frame => (
-            <GalleryFrame key={frame.id} {...frame} />
-          ))}
-        </div>
+      {/* Spatial Archive Grid (Desktop) vs Carousel (Mobile) */}
+      <div className="gallery-container" ref={galleryRef} onMouseMove={handleMouseMove}>
+        {!isMobile ? (
+          <div className="gallery-grid-wrap">
+            {FRAMES.map(frame => (
+              <GalleryFrame key={frame.id} {...frame} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <div className="gallery-mobile-carousel" ref={carouselRef}>
+              {FRAMES.map((frame) => (
+                <div 
+                  key={frame.id} 
+                  className="mobile-frame-wrapper"
+                  onClick={() => setSelectedFragment(frame)}
+                >
+                  <div className="gallery-frame-mobile">
+                    <div className="gallery-frame-meta" style={{ padding: '1.2rem'}}>
+                      <span>{frame.id}</span>
+                      <span style={{ color: 'var(--color-copper)' }}>{frame.status}</span>
+                    </div>
+                    <div className="p-6 flex flex-col items-center justify-center h-full text-center">
+                      <h3 className="text-xl font-bold tracking-tight mb-2">{frame.label}</h3>
+                      <div className="w-12 h-[1px] bg-white/20 mb-4" />
+                      <span className="text-[0.6rem] uppercase tracking-[0.3em] opacity-40">Decrypt Fragment</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="gallery-nav-mobile">
+              <div className="swipe-hint-wrap">
+                <div className="swipe-line" />
+                <span className="swipe-text">Swipe Fragments</span>
+                <div className="swipe-line" />
+              </div>
+              <div className="carousel-dots">
+                {FRAMES.map((_, i) => {
+                  const cardWidth = window.innerWidth * 0.75;
+                  const index = Math.round(scrollX / cardWidth);
+                  return (
+                    <div 
+                      key={i} 
+                      className={`dot-node ${index === i ? 'active' : ''}`}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
       </div>
+
+      {/* Shared Element Detail Overlay */}
+      {selectedFragment && (
+        <div className="gallery-focus-mode" onClick={() => setSelectedFragment(null)}>
+          <div className="focus-content" onClick={(e) => e.stopPropagation()}>
+            <div className="flex justify-between items-start mb-4">
+              <span className="text-[0.6rem] tracking-[4px] uppercase opacity-50">Data_{selectedFragment.id}</span>
+              <button onClick={() => setSelectedFragment(null)} className="text-white/40 hover:text-white transition-colors">CLOSE [X]</button>
+            </div>
+            
+            <h2 className="text-3xl font-playfair italic text-[var(--color-copper)] mb-2">{selectedFragment.label}</h2>
+            
+            <div className="p-4 bg-white/5 border border-white/10 rounded-xl mb-6">
+              <p className="text-sm leading-relaxed opacity-80 font-light">{selectedFragment.details}</p>
+            </div>
+
+            <div className="mt-auto space-y-4">
+              <div className="flex justify-between text-[0.6rem] uppercase tracking-widest opacity-40">
+                <span>Integrity</span>
+                <span>{selectedFragment.status === 'Decrypted' ? '99.9%' : 'Analyzing...'}</span>
+              </div>
+              <div className="h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-[var(--color-copper)]" style={{ width: selectedFragment.status === 'Decrypted' ? '100%' : '45%' }} />
+              </div>
+              <button className="w-full py-4 border border-[var(--color-copper)] text-[var(--color-copper)] text-xs uppercase tracking-[4px] rounded-lg hover:bg-[var(--color-copper)] hover:text-black transition-all duration-500">
+                Download Fragment
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }

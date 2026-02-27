@@ -42,19 +42,7 @@ export default function SignInPage() {
       
       {!isLoading && (
         <div className="signin-content">
-          <Link href="/" className="back-link animate-fade-in" style={{ 
-            position: 'absolute', 
-            top: '-60px', 
-            left: '0', 
-            color: 'var(--text-muted)', 
-            textDecoration: 'none', 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '8px',
-            fontSize: '0.9rem',
-            fontFamily: 'var(--font-ui)',
-            transition: 'color 0.3s ease'
-          }}>
+          <Link href="/" className="back-link animate-fade-in">
             <ArrowLeftIcon size={20} />
             Back to Home
           </Link>

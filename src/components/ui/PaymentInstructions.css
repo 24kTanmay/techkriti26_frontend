@@ -107,9 +107,34 @@
 /* Removed local .btn-instr-simple in favor of global .btn-primary */
 
 @media (max-width: 600px) {
+    .instr-overlay {
+        padding: 1rem;
+        align-items: flex-start;
+        overflow-y: auto;
+    }
+
     .instr-container.simple {
-        padding: 2rem 1.5rem;
-        border-radius: var(--radius-lg);
+        padding: 2.5rem 1.5rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .modal-title-instr {
+        font-size: 1.8rem;
+    }
+
+    .step-text-simple {
+        font-size: 0.9rem;
+    }
+
+    .step-item-simple {
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .instr-container.simple {
+        padding: 2rem 1.25rem;
     }
 
     .modal-title-instr {
@@ -118,9 +143,5 @@
 
     .step-text-simple {
         font-size: 0.85rem;
-    }
-
-    .step-item-simple {
-        gap: 1rem;
     }
 }
