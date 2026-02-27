@@ -235,8 +235,8 @@ export default function AdminPage() {
               value={query}
               onChange={e => setQuery(e.target.value)}
             />
-            <button className="admin-btn primary">Execute Search</button>
-            <button className="admin-btn" onClick={handleExportCSV}>Export .CSV</button>
+            <button className="btn btn-primary btn-shine">Execute Search</button>
+            <button className="btn btn-secondary" onClick={handleExportCSV}>Export .CSV</button>
           </div>
 
           <div className="admin-table-wrap">

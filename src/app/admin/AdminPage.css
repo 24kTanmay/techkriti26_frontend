@@ -86,66 +86,7 @@ body {
     opacity: 0.25;
 }
 
-/* === BUTTON SYSTEM === */
-.admin-btn {
-    background: var(--white-subtle);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    padding: 0.7rem 1.6rem;
-    border-radius: 8px;
-    font-family: var(--font-ui);
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s var(--ease-expo);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.admin-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 60%;
-    height: 100%;
-    background: linear-gradient(to right,
-            transparent,
-            var(--copper-normal),
-            transparent);
-    transform: skewX(-25deg);
-    transition: 0s;
-}
-
-.admin-btn:hover {
-    border-color: var(--accent);
-    background: var(--copper-subtle);
-    color: var(--color-white);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(var(--color-black-rgb), 0.2);
-}
-
-.admin-btn:hover::before {
-    left: 150%;
-    transition: left 0.8s var(--ease-out);
-}
-
-.admin-btn.primary {
-    border-color: var(--accent-border);
-    color: var(--accent);
-    background: var(--copper-subtle);
-}
-
-.admin-btn.primary:hover {
-    background: var(--accent);
-    color: var(--color-black);
-    border-color: var(--accent);
-}
+/* Removed local .admin-btn in favor of global .btn classes */
 
 /* === VIEW SWITCHER TOGGLE === */
 .admin-toggle-container {

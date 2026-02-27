@@ -121,21 +121,21 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
 
                 <div className="event-action-group">
                   <button 
-                    className="event-btn-action primary" 
+                    className="btn btn-primary btn-shine" 
                     aria-label="Register as Individual"
                     onClick={() => setShowConfirmation(true)}
                   >
                     Individual
                   </button>
                   <button 
-                    className="event-btn-action" 
+                    className="btn btn-secondary" 
                     aria-label="Create a new team"
                     onClick={() => setShowCreateTeam(true)}
                   >
                     Create Team
                   </button>
                   <button 
-                    className="event-btn-action" 
+                    className="btn btn-secondary" 
                     aria-label="Join an existing team"
                     onClick={() => setShowJoinTeam(true)}
                   >

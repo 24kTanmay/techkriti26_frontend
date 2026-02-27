@@ -64,26 +64,7 @@
     font-weight: 400;
 }
 
-.dash-logout-btn {
-    background: var(--white-subtle);
-    border: 1px solid var(--glass-border);
-    color: var(--text-muted);
-    padding: 0.6rem 1.8rem;
-    border-radius: 100px;
-    font-family: var(--font-ui);
-    font-size: 0.75rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.dash-logout-btn:hover {
-    background: var(--white-normal);
-    color: var(--color-white);
-    border-color: var(--white-strong);
-}
+/* Removed local .dash-logout-btn in favor of global .btn-secondary */
 
 .status-badge {
     font-family: var(--font-ui);
@@ -294,25 +275,7 @@
     margin-left: 8px;
 }
 
-.withdraw-btn {
-    background: rgba(var(--color-danger-rgb), 0.05);
-    border: 1px solid rgba(var(--color-danger-rgb), 0.2);
-    color: var(--color-danger);
-    padding: 0.6rem 1.4rem;
-    border-radius: 8px;
-    font-family: var(--font-ui);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.withdraw-btn:hover {
-    background: var(--color-danger);
-    color: var(--color-white);
-    box-shadow: 0 0 15px rgba(var(--color-danger-rgb), 0.3);
-}
+/* Removed local .withdraw-btn in favor of global .btn-secondary (danger variant handled in TSX) */
 
 .team-members-box {
     background: rgba(var(--color-black-rgb), 0.2);
@@ -416,55 +379,7 @@
 }
 
 /* Registration Action Buttons */
-.reg-action-btn {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    font-family: var(--font-ui);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s var(--ease-out-expo);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-}
-
-.reg-action-btn svg {
-    opacity: 0.8;
-}
-
-.reg-action-btn.view {
-    background: var(--white-subtle);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-muted);
-}
-
-.reg-action-btn.view:hover {
-    background: var(--white-normal);
-    color: var(--text-primary);
-    border-color: var(--border-normal);
-    transform: translateY(-1px);
-}
-
-.reg-action-btn.upload {
-    background: var(--copper-subtle);
-    border: 1px solid var(--copper-normal);
-    color: var(--accent-cyan);
-}
-
-.reg-action-btn.upload:hover {
-    background: var(--accent-cyan);
-    color: var(--color-black);
-    border-color: var(--accent-cyan);
-    box-shadow: 0 0 15px var(--copper-strong);
-    transform: translateY(-1px);
-}
-
-.reg-action-btn.upload:hover svg {
-    filter: brightness(0);
-}
+/* Removed local .reg-action-btn in favor of global .btn classes */
 
 /* Join Request Card */
 .join-request-card {
@@ -493,37 +408,7 @@
     gap: 0.8rem;
 }
 
-.jr-btn {
-    padding: 0.6rem 1.6rem;
-    border-radius: 6px;
-    font-family: var(--font-ui);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.jr-btn.accept {
-    background: var(--color-info);
-    border: 1px solid var(--color-info);
-    color: var(--color-white);
-}
-
-.jr-btn.accept:hover {
-    background: var(--color-info);
-    box-shadow: 0 0 15px rgba(var(--color-info-rgb), 0.4);
-}
-
-.jr-btn.reject {
-    background: var(--white-subtle);
-    border: 1px solid var(--border-subtle);
-    color: var(--color-white);
-}
-
-.jr-btn.reject:hover {
-    background: var(--white-normal);
-}
+/* Removed local .jr-btn in favor of global .btn classes */
 
 .jr-details {
     display: grid;
@@ -597,26 +482,7 @@
     font-weight: 300;
 }
 
-.explore-btn {
-    background: var(--color-white);
-    color: var(--color-black);
-    border: none;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-family: var(--font-ui);
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s var(--ease-out-expo);
-    text-decoration: none;
-    display: inline-block;
-}
-
-.explore-btn:hover {
-    transform: translateY(-2px);
-    background: var(--accent-cyan);
-    box-shadow: 0 10px 20px var(--copper-normal);
-}
+/* Removed local .explore-btn in favor of global .btn-primary */
 
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {

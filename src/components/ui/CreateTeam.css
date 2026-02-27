@@ -152,50 +152,15 @@
 
 .btn-group-createteam {
     display: flex;
-    gap: 1rem;
+    gap: 1.2rem;
     width: 100%;
 }
 
-.btn-createteam {
+.btn-group-createteam .btn {
     flex: 1;
-    padding: 1.1rem;
-    border-radius: 12px;
-    font-family: var(--ct-font-ui);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s var(--ct-ease);
-    border: 1px solid transparent;
-    outline: none;
 }
 
-.btn-createteam:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-.btn-secondary-createteam {
-    background: var(--white-subtle);
-    border-color: var(--ct-border);
-    color: var(--text-primary);
-}
-
-.btn-secondary-createteam:hover:not(:disabled) {
-    background: var(--white-normal);
-    border-color: var(--color-white);
-}
-
-.btn-primary-createteam {
-    background: var(--color-white);
-    color: var(--color-black);
-}
-
-.btn-primary-createteam:hover:not(:disabled) {
-    background: var(--ct-accent);
-    box-shadow: 0 10px 30px var(--ct-accent-glow);
-}
+/* Removed local button styles in favor of global .btn classes */
 
 /* Spinner for Processing */
 .hologram-spinner-createteam {

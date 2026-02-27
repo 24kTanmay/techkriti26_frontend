@@ -109,8 +109,8 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                     <h2 className="modal-title-gateway">Register for <i>Participation?</i></h2>
                     <p className="modal-desc-gateway">You are about to register for individual participation in this event.</p>
                     <div className="btn-group-gateway">
-                        <button className="btn-gateway btn-primary-gateway" onClick={() => transition('hub')}>Confirm</button>
-                        <button className="btn-gateway btn-secondary-gateway" onClick={onClose}>Cancel</button>
+                        <button className="btn btn-primary" onClick={() => transition('hub')}>Confirm</button>
+                        <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
                     </div>
                 </div>
 
@@ -169,7 +169,7 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                                         <p style={{ fontSize: '0.55rem', color: 'var(--text-muted)', marginTop: '2px' }}>{fileName} Attached</p>
                                     </div>
                                     <button 
-                                        className="change-btn-gateway"
+                                        className="btn btn-secondary"
                                         onClick={resetUpload}
                                         aria-label="Change uploaded file"
                                     >
@@ -184,7 +184,7 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                         </div>
 
                         <button 
-                            className="sub-link-gateway" 
+                            className="btn btn-secondary" 
                             style={{ border: 'none', background: 'none', cursor: 'pointer', textAlign: 'center', width: '100%', opacity: 0.7 }}
                             onClick={() => transition('pay_later')}
                         >
@@ -193,7 +193,7 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
 
                         {uploadStatus === 'complete' && (
                             <button 
-                                className="btn-gateway btn-primary-gateway" 
+                                className="btn btn-primary btn-shine" 
                                 style={{ marginTop: '1rem', width: '100%', flex: 'none' }}
                                 onClick={() => transition('submitted')}
                             >
@@ -212,8 +212,8 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                         Your registration will be saved. You can upload the payment receipt later from your <b>Neural Dashboard</b> to complete verification.
                     </p>
                     <div className="btn-group-gateway">
-                        <button className="btn-gateway btn-primary-gateway" onClick={() => transition('submitted')}>Confirm</button>
-                        <button className="btn-gateway btn-secondary-gateway" onClick={() => transition('hub')}>Go Back</button>
+                        <button className="btn btn-primary" onClick={() => transition('submitted')}>Confirm</button>
+                        <button className="btn btn-secondary" onClick={() => transition('hub')}>Go Back</button>
                     </div>
                 </div>
 
@@ -225,8 +225,8 @@ export default function Confirmation({ onClose }: ConfirmationProps) {
                     <p className="modal-desc-gateway">
                         Your payment details have been submitted. Our team will verify the payment and confirm your registration soon.
                     </p>
-                    <button className="btn-gateway btn-secondary-gateway" style={{ width: '100%' }} onClick={onClose}>
-                        Back to Home
+                    <button className="btn btn-secondary" style={{ width: '100%' }} onClick={onClose}>
+                        Return to Dashboard
                     </button>
                 </div>
             </div>

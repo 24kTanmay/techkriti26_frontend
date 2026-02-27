@@ -67,7 +67,7 @@ function GridEventCard({
         <h2 className="card-title-grid">{title}</h2>
         <div className="card-reveal-grid">
           <p className="card-desc-grid">{desc}</p>
-          <div className="btn-glass-grid">
+          <div className="btn btn-glass">
             {ctaText} <i>→</i>
           </div>
         </div>

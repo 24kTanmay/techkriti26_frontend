@@ -163,7 +163,7 @@ export default function NeuralDashboard() {
             </div>
             <h1 className="dash-title">Neural <i>Dashboard</i></h1>
           </div>
-          <button className="dash-logout-btn">
+          <button className="btn btn-secondary">
             Logout
           </button>
         </header>
@@ -181,8 +181,8 @@ export default function NeuralDashboard() {
           >
             <div className="card-glow"></div>
 
-            <button className="edit-btn">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <button className="btn btn-secondary" style={{ position: 'absolute', top: '35px', right: '40px', padding: '6px 16px', fontSize: '0.65rem' }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: '12px', height: '12px', marginRight: '8px' }}><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
               Modify Parameters
             </button>
             
@@ -244,19 +244,19 @@ export default function NeuralDashboard() {
                       <div className="reg-status-container" style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <div className={`status-pill ${reg.status.toLowerCase()}`}>{reg.status}</div>
                         {reg.status === 'Unpaid' ? (
-                          <button className="reg-action-btn upload">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
-                            Upload Receipt
+                          <button className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.65rem' }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '6px' }}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                            Upload
                           </button>
                         ) : (
-                          <button className="reg-action-btn view">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                            View Document
+                          <button className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.65rem' }}>
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '6px' }}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            View
                           </button>
                         )}
                       </div>
                     </div>
-                    <button className="withdraw-btn">Withdraw</button>
+                    <button className="btn btn-secondary" style={{ background: 'rgba(var(--color-danger-rgb), 0.1)', color: 'var(--color-danger)', borderColor: 'rgba(var(--color-danger-rgb), 0.2)' }}>Withdraw</button>
                   </div>
                   
                   <div className="team-members-box">
@@ -273,7 +273,7 @@ export default function NeuralDashboard() {
           ) : (
             <div className="empty-state">
               <p className="empty-text">No active event registrations detected in the current sector.</p>
-              <Link href="/competitions" className="explore-btn">Initiate Discovery →</Link>
+              <Link href="/competitions" className="btn btn-primary btn-shine" style={{ borderRadius: '50px' }}>Initiate Discovery →</Link>
             </div>
           )}
         </section>
@@ -292,7 +292,7 @@ export default function NeuralDashboard() {
                 </div>
                 <div className="status-group-sync" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div className={`status-pill ${abs.status.toLowerCase()}`}>{abs.status}</div>
-                    <button className="reg-action-btn view" style={{ padding: '4px 8px' }}>
+                    <button className="btn btn-secondary" style={{ padding: '4px 8px' }}>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                     </button>
                 </div>
@@ -330,8 +330,8 @@ export default function NeuralDashboard() {
                 <div className="jr-header">
                   <h4 className="jr-name">{req.name}</h4>
                   <div className="jr-actions">
-                    <button className="jr-btn accept">Accept</button>
-                    <button className="jr-btn reject">Reject</button>
+                    <button className="btn btn-primary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Accept</button>
+                    <button className="btn btn-secondary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Reject</button>
                   </div>
                 </div>
                 <div className="jr-details">

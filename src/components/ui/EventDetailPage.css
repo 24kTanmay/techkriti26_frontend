@@ -10,7 +10,7 @@
 
     --event-font-ui: var(--font-space-grotesk), sans-serif;
     --event-font-body: var(--font-space-grotesk), sans-serif;
-    --event-font-display: var(--font-space-grotesk), sans-serif;
+    --event-font-display: var(--font-display);
     --event-font-mono: var(--font-mono);
 
     --event-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -230,7 +230,7 @@
 .event-tab-btn.active {
     color: var(--text-primary);
     font-weight: 600;
-    text-shadow: 0 0 20px var(--white-strong);
+    text-shadow: 0 0 10px var(--white-normal);
 }
 
 .event-tab-indicator {
@@ -318,50 +318,7 @@
     margin-top: 2rem;
 }
 
-.event-btn-action {
-    position: relative;
-    overflow: hidden;
-    background: var(--white-subtle);
-    border: 1px solid var(--event-panel-border);
-    color: var(--text-primary);
-    font-family: var(--event-font-ui);
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 0.8rem 2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.event-btn-action.primary {
-    background: var(--event-accent);
-    border-color: var(--event-accent);
-    color: var(--color-black);
-    font-weight: 600;
-}
-
-.event-btn-action:not(.primary):hover {
-    background: var(--white-normal);
-    border-color: var(--border-strong);
-}
-
-/* Shine effect */
-.event-btn-action::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(to right, transparent, var(--white-normal), transparent);
-    transform: skewX(-20deg);
-    transition: 0s;
-}
-
-.event-btn-action:hover::before {
-    left: 150%;
-    transition: left 0.6s var(--event-ease-out);
-}
+/* Removed local button styles in favor of global .btn classes */
 
 .event-download-card {
     background: var(--copper-subtle);

@@ -115,13 +115,13 @@ export default function CreateTeam({ onClose }: CreateTeamProps) {
 
                     <div className="btn-group-createteam">
                         <button 
-                            className="btn-createteam btn-primary-createteam" 
+                            className="btn btn-primary" 
                             onClick={handleConfirm}
                             disabled={!teamName.trim()}
                         >
                             Confirm
                         </button>
-                        <button className="btn-createteam btn-secondary-createteam" onClick={onClose}>Cancel</button>
+                        <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
                     </div>
                 </div>
 
@@ -158,7 +158,7 @@ export default function CreateTeam({ onClose }: CreateTeamProps) {
                         <p className="id-hint-createteam">Share this ID with your members so they can join your team.</p>
                     </div>
 
-                    <button className="btn-createteam btn-secondary-createteam" style={{ width: '100%' }} onClick={onClose}>
+                    <button className="btn btn-secondary" style={{ width: '100%' }} onClick={onClose}>
                         Return to Dashboard
                     </button>
                 </div>

@@ -153,8 +153,8 @@
     z-index: 2;
 }
 
-.card-title {
-    font-family: var(--comp-font-ui);
+.comp-list .card-title {
+    font-family: var(--font-ui);
     font-size: 2rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -189,7 +189,7 @@
     border-color: var(--comp-text-main);
     background: var(--comp-text-main);
     color: var(--comp-bg-base);
-    box-shadow: 0 0 25px var(--white-strong);
+    box-shadow: 0 5px 15px rgba(var(--color-white-rgb), 0.2);
 }
 
 .comp-group.is-active .expand-icon {
@@ -197,7 +197,7 @@
     background: var(--comp-accent);
     border-color: var(--comp-accent);
     color: var(--comp-bg-base);
-    box-shadow: 0 0 25px var(--copper-strong);
+    box-shadow: 0 5px 15px rgba(var(--color-copper-rgb), 0.3);
 }
 
 .main-card:active .expand-icon {
@@ -329,23 +329,7 @@
     overflow: hidden;
 }
 
-/* Premium Button */
-.sub-btn {
-    align-self: flex-start;
-    background: var(--comp-btn-bg);
-    color: var(--comp-btn-text);
-    text-decoration: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    font-family: var(--comp-font-ui);
-    transition: all 0.3s;
-    border: 1px solid transparent;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
+/* Removed local .sub-btn in favor of global .btn-primary */
 
 .sub-btn span {
     transition: transform 0.3s var(--comp-ease-out-expo);

@@ -309,7 +309,8 @@ export default function ProfileSetupPage() {
 
                     <button 
                         type="submit" 
-                        className="submit-btn" 
+                        className="btn btn-primary btn-shine" 
+                        style={{ width: '100%', padding: '1.25rem', marginTop: '1.5rem', borderRadius: '100px' }}
                         disabled={isSubmitting}
                     >
                         {isSubmitting ? 'Syncing...' : (

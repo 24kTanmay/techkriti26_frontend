@@ -97,7 +97,7 @@ export default function AbstractUpload({ eventTitle }: AbstractUploadProps) {
                             <span className="success-msg">Upload Successful</span>
                             <p className="success-sub">Fragment: {fileName}</p>
                         </div>
-                        <button className="re-upload-btn" onClick={resetUpload}>Change</button>
+                        <button className="btn btn-secondary" style={{ padding: '6px 14px', fontSize: '0.7rem' }} onClick={resetUpload}>Change</button>
                     </div>
                 )}
             </div>

@@ -109,13 +109,13 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
 
                     <div className="btn-group-jointeam">
                         <button 
-                            className="btn-jointeam btn-primary-jointeam" 
+                            className="btn btn-primary" 
                             onClick={handleConfirm}
                             disabled={!teamId.trim()}
                         >
                             Confirm
                         </button>
-                        <button className="btn-jointeam btn-secondary-jointeam" onClick={onClose}>Cancel</button>
+                        <button className="btn btn-secondary" onClick={onClose}>Cancel</button>
                     </div>
                 </div>
 
@@ -145,7 +145,7 @@ export default function JoinTeam({ onClose }: JoinTeamProps) {
                     <p className="modal-desc-createteam" style={{ fontSize: '0.75rem', marginTop: '-1rem', opacity: 0.7 }}>
                         You will be notified once they approve your request.
                     </p>
-                    <button className="btn-createteam btn-secondary-createteam" style={{ width: '100%' }} onClick={onClose}>
+                    <button className="btn btn-secondary" style={{ width: '100%' }} onClick={onClose}>
                         Return to Dashboard
                     </button>
                 </div>

@@ -89,7 +89,7 @@ const EventCard = ({ title, desc, image, delay, href = '#' }: EventCardProps) =>
         <h3 className="sub-title">{title}</h3>
       </div>
       <p className="sub-desc">{desc}</p>
-      <Link href={href} className="sub-btn">Explore <span>→</span></Link>
+      <Link href={href} className="btn btn-primary">Explore <span>→</span></Link>
     </div>
   )
 }

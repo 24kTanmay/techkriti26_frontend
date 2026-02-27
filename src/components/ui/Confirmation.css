@@ -138,46 +138,15 @@
 
 .btn-group-gateway {
     display: flex;
-    gap: 1rem;
+    gap: 1.2rem;
     width: 100%;
 }
 
-.btn-gateway {
+.btn-group-gateway .btn {
     flex: 1;
-    padding: 1.1rem;
-    border-radius: 12px;
-    font-family: var(--gateway-font-ui);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s var(--gateway-ease);
-    border: 1px solid transparent;
-    outline: none;
 }
 
-.btn-secondary-gateway {
-    background: var(--white-subtle);
-    border-color: var(--gateway-border);
-    color: var(--text-primary);
-}
-
-.btn-secondary-gateway:hover {
-    background: var(--white-normal);
-    border-color: var(--color-white);
-}
-
-.btn-primary-gateway {
-    background: var(--color-white);
-    color: var(--color-black);
-}
-
-.btn-primary-gateway:hover {
-    background: var(--gateway-accent);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px var(--gateway-accent-glow);
-}
+/* Removed local button styles in favor of global .btn classes */
 
 .loader-ring-gateway {
     width: 80px;
@@ -471,25 +440,7 @@
     flex-shrink: 0;
 }
 
-.change-btn-gateway {
-    background: var(--white-subtle);
-    border: 1px solid var(--gateway-border);
-    color: var(--gateway-muted);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-family: var(--gateway-font-ui);
-    font-size: 0.55rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s var(--gateway-ease);
-}
-
-.change-btn-gateway:hover {
-    background: var(--white-normal);
-    color: var(--text-primary);
-    border-color: var(--border-strong);
-}
+/* Removed local .change-btn-gateway in favor of global .btn-secondary */
 
 .upload-label-gateway {
     font-family: var(--gateway-font-ui);

@@ -35,7 +35,7 @@ export default function PaymentInstructions({ onClose }: PaymentInstructionsProp
                 </div>
 
                 <div className="instr-footer">
-                    <button className="btn-instr-simple" onClick={onClose}>Close</button>
+                    <button className="btn btn-primary" style={{ width: '100%' }} onClick={onClose}>Close</button>
                 </div>
             </div>
         </div>

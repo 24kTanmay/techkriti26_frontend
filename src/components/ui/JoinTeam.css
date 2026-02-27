@@ -143,52 +143,7 @@
     box-shadow: 0 0 30px var(--copper-normal);
 }
 
-.btn-group-jointeam {
-    display: flex;
-    gap: 1.2rem;
-    width: 100%;
-}
-
-.btn-jointeam {
-    flex: 1;
-    padding: 1.2rem;
-    border-radius: 14px;
-    font-family: var(--jt-font-ui);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s var(--jt-ease);
-    border: 1px solid transparent;
-}
-
-.btn-primary-jointeam {
-    background: var(--color-white);
-    color: var(--color-black);
-}
-
-.btn-primary-jointeam:hover:not(:disabled) {
-    background: var(--jt-accent);
-    box-shadow: 0 10px 40px var(--copper-strong);
-}
-
-.btn-secondary-jointeam {
-    background: var(--white-subtle);
-    border-color: var(--jt-border);
-    color: var(--text-primary);
-}
-
-.btn-secondary-jointeam:hover {
-    background: var(--white-normal);
-    border-color: var(--color-white);
-}
-
-.btn-jointeam:disabled {
-    opacity: 0.3;
-    filter: grayscale(1);
-    cursor: not-allowed;
-}
+/* Removed local button styles in favor of global .btn classes */
 
 /* Beacon Scanner (Processing State) */
 .beacon-scanner-jointeam {

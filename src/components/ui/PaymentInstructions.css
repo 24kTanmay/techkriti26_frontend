@@ -68,6 +68,16 @@
     margin-bottom: 2.5rem;
 }
 
+.btn-group-createteam {
+    display: flex;
+    gap: 1.2rem;
+    width: 100%;
+}
+
+.btn-group-createteam .btn {
+    flex: 1;
+}
+
 .step-item-simple {
     display: flex;
     gap: 1.2rem;
@@ -94,26 +104,7 @@
     line-height: 1.5;
 }
 
-.btn-instr-simple {
-    width: 100%;
-    padding: 1.1rem;
-    border-radius: 12px;
-    background: var(--color-white);
-    color: var(--color-black);
-    border: none;
-    font-family: var(--pi-font-ui);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.3s var(--pi-ease);
-}
-
-.btn-instr-simple:hover {
-    background: var(--pi-accent);
-    transform: translateY(-2px);
-}
+/* Removed local .btn-instr-simple in favor of global .btn-primary */
 
 @media (max-width: 600px) {
     .instr-container.simple {
