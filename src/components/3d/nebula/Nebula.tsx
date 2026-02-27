@@ -123,9 +123,13 @@ const orbitState = useRef({
   useFrame((state) => {
     const p = progressRef.current;
     const os = orbitState.current;
-    // const gp = groupRef.current
-    (window as any).nebulaGroup = groupRef.current;
-    (window as any).orbit = os;
+    
+    // Visibility Culling: skip all logic if far before appearance
+    // Nebula appears at 0.48
+    const isVisible = p > 0.43
+    if (groupRef.current) groupRef.current.visible = isVisible
+    if (!isVisible) return
+
     // --- Shader Updates ---
     if (material.uniforms) {
       material.uniforms.u_time.value = state.clock.getElapsedTime() * 0.05
@@ -139,7 +143,6 @@ const orbitState = useRef({
       material.uniforms.u_colorIntensity.value = NEBULA_CONFIG.colorIntensity * nebulaOpacity
     }
 
-    // --- Manual Orbit: Inertia (apply velocity when not dragging) ---
     // --- Manual Orbit: Inertia (apply velocity) ---
     os.targetTheta += os.velocityTheta
     os.targetPhi += os.velocityPhi

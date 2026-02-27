@@ -28,13 +28,17 @@ const FRAMES: FrameData[] = [
   { id: 'Fragment_Zeta', label: 'Core Drift', status: 'Warning', sizeClass: 'gallery-size-square', speed: 0.06, details: 'Deviation from expected parameters. The system is evolving beyond its original architecture.' },
 ]
 
-/* ─── Gallery Frame Component ─── */
+/* ─── Gallery Frame Component (Optimized) ─── */
 
-const GalleryFrame = ({ id, status, sizeClass, speed }: FrameData) => {
-  const frameRef = useRef<HTMLDivElement>(null)
+interface GalleryFrameProps extends FrameData {
+  frameRef: (el: HTMLDivElement | null) => void
+}
+
+const GalleryFrame = ({ id, status, sizeClass, frameRef }: GalleryFrameProps) => {
+  const elRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const el = frameRef.current
+    const el = elRef.current
     if (!el) return
 
     const observer = new IntersectionObserver(
@@ -47,22 +51,17 @@ const GalleryFrame = ({ id, status, sizeClass, speed }: FrameData) => {
       { rootMargin: '0px 0px -100px 0px', threshold: 0.1 }
     )
     observer.observe(el)
-
-    const handleScroll = () => {
-      if (!el.classList.contains('in-view')) return
-      const yPos = -(window.scrollY * speed)
-      el.style.transform = `translateY(${yPos}px)`
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => {
-      observer.disconnect()
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [speed])
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <div ref={frameRef} className={`gallery-frame ${sizeClass}`}>
+    <div 
+      className={`gallery-frame ${sizeClass}`}
+      ref={(el) => {
+        elRef.current = el
+        frameRef(el)
+      }}
+    >
       <div className="gallery-frame-meta">
         <span>{id}</span>
         <span>{status}</span>
@@ -79,15 +78,37 @@ export default function GallerySection() {
   const carouselRef = useRef<HTMLDivElement>(null)
   
   const [isMobile, setIsMobile] = useState(false)
+  const [windowWidth, setWindowWidth] = useState(0)
   const [selectedFragment, setSelectedFragment] = useState<FrameData | null>(null)
   const [scrollX, setScrollX] = useState(0)
+  const framesRef = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 600)
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
+    const updateWindowSettings = () => {
+      setIsMobile(window.innerWidth <= 600)
+      setWindowWidth(window.innerWidth)
+    }
+    updateWindowSettings()
+    window.addEventListener('resize', updateWindowSettings)
+    return () => window.removeEventListener('resize', updateWindowSettings)
   }, [])
+
+  // Consolidate card scroll listeners into ONE shared listener
+  useEffect(() => {
+    if (isMobile) return
+
+    const handleScroll = () => {
+      const sy = window.scrollY
+      framesRef.current.forEach((el, i) => {
+        if (!el || !el.classList.contains('in-view')) return
+        const speed = FRAMES[i].speed
+        el.style.transform = `translateY(${-sy * speed}px)`
+      })
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [isMobile])
 
   // 3D Cover Flow Logic using horizontal scroll
   useGSAP(() => {
@@ -170,8 +191,12 @@ export default function GallerySection() {
       <div className="gallery-container" ref={galleryRef} onMouseMove={handleMouseMove}>
         {!isMobile ? (
           <div className="gallery-grid-wrap">
-            {FRAMES.map(frame => (
-              <GalleryFrame key={frame.id} {...frame} />
+            {FRAMES.map((frame, i) => (
+              <GalleryFrame 
+                key={frame.id} 
+                {...frame} 
+                frameRef={(el) => { framesRef.current[i] = el }}
+              />
             ))}
           </div>
         ) : (
@@ -206,7 +231,8 @@ export default function GallerySection() {
               </div>
               <div className="carousel-dots">
                 {FRAMES.map((_, i) => {
-                  const cardWidth = window.innerWidth * 0.75;
+                  // Caching cardWidth from windowWidth state instead of window.innerWidth
+                  const cardWidth = (windowWidth || 600) * 0.75;
                   const index = Math.round(scrollX / cardWidth);
                   return (
                     <div 

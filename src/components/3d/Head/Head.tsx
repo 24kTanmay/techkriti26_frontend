@@ -40,8 +40,8 @@ const GLASS_CONFIG = {
   attenuationDistance: 0.5,
   attenuationColor: '#ffffff',
   color: '#ffffff',
-  samples: 3, 
-  resolution: 256,
+  samples: 1,     // Reduced from 3 — eliminates 2 extra render passes per frame
+  resolution: 128, // Reduced from 256 — 4x fewer pixels per FBO pass
 }
 
 function createGlowTexture() {
@@ -67,7 +67,7 @@ function createGlowTexture() {
 
 const PARTICLE_COUNT = 3000
 
-export function Head() {
+export function Head({ isMobile = false }: { isMobile?: boolean }) {
   const progressRef = useScrollProgress()
   const headGroupRef = useRef<THREE.Group>(null!)
   const dprRef = useRef(Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2))
@@ -175,6 +175,11 @@ export function Head() {
     const p = progressRef.current
     const t = state.clock.elapsedTime
 
+    // Visibility Culling: hide everything and skip logic if far outside active phase
+    const isVisible = p < PHASES.HEAD_VISIBLE.end + 0.05
+    if (groupRef.current) groupRef.current.visible = isVisible
+    if (!isVisible) return
+
     if (headGroupRef.current) headGroupRef.current.visible = p < PHASES.HEAD_VISIBLE.end
 
     if (particleMatRef.current) {
@@ -211,10 +216,24 @@ export function Head() {
             castShadow={false}
             receiveShadow={false}
           >
-            <MeshTransmissionMaterial 
-              {...GLASS_CONFIG}
-              background={BG_COLOR}
-            />
+            {/* Mobile: lightweight MeshStandardMaterial (no extra render passes)
+                Desktop: full MeshTransmissionMaterial (multi-pass glass) */}
+            {isMobile ? (
+              <meshStandardMaterial
+                color="#ffffff"
+                transparent
+                opacity={0.15}
+                roughness={0.05}
+                metalness={0.1}
+                envMapIntensity={0.5}
+                side={THREE.FrontSide}
+              />
+            ) : (
+              <MeshTransmissionMaterial 
+                {...GLASS_CONFIG}
+                background={BG_COLOR}
+              />
+            )}
           </mesh>
         </group>
         

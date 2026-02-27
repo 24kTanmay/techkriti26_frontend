@@ -38,8 +38,31 @@ interface StarBackgroundProps {
   sizing?: 'viewport' | 'container'
 }
 
+/* ─── Shared star factories ─── */
+
+const createDriftStars = (count: number, width: number, height: number): DriftStar[] =>
+  Array.from({ length: count }, () => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    z: Math.random() * 2 + 0.5,
+    vx: (Math.random() - 0.5) * 0.2,
+    vy: (Math.random() - 0.5) * 0.2,
+    baseAlpha: Math.random() * 0.7 + 0.3,
+    twinkle: Math.random() * 0.02,
+  }))
+
+const createRisingStars = (count: number, width: number, height: number): RisingStar[] =>
+  Array.from({ length: count }, () => ({
+    x: Math.random() * width,
+    y: Math.random() * height,
+    size: Math.random() * 1.5,
+    alpha: Math.random() * 0.5 + 0.1,
+    speedY: Math.random() * 0.15 + 0.05,
+  }))
+
 /**
  * A shared, configurable canvas star-field background.
+ * Handles both viewport-fixed and container-relative sizing in a single component.
  * Properly cleans up animation frames, resize observers, and event listeners.
  */
 const StarBackground = ({
@@ -53,8 +76,11 @@ const StarBackground = ({
 
   useEffect(() => {
     const canvas = canvasRef.current
+    if (!canvas) return
+
+    // For container mode, we need the wrapper div
     const container = containerRef.current
-    if (!canvas || !container) return
+    if (sizing === 'container' && !container) return
 
     const ctx = canvas.getContext('2d')
     if (!ctx) return
@@ -73,44 +99,23 @@ const StarBackground = ({
         width = canvas.width = window.innerWidth
         height = canvas.height = window.innerHeight
       } else {
-        width = canvas.width = container.offsetWidth
-        height = canvas.height = container.offsetHeight
+        width = canvas.width = container!.offsetWidth
+        height = canvas.height = container!.offsetHeight
       }
     }
-
-    /* ── Star factories ── */
-    const createDriftStars = (): DriftStar[] =>
-      Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        z: Math.random() * 2 + 0.5,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        baseAlpha: Math.random() * 0.7 + 0.3,
-        twinkle: Math.random() * 0.02,
-      }))
-
-    const createRisingStars = (): RisingStar[] =>
-      Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 1.5,
-        alpha: Math.random() * 0.5 + 0.1,
-        speedY: Math.random() * 0.15 + 0.05,
-      }))
 
     const init = () => {
       measure()
       if (mode === 'drift') {
-        driftStars = createDriftStars()
+        driftStars = createDriftStars(count, width, height)
       } else {
-        risingStars = createRisingStars()
+        risingStars = createRisingStars(count, width, height)
       }
     }
 
     /* ── Mouse (only needed for drift parallax) ── */
     const handleMouseMove = (e: MouseEvent) => {
-      if (sizing === 'container') {
+      if (sizing === 'container' && container) {
         const rect = container.getBoundingClientRect()
         mouseX = ((e.clientX - rect.left) - width / 2) * 0.04
         mouseY = ((e.clientY - rect.top) - height / 2) * 0.04
@@ -167,8 +172,14 @@ const StarBackground = ({
     /* ── Bootstrap ── */
     init()
 
-    const resizeObserver = new ResizeObserver(() => init())
-    resizeObserver.observe(container)
+    // Resize handling: use ResizeObserver for container, window resize for viewport
+    let resizeObserver: ResizeObserver | null = null
+    if (sizing === 'container' && container) {
+      resizeObserver = new ResizeObserver(() => init())
+      resizeObserver.observe(container)
+    } else {
+      window.addEventListener('resize', init)
+    }
 
     if (mode === 'drift') {
       window.addEventListener('mousemove', handleMouseMove)
@@ -180,7 +191,11 @@ const StarBackground = ({
     /* ── Cleanup ── */
     return () => {
       cancelAnimationFrame(requestId)
-      resizeObserver.disconnect()
+      if (resizeObserver) {
+        resizeObserver.disconnect()
+      } else {
+        window.removeEventListener('resize', init)
+      }
       if (mode === 'drift') {
         window.removeEventListener('mousemove', handleMouseMove)
       }
@@ -220,133 +235,13 @@ const StarBackground = ({
   )
 }
 
-// For viewport mode we still need a wrapper for the ref
-const StarBackgroundViewport = (props: StarBackgroundProps) => {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const count = props.count ?? 200
-    let width = 0
-    let height = 0
-    let requestId: number
-    let driftStars: DriftStar[] = []
-    let risingStars: RisingStar[] = []
-    let mouseX = 0
-    let mouseY = 0
-
-    const measure = () => {
-      width = canvas.width = window.innerWidth
-      height = canvas.height = window.innerHeight
-    }
-
-    const createDriftStars = (): DriftStar[] =>
-      Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        z: Math.random() * 2 + 0.5,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        baseAlpha: Math.random() * 0.7 + 0.3,
-        twinkle: Math.random() * 0.02,
-      }))
-
-    const createRisingStars = (): RisingStar[] =>
-      Array.from({ length: count }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 1.5,
-        alpha: Math.random() * 0.5 + 0.1,
-        speedY: Math.random() * 0.15 + 0.05,
-      }))
-
-    const init = () => {
-      measure()
-      if (props.mode === 'rise') {
-        risingStars = createRisingStars()
-      } else {
-        driftStars = createDriftStars()
-      }
-    }
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX = (e.clientX - width / 2) * 0.04
-      mouseY = (e.clientY - height / 2) * 0.04
-    }
-
-    const animateDrift = () => {
-      ctx.clearRect(0, 0, width, height)
-      for (const s of driftStars) {
-        s.x += s.vx
-        s.y += s.vy
-        if (s.x < 0) s.x = width
-        if (s.x > width) s.x = 0
-        if (s.y < 0) s.y = height
-        if (s.y > height) s.y = 0
-        s.baseAlpha += s.twinkle
-        if (s.baseAlpha > 1 || s.baseAlpha < 0.2) s.twinkle *= -1
-        ctx.beginPath()
-        ctx.arc(s.x + mouseX * s.z, s.y + mouseY * s.z, s.z * 0.8, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(var(--color-white-rgb), ${Math.max(0, s.baseAlpha)})`
-        ctx.fill()
-      }
-      requestId = requestAnimationFrame(animateDrift)
-    }
-
-    const animateRise = () => {
-      ctx.clearRect(0, 0, width, height)
-      for (const s of risingStars) {
-        s.y -= s.speedY
-        if (s.y < 0) { s.y = height; s.x = Math.random() * width }
-        ctx.beginPath()
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(var(--color-white-rgb), ${s.alpha})`
-        ctx.fill()
-      }
-      requestId = requestAnimationFrame(animateRise)
-    }
-
-    init()
-    window.addEventListener('resize', init)
-
-    if (props.mode === 'rise') {
-      animateRise()
-    } else {
-      window.addEventListener('mousemove', handleMouseMove)
-      animateDrift()
-    }
-
-    return () => {
-      cancelAnimationFrame(requestId)
-      window.removeEventListener('resize', init)
-      if (props.mode !== 'rise') {
-        window.removeEventListener('mousemove', handleMouseMove)
-      }
-    }
-  }, [props.mode, props.count])
-
-  return (
-    <canvas
-      id={props.canvasId}
-      ref={canvasRef}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        zIndex: 0,
-        pointerEvents: 'none',
-      }}
-    />
-  )
-}
+/**
+ * Convenience alias — uses viewport sizing by default.
+ * Drop-in replacement for the old duplicated component.
+ */
+const StarBackgroundViewport = (props: StarBackgroundProps) => (
+  <StarBackground {...props} sizing="viewport" />
+)
 
 export { StarBackgroundViewport }
 export default StarBackground

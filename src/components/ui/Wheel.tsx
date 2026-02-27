@@ -59,6 +59,7 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
     const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
     const lastSelectedIndex = useRef<number>(-1);
     const [mounted, setMounted] = useState(false);
+    const isMobileRef = useRef(false);
 
     // Animation & Interaction State
     const state = useRef({
@@ -78,6 +79,12 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
 
     useEffect(() => {
         setMounted(true);
+        const updateMobile = () => {
+            isMobileRef.current = window.innerWidth <= 1024;
+        };
+        updateMobile();
+        window.addEventListener('resize', updateMobile);
+        return () => window.removeEventListener('resize', updateMobile);
     }, []);
 
     // 1. Update target from scroll drive - NO RE-RENDERING LOOP
@@ -124,7 +131,7 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
                 const scale = d < 100 ? 1 - Math.pow(d / 100, 1.5) * 0.3 : 0.7;
 
                 // Correct for parent dial rotation on mobile (-90deg in CSS)
-                const isMobile = window.innerWidth <= 1024;
+                const isMobile = isMobileRef.current;
                 const mobileOffset = isMobile ? 90 : 0;
                 const distOffset = isMobile ? 8 : 0; // Push text further out on mobile
 

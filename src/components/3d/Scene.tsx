@@ -25,98 +25,89 @@ gsap.registerPlugin(ScrollTrigger)
 
 
 /* ----------------- CAMERA CONTROLLER ----------------- */
-/*
- *  Phase 1  Head circular orbit   (PHASES.HEAD_CAMERA_ORBIT)
- *  Phase 2  Head Z-axis close-in  (PHASES.HEAD_CAMERA_ZOOM)
- *  Phase 3  Return to default     (PHASES.HEAD_CAMERA_RETURN)
- */
+
+// Hoisted constants to avoid per-frame allocations
+const HEAD_LOOK_AT = new THREE.Vector3(-0.09, 0.8, 0)
+const DNA_LOOK_AT = new THREE.Vector3(0, 0, 0)
+const ORBIT_RADIUS = Math.sqrt(4 * 4 + (-4) * (-4)) // ~5.65
+const START_ANGLE = Math.atan2(-4, 4) // -PI/4
+const END_ORBIT_ANGLE = 0 // Ending point of orbit (straight ahead)
+
+const START_Y = 0.3
+const ZOOM_END_Y = 0.8
+const ZOOM_END_Z = 0.8
+const ZOOM_END_X = -0.5
+
+const DEFAULT_X = 0
+const DEFAULT_Y = 0
+const DEFAULT_Z = 5
+
+// Reusable scratch vector for calculations
+const _tempVector = new THREE.Vector3()
 
 function CameraController() {
-
   const progressRef = useScrollProgress()
 
-
   useFrame(({ camera }) => {
-
     const p = progressRef.current
 
     // Phase 4: fully release camera
     if (p > PHASES.HEAD_CAMERA_RETURN.end) return
 
-
-    /* ---- Constants for Head Section ---- */
-
-    const headLookAt  = new THREE.Vector3(-0.09, 0.8, 0)
-    const defaultLookAt = new THREE.Vector3(-0.09, 0.8, 0)
-    
-    // Initial Orbit Params (matches your [-4, 0.3, 4] start)
-    const orbitRadius = Math.sqrt(4 * 4 + (-4) * (-4)) // ~5.65
-    const startAngle = Math.atan2(-4, 4) // -PI/4
-    const endOrbitAngle = 0 // Ending point of orbit (straight ahead)
-    
-    const startY = 0.3
-    const zoomEndY = 0.8
-    const zoomEndZ = 0.8
-    const zoomEndX = -0.5
-
-
-    /* ---- State variables for lerping between phases ---- */
+    /* ---- State variables for current position ---- */
     let currentX, currentY, currentZ
-
 
     if (p <= PHASES.HEAD_CAMERA_ORBIT.end) {
       /* ---- Phase 1: Circular Orbit ---- */
       const orbitP = phaseProgress(p, PHASES.HEAD_CAMERA_ORBIT)
-      const angle = THREE.MathUtils.lerp(startAngle, endOrbitAngle, orbitP)
+      const angle = THREE.MathUtils.lerp(START_ANGLE, END_ORBIT_ANGLE, orbitP)
       
-      currentX = Math.sin(angle) * orbitRadius
-      currentY = startY
-      currentZ = Math.cos(angle) * orbitRadius
+      currentX = Math.sin(angle) * ORBIT_RADIUS
+      currentY = START_Y
+      currentZ = Math.cos(angle) * ORBIT_RADIUS
 
     } else if (p <= PHASES.HEAD_CAMERA_ZOOM.end) {
       /* ---- Phase 2: Z-Axis Closing ---- */
       const zoomP = phaseProgress(p, PHASES.HEAD_CAMERA_ZOOM)
       
       // Starting from orbit end position
-      const orbitEndX = Math.sin(endOrbitAngle) * orbitRadius
-      const orbitEndZ = Math.cos(endOrbitAngle) * orbitRadius
+      const orbitEndX = Math.sin(END_ORBIT_ANGLE) * ORBIT_RADIUS
+      const orbitEndZ = Math.cos(END_ORBIT_ANGLE) * ORBIT_RADIUS
       
-      currentX = THREE.MathUtils.lerp(orbitEndX, zoomEndX, zoomP)
-      currentY = THREE.MathUtils.lerp(startY, zoomEndY, zoomP)
-      currentZ = THREE.MathUtils.lerp(orbitEndZ, zoomEndZ, zoomP)
+      currentX = THREE.MathUtils.lerp(orbitEndX, ZOOM_END_X, zoomP)
+      currentY = THREE.MathUtils.lerp(START_Y, ZOOM_END_Y, zoomP)
+      currentZ = THREE.MathUtils.lerp(orbitEndZ, ZOOM_END_Z, zoomP)
 
     } else {
       /* ---- Phase 3: Return to Default ---- */
       const returnP = phaseProgress(p, PHASES.HEAD_CAMERA_RETURN)
       
-      const defaultX = 0, defaultY = 0, defaultZ = 5
-      const actualDefaultLookAt = new THREE.Vector3(0, 0, 0) // DNA focus
-
-      currentX = THREE.MathUtils.lerp(zoomEndX, defaultX, returnP)
-      currentY = THREE.MathUtils.lerp(zoomEndY, defaultY, returnP)
-      currentZ = THREE.MathUtils.lerp(zoomEndZ, defaultZ, returnP)
+      currentX = THREE.MathUtils.lerp(ZOOM_END_X, DEFAULT_X, returnP)
+      currentY = THREE.MathUtils.lerp(ZOOM_END_Y, DEFAULT_Y, returnP)
+      currentZ = THREE.MathUtils.lerp(ZOOM_END_Z, DEFAULT_Z, returnP)
       
-      const look = headLookAt.clone().lerp(actualDefaultLookAt, returnP)
-      camera.lookAt(look)
+      // Reuse _tempVector instead of .clone().lerp()
+      _tempVector.copy(HEAD_LOOK_AT).lerp(DNA_LOOK_AT, returnP)
+      camera.lookAt(_tempVector)
       
       camera.position.set(currentX, currentY, currentZ)
       return
     }
 
     camera.position.set(currentX, currentY, currentZ)
-    camera.lookAt(headLookAt)
-
+    camera.lookAt(HEAD_LOOK_AT)
   })
 
-
   return null
-
 }
 
 
 
 
 /* ----------------- SCENE ----------------- */
+
+// Detect mobile once at module level to avoid per-render checks
+const IS_MOBILE = typeof window !== 'undefined' && window.innerWidth <= 768
 
 function SceneContent() {
 
@@ -210,7 +201,7 @@ function SceneContent() {
       }}
 
 
-      dpr={[1, 1.5]}
+      dpr={IS_MOBILE ? [1, 1] : [1, 1.5]}
 
       style={{ background: '#050505' }}
 
@@ -251,22 +242,27 @@ function SceneContent() {
 
 
       <Suspense fallback={null}>
-        <Head />
+        <Head isMobile={IS_MOBILE} />
         <Dna />
         <Nebula />
-        <Environment
-          preset="city"
-          background={false}
-        />
+        {!IS_MOBILE && (
+          <Environment
+            preset="city"
+            background={false}
+          />
+        )}
       </Suspense>
 
-      <EffectComposer multisampling={0}>
-        <Bloom
-          luminanceThreshold={0.8}
-          luminanceSmoothing={0.3}
-          intensity={0.25}
-        />
-      </EffectComposer>
+      {/* Bloom disabled on mobile — saves a full-screen shader pass */}
+      {!IS_MOBILE && (
+        <EffectComposer multisampling={0}>
+          <Bloom
+            luminanceThreshold={0.9}
+            luminanceSmoothing={0.2}
+            intensity={0.15}
+          />
+        </EffectComposer>
+      )}
 
 
       <Preload all />

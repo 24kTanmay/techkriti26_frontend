@@ -74,6 +74,12 @@ export function Dna() {
     const t = state.clock.elapsedTime
     const p = progressRef.current
 
+    // Visibility Culling: hide everything and skip logic if far outside active phase
+    // DNA is active from around 0.15 (fade in) to 0.50 (fade out)
+    const isVisible = p > 0.10 && p < 0.55
+    if (groupRef.current) groupRef.current.visible = isVisible
+    if (!isVisible) return
+
     if (materialRef.current) {
       materialRef.current.time = t
       materialRef.current.uScrollProgress = p
