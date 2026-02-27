@@ -4,8 +4,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Navbar from '@/components/common/Navbar'
 import { EditIcon, UploadIcon, EyeIcon } from '@/components/common/Icons'
-import Button from '@/components/ui/Button'
-import Card from '@/components/ui/Card'
 import './Dashboard.css'
 
 const MY_REGISTRATIONS = [
@@ -166,9 +164,9 @@ export default function NeuralDashboard() {
             </div>
             <h1 className="dash-title">Neural <i>Dashboard</i></h1>
           </div>
-          <Button variant="secondary" onClick={() => {}}>
+          <button className="btn btn-secondary">
             Logout
-          </Button>
+          </button>
         </header>
 
         <section className="dashboard-section">
@@ -176,16 +174,18 @@ export default function NeuralDashboard() {
             <span className="title-num">01 //</span> Personal <i>Details.</i>
           </h2>
           
-          <Card 
-            variant="glass"
-            interactive
-            className="identity-card p-10 flex flex-col gap-6"
+          <div 
+            className="identity-card"
             ref={cardRef}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
           >
-            <Button variant="secondary" className="absolute top-[35px] right-[40px] px-4 py-1.5 text-[0.65rem]">
+            <div className="card-glow"></div>
+
+            <button className="btn btn-secondary" style={{ position: 'absolute', top: '35px', right: '40px', padding: '6px 16px', fontSize: '0.65rem' }}>
               <EditIcon size={12} style={{ marginRight: '8px' }} />
               Modify Parameters
-            </Button>
+            </button>
             
             <div className="detail-item">
               <span className="detail-label">Designation // Full Name</span>
@@ -226,7 +226,7 @@ export default function NeuralDashboard() {
               <span className="detail-label">Phenotype // Gender</span>
               <div className="detail-value">Male</div>
             </div>
-          </Card>
+          </div>
         </section>
 
         <section className="registrations-section">
@@ -236,7 +236,7 @@ export default function NeuralDashboard() {
           {MY_REGISTRATIONS.length > 0 ? (
             <div className="registrations-grid">
               {MY_REGISTRATIONS.map(reg => (
-                <Card key={reg.id} className="reg-card p-8">
+                <div key={reg.id} className="reg-card">
                   <div className="reg-card-header">
                     <div>
                       <h3 className="reg-event-name">{reg.event}</h3>
@@ -245,30 +245,36 @@ export default function NeuralDashboard() {
                       <div className="reg-status-container" style={{ marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                         <div className={`status-pill ${reg.status.toLowerCase()}`}>{reg.status}</div>
                         {reg.status === 'Unpaid' ? (
-                          <Button variant="primary" className="px-3 py-1.5 text-[0.65rem]">
+                          <button className="btn btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.65rem' }}>
                             <UploadIcon size={12} style={{ marginRight: '6px' }} />
                             Upload
-                          </Button>
+                          </button>
                         ) : (
-                          <Button variant="secondary" className="px-3 py-1.5 text-[0.65rem]">
+                          <button className="btn btn-secondary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.65rem' }}>
                             <EyeIcon size={12} style={{ marginRight: '6px' }} />
                             View
-                          </Button>
+                          </button>
                         )}
                       </div>
                     </div>
-                    <Button variant="secondary" className="bg-red-500/10 text-red-500 border-red-500/20 hover:bg-red-500/20">Withdraw</Button>
+                    <button className="btn btn-secondary" style={{ background: 'rgba(var(--color-danger-rgb), 0.1)', color: 'var(--color-danger)', borderColor: 'rgba(var(--color-danger-rgb), 0.2)' }}>Withdraw</button>
                   </div>
                   
+                  <div className="team-members-box">
+                    <span className="members-label">TEAM MEMBERS</span>
+                    <div className="members-list">
+                      {reg.members.map((m, i) => (
+                        <div key={i} className="member-tag">{m}</div>
+                      ))}
                     </div>
                   </div>
-                </Card>
+                </div>
               ))}
             </div>
           ) : (
             <div className="empty-state">
               <p className="empty-text">No active event registrations detected in the current sector.</p>
-              <Button href="/competitions" variant="primary" showShine className="rounded-full">Initiate Discovery →</Button>
+              <Link href="/competitions" className="btn btn-primary btn-shine" style={{ borderRadius: '50px' }}>Initiate Discovery →</Link>
             </div>
           )}
         </section>
@@ -287,9 +293,9 @@ export default function NeuralDashboard() {
                 </div>
                 <div className="status-group-sync" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div className={`status-pill ${abs.status.toLowerCase()}`}>{abs.status}</div>
-                    <Button variant="secondary" className="p-2">
+                    <button className="btn btn-secondary" style={{ padding: '4px 8px' }}>
                         <EyeIcon size={12} />
-                    </Button>
+                    </button>
                 </div>
               </div>
             ))}
@@ -321,12 +327,12 @@ export default function NeuralDashboard() {
           </h2>
           <div className="requests-container">
             {JOIN_REQUESTS.map(req => (
-              <Card key={req.id} className="join-request-card p-6">
+              <div key={req.id} className="join-request-card">
                 <div className="jr-header">
                   <h4 className="jr-name">{req.name}</h4>
-                  <div className="jr-actions flex gap-3">
-                    <Button variant="primary" className="px-5 py-2.5 text-[0.7rem]">Accept</Button>
-                    <Button variant="secondary" className="px-5 py-2.5 text-[0.7rem]">Reject</Button>
+                  <div className="jr-actions">
+                    <button className="btn btn-primary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Accept</button>
+                    <button className="btn btn-secondary" style={{ padding: '0.6rem 1.2rem', fontSize: '0.7rem' }}>Reject</button>
                   </div>
                 </div>
                 <div className="jr-details">
@@ -339,8 +345,11 @@ export default function NeuralDashboard() {
                   <div className="jr-detail">
                     <span>Event:</span> {req.event}
                   </div>
+                  <div className="jr-detail">
+                    <span>Team ID:</span> {req.teamId}
+                  </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </section>
