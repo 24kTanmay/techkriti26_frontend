@@ -283,3 +283,36 @@
         height: 320px;
     }
 }
+
+/* --- STRICTLY FOR 320px DEVICES --- */
+@media (max-width: 360px) {
+    .hero-grid {
+        padding: 6rem 1rem 2rem;
+    }
+
+    .hero-title-grid {
+        font-size: 2.1rem;
+    }
+
+    .hero-desc-grid {
+        font-size: 0.85rem;
+    }
+
+    .arena-container-grid {
+        padding: 0 1rem 3rem;
+    }
+
+    .event-card-grid {
+        height: 280px;
+        padding: 1.5rem;
+    }
+
+    .card-title-grid {
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
+
+    .card-desc-grid {
+        font-size: 0.8rem;
+    }
+}

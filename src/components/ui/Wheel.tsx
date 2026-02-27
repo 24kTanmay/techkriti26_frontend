@@ -124,7 +124,7 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
                 const scale = d < 100 ? 1 - Math.pow(d / 100, 1.5) * 0.3 : 0.7;
 
                 // Correct for parent dial rotation on mobile (-90deg in CSS)
-                const isMobile = window.innerWidth <= 600;
+                const isMobile = window.innerWidth <= 1024;
                 const mobileOffset = isMobile ? 90 : 0;
                 const distOffset = isMobile ? 8 : 0; // Push text further out on mobile
 

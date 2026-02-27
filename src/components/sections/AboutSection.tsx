@@ -88,7 +88,7 @@ export default function AboutSection() {
           background: linear-gradient(to bottom, var(--color-white) 60%, var(--text-muted) 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          font-size: 3.5rem;
+          font-size: clamp(2rem, 5vw, 3.5rem);
           font-weight: 700;
           letter-spacing: -0.03em;
           line-height: 1.1;
@@ -102,6 +102,13 @@ export default function AboutSection() {
           opacity: 0.8;
           display: inline-block;
           margin-left: 0.2em;
+        }
+
+        @media (max-width: 1280px) {
+          .about-card {
+            width: 40%;
+            padding: 2.5rem;
+          }
         }
 
         @media (max-width: 1024px) {

@@ -79,7 +79,7 @@ export default function EventDetailPage({ data }: { data: EventDetailData }) {
             {/* Tab Bar */}
             <div className="event-tabs-wrapper">
               <div className="event-tab-indicator" ref={indicatorRef} />
-              <div className="event-tabs-list" ref={tabsContainerRef}>
+              <div className="event-tabs-list" ref={tabsContainerRef} role="tablist">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}

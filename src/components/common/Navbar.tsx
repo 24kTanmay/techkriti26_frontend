@@ -13,6 +13,12 @@ const navItems = [
   { name: 'Archives', href: '/archives' },
 ]
 
+const mobileNavItems = [
+  ...navItems,
+  { name: 'FAQ', href: '/faq' },
+  { name: 'Team', href: '/team' },
+]
+
 export default function Navbar() {
   const pathname = usePathname()
   const [mounted, setMounted] = React.useState(false)
@@ -56,6 +62,34 @@ export default function Navbar() {
         .navbar-left { flex: 1; display: flex; justify-content: flex-start; align-items: center; pointer-events: auto; }
         .navbar-center { flex: 2; display: flex; justify-content: center; align-items: center; pointer-events: auto; }
         .navbar-right { flex: 1; display: flex; justify-content: flex-end; align-items: center; pointer-events: auto; }
+
+        /* Navigation Pill Styles */
+        .nav-pill-list {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          background: var(--white-subtle);
+          backdrop-filter: blur(40px);
+          -webkit-backdrop-filter: blur(40px);
+          border: 1px solid var(--border-subtle);
+          padding: 0 44px;
+          height: 56px;
+          border-radius: 100px;
+          list-style: none;
+          margin: 0;
+          box-shadow: 0 20px 40px rgba(var(--color-black-rgb), 0.1);
+          transition: all 0.4s ease;
+        }
+
+        .nav-pill-link {
+          text-decoration: none;
+          font-size: 16.5px;
+          font-weight: 500;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+          font-family: var(--font-space-grotesk), sans-serif;
+        }
 
         .navbar-hamburger {
           display: none;
@@ -141,6 +175,8 @@ export default function Navbar() {
         .mobile-nav-overlay a:nth-child(4) { transition-delay: 0.25s; }
         .mobile-nav-overlay a:nth-child(5) { transition-delay: 0.3s; }
         .mobile-nav-overlay a:nth-child(6) { transition-delay: 0.35s; }
+        .mobile-nav-overlay a:nth-child(7) { transition-delay: 0.4s; }
+        .mobile-nav-overlay a:nth-child(8) { transition-delay: 0.45s; }
 
         .mobile-nav-overlay a.is-active-link {
           color: var(--text-primary);
@@ -157,7 +193,7 @@ export default function Navbar() {
           opacity: 0;
           transform: translateY(20px);
           transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-          transition-delay: 0.4s;
+          transition-delay: 0.5s;
         }
 
         .mobile-nav-overlay.is-open .mobile-nav-portal {
@@ -166,16 +202,36 @@ export default function Navbar() {
         }
 
         /* ── Responsive Breakpoints ── */
-        @media (max-width: 900px) {
+        @media (max-width: 1300px) {
+          .navbar-header {
+            padding: 20px 30px;
+          }
+        }
+
+        @media (max-width: 1250px) {
           .navbar-header {
             padding: 16px 20px;
           }
+          .logo-text-wrap {
+            display: none;
+          }
+          .nav-pill-list {
+            gap: 12px;
+            padding: 0 20px;
+          }
+          .nav-pill-link {
+            font-size: 13px;
+            letter-spacing: 0.05em;
+          }
+        }
+
+        @media (max-width: 1024px) {
           .navbar-center { display: none; }
           .navbar-right { display: none; }
           .navbar-hamburger { display: flex; }
         }
 
-        @media (min-width: 901px) {
+        @media (min-width: 1025px) {
           .mobile-nav-overlay {
             display: none !important;
           }
@@ -203,7 +259,7 @@ export default function Navbar() {
           }}>
               TK
             </div>
-            <div style={{ textAlign: 'left' }} className="hidden sm:block">
+            <div style={{ textAlign: 'left' }} className="hidden sm:block logo-text-wrap">
               <p style={{ fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2px', color: 'var(--text-primary)' }}>TechKriti</p>
               <p style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>IIT Kanpur</p>
             </div>
@@ -212,23 +268,7 @@ export default function Navbar() {
 
         {/* Center: Navigation Pill (Desktop Only) */}
         <div className="navbar-center">
-          <ul 
-            style={{
-              gap: '32px',
-            background: 'var(--white-subtle)',
-            backdropFilter: 'blur(40px)',
-            WebkitBackdropFilter: 'blur(40px)',
-            border: '1px solid var(--border-subtle)',
-            padding: '0 44px',
-            height: '56px',
-            borderRadius: '100px',
-            listStyle: 'none',
-            margin: 0,
-            display: 'flex',
-            alignItems: 'center',
-            boxShadow: '0 20px 40px rgba(var(--color-black-rgb), 0.1)'
-          }}
-          >
+          <ul className="nav-pill-list">
             {navItems.map((item) => (
               <li key={item.name}>
                 <Link 
@@ -239,15 +279,9 @@ export default function Navbar() {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                   }}
+                  className="nav-pill-link"
                   style={{
-                    textDecoration: 'none',
                     color: (mounted && item.href === pathname) ? 'var(--text-primary)' : 'var(--text-secondary)',
-                    fontSize: '16.5px',
-                    fontWeight: 500,
-                    letterSpacing: '0.15em',
-                    textTransform: 'uppercase',
-                    transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
-                    fontFamily: "var(--font-space-grotesk), sans-serif",
                     textShadow: (mounted && item.href === pathname) ? '0 0 15px var(--white-strong)' : 'none'
                   }}
                   onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -287,7 +321,7 @@ export default function Navbar() {
 
       {/* Mobile Fullscreen Navigation Overlay */}
       <div className={`mobile-nav-overlay ${mobileOpen ? 'is-open' : ''}`}>
-        {navItems.map((item) => (
+        {mobileNavItems.map((item) => (
           <Link
             key={item.name}
             href={item.href}

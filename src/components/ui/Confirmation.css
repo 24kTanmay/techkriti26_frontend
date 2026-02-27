@@ -545,3 +545,56 @@
         white-space: nowrap;
     }
 }
+
+/* --- STRICTLY FOR 320px DEVICES --- */
+@media (max-width: 360px) {
+    .gateway-container {
+        padding: 1.5rem 1rem;
+        width: 95%;
+    }
+
+    .modal-title-gateway {
+        font-size: 1.5rem;
+    }
+
+    .status-tag-gateway {
+        font-size: 0.55rem;
+        letter-spacing: 1.5px;
+        margin-bottom: 0.75rem;
+    }
+
+    .modal-desc-gateway {
+        font-size: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .btn-group-gateway {
+        gap: 0.6rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.75rem;
+    }
+
+    .payment-cta-gateway {
+        padding: 0.9rem;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+    }
+
+    .upload-shard-gateway {
+        padding: 1rem;
+    }
+
+    .upload-label-gateway {
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+    }
+
+    .success-icon-gateway {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+}

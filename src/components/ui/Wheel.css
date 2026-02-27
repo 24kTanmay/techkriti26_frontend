@@ -21,13 +21,7 @@
     --wheel-orbit: 44vh;
 }
 
-@media (max-width: 900px) {
-    .wheel-scene {
-        --wheel-orbit: 32vmin;
-    }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
     .wheel-scene {
         --wheel-orbit: 35vh;
         align-items: flex-end;
@@ -47,9 +41,6 @@
     pointer-events: none;
     z-index: 10;
 }
-
-/* Ambient lighting removed to be handled globally in globals.css */
-
 
 /* Master Container holding the 3D angles */
 .dial-container {
@@ -238,40 +229,7 @@
     opacity: 0.8;
 }
 
-@media (max-width: 900px) {
-    .dial-container {
-        left: -35vmin;
-        width: 70vmin;
-        height: 70vmin;
-        margin-top: -35vmin;
-    }
-
-    .wheel-dial-item {
-        width: 40vmin;
-        padding-left: 140px;
-    }
-
-    .wheel-item-text {
-        font-size: 1.2rem;
-        letter-spacing: 3px;
-        max-width: 250px;
-    }
-
-    .wheel-item-text span {
-        right: calc(100% + 60px);
-        font-size: 0.75rem;
-    }
-
-    .wheel-pointer-wrapper {
-        left: 32vmin;
-    }
-
-    .wheel-pointer-line {
-        width: 40px;
-    }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
     .dial-container {
         left: 50%;
         top: 100%;

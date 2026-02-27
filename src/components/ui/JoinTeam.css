@@ -308,3 +308,41 @@
         font-size: 0.6rem;
     }
 }
+
+/* --- STRICTLY FOR 320px DEVICES --- */
+@media (max-width: 360px) {
+    .jointeam-container {
+        padding: 1.5rem 1rem;
+        width: 95%;
+    }
+
+    .status-tag-jointeam {
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .modal-title-jointeam {
+        font-size: 1.6rem;
+    }
+
+    .modal-desc-jointeam {
+        font-size: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .text-input-jointeam {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .target-id-jointeam {
+        font-size: 1rem;
+        letter-spacing: 3px;
+    }
+
+    .success-icon-jointeam {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+}

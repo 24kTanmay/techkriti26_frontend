@@ -319,3 +319,52 @@
         padding: 1.5rem;
     }
 }
+
+/* --- STRICTLY FOR 320px DEVICES --- */
+@media (max-width: 360px) {
+    .createteam-container {
+        padding: 1.5rem 1rem;
+        width: 95%;
+    }
+
+    .status-tag-createteam {
+        margin-bottom: 1rem;
+        letter-spacing: 2px;
+    }
+
+    .modal-title-createteam {
+        font-size: 1.5rem;
+    }
+
+    .modal-desc-createteam {
+        font-size: 0.8rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .text-input-createteam {
+        padding: 0.8rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    .hologram-spinner-createteam {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1.5rem;
+    }
+
+    .team-id-card-createteam {
+        padding: 1.25rem 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .id-value-createteam {
+        font-size: 1.25rem;
+        letter-spacing: 1.5px;
+    }
+
+    .success-icon-createteam {
+        width: 48px;
+        height: 48px;
+        font-size: 1.25rem;
+    }
+}
