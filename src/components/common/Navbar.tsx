@@ -1,5 +1,6 @@
 "use client"
 
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { usePathname } from 'next/navigation'
@@ -49,26 +50,18 @@ export default function Navbar() {
         {/* Left: Logo */}
         <div className="navbar-left">
           <Link href="/" className="flex items-center gap-4" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{
-            width: '56px',
-            height: '56px',
-            background: 'linear-gradient(135deg, var(--white-subtle) 0%, transparent 100%)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            border: '1px solid var(--border-subtle)',
-            borderRadius: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '18px',
-            fontWeight: 'bold',
-            color: 'var(--text-primary)'
-          }}>
-              TK
+            <div className="relative w-[48px] h-[48px] md:w-[56px] md:h-[56px] flex items-center justify-center">
+              <Image 
+                src="/TechKriti_logo.svg" 
+                alt="TechKriti Logo" 
+                fill 
+                className="object-contain" 
+                priority
+              />
             </div>
             <div style={{ textAlign: 'left' }} className="hidden sm:block logo-text-wrap">
               <p style={{ fontSize: '15px', fontWeight: 'bold', letterSpacing: '0.2em', textTransform: 'uppercase', marginBottom: '2px', color: 'var(--text-primary)' }}>TechKriti</p>
-              <p style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>IIT Kanpur</p>
+              <p style={{ fontSize: '12px', color: 'var(--text-primary)', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase' }}>IIT Kanpur</p>
             </div>
           </Link>
         </div>

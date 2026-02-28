@@ -61,7 +61,13 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
             ctx.clearRect(0,0,w,h)
             ctx.fillStyle = "var(--white-subtle)"
             
-            points.forEach((p, i) => {
+            // 1. Grid-based spatial partitioning to avoid O(n²)
+            const cellSize = 150
+            const gridW = Math.ceil(w / cellSize)
+            const gridH = Math.ceil(h / cellSize)
+            const grid: any[][] = Array.from({ length: gridW * gridH }, () => [])
+
+            points.forEach((p) => {
                 p.x += p.vx; p.y += p.vy
                 if(p.x < 0 || p.x > w) p.vx *= -1
                 if(p.y < 0 || p.y > h) p.vy *= -1
@@ -70,16 +76,41 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
                 ctx.arc(p.x, p.y, 1, 0, Math.PI*2)
                 ctx.fill()
 
-                for(let j=i+1; j<points.length; j++) {
-                    const p2 = points[j]
-                    const dist = Math.hypot(p.x - p2.x, p.y - p2.y)
-                    if(dist < 150) {
-                        ctx.strokeStyle = `rgba(var(--color-white-rgb), ${(1 - dist/150) * 0.15})`
-                        ctx.lineWidth = 0.5
-                        ctx.beginPath()
-                        ctx.moveTo(p.x, p.y)
-                        ctx.lineTo(p2.x, p2.y)
-                        ctx.stroke()
+                const gx = Math.floor(p.x / cellSize)
+                const gy = Math.floor(p.y / cellSize)
+                if (gx >= 0 && gx < gridW && gy >= 0 && gy < gridH) {
+                    grid[gy * gridW + gx].push(p)
+                }
+            })
+
+            // 2. Only check neighboring cells
+            const distLimitSq = cellSize * cellSize
+            points.forEach((p) => {
+                const gx = Math.floor(p.x / cellSize)
+                const gy = Math.floor(p.y / cellSize)
+
+                for (let ox = -1; ox <= 1; ox++) {
+                    for (let oy = -1; oy <= 1; oy++) {
+                        const nx = gx + ox
+                        const ny = gy + oy
+                        if (nx >= 0 && nx < gridW && ny >= 0 && ny < gridH) {
+                            const cell = grid[ny * gridW + nx]
+                            for (const p2 of cell) {
+                                if (p === p2) continue
+                                const dx = p.x - p2.x
+                                const dy = p.y - p2.y
+                                const d2 = dx*dx + dy*dy
+                                if (d2 < distLimitSq) {
+                                    const dist = Math.sqrt(d2)
+                                    ctx.strokeStyle = `rgba(var(--color-white-rgb), ${(1 - dist/cellSize) * 0.15})`
+                                    ctx.lineWidth = 0.5
+                                    ctx.beginPath()
+                                    ctx.moveTo(p.x, p.y)
+                                    ctx.lineTo(p2.x, p2.y)
+                                    ctx.stroke()
+                                }
+                            }
+                        }
                     }
                 }
             })

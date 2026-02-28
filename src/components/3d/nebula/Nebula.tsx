@@ -71,6 +71,10 @@ const orbitState = useRef({
 
   // ─── Mouse Event Handlers ───
   const onPointerMove = useCallback((e: PointerEvent) => {
+    const p = progressRef.current
+    // Early exit if nebula is not yet visible (saves CPU/calculations on every mouse move)
+    if (p < 0.43) return
+
     const state = orbitState.current
     
     // Prevent jump on first move or after leaving window
@@ -102,6 +106,8 @@ const orbitState = useRef({
   }, [])
 
   const onPointerLeave = useCallback(() => {
+    if (progressRef.current < 0.43) return
+
     // Reset previous coordinates so we don't jump when re-entering
     const state = orbitState.current
     state.prevX = 0

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import StarBackground from '@/components/common/StarBackground'
 import './CompetitionsSection.css'
 
@@ -85,7 +86,13 @@ const EventCard = ({ title, desc, image, delay, href = '#' }: EventCardProps) =>
       style={{ animationDelay: delay }}
     >
       <div className="sub-header">
-        <img src={image} className="sub-icon" alt={title} loading="lazy" />
+        <Image 
+          src={image} 
+          className="sub-icon" 
+          alt={title} 
+          width={56}
+          height={56}
+        />
         <h3 className="sub-title">{title}</h3>
       </div>
       <p className="sub-desc">{desc}</p>

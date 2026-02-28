@@ -1,6 +1,7 @@
 "use client"
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import Timer from './Timer'
 import { ArrowRightIcon, LinkedInIcon, InstagramIcon, YouTubeIcon, WhatsAppIcon } from '../common/Icons'
@@ -68,16 +69,18 @@ export default function HeroConclusion() {
           <div className="h-1 md:hidden" />
 
           {/* Left: Branding */}
-          <div className="md:flex-1 flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center md:justify-start">
-            <div className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] border border-white/10 rounded-[8px] md:rounded-[14px] flex items-center justify-center text-[20px] md:text-[21px] font-bold tracking-normal transition-all duration-500 group-hover/footer:scale-110 group-hover/footer:border-white/30"
-                 style={{
-                   background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%)'
-                 }}>
-              TK
+          <div className="md:flex-1 flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center md:justify-start pl-4 md:pl-8">
+            <div className="relative w-[36px] h-[36px] md:w-[48px] md:h-[48px] flex items-center justify-center">
+              <Image 
+                src="/TechKriti_logo.svg" 
+                alt="TechKriti Logo" 
+                fill 
+                className="object-contain" 
+              />
             </div>
             <div className="text-center md:text-left">
-              <p className="text-[14px] md:text-[18px] font-bold tracking-[0.3em] uppercase leading-none mb-3 text-white/90" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>TECHKRITI 26</p>
-              <p className="text-[11px] md:text-[15px] font-medium tracking-[0.2em] text-gray-500 uppercase" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>IIT Kanpur Festival</p>
+              <p className="text-[14px] md:text-[18px] font-bold tracking-[0.3em] uppercase leading-none mb-3 text-white" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>TECHKRITI 26</p>
+              <p className="text-[11px] md:text-[15px] font-medium tracking-[0.2em] text-white/80 uppercase" style={{ fontFamily: "var(--font-space-grotesk), sans-serif" }}>IIT Kanpur Festival</p>
             </div>
           </div>
 
