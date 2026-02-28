@@ -69,6 +69,14 @@ export function Dna() {
     return geo as THREE.BufferGeometry
   }, [gltfScene])
 
+  useEffect(() => {
+    return () => {
+      if (geometry) {
+        geometry.dispose()
+      }
+    }
+  }, [geometry])
+
   // Render loop
   useFrame((state) => {
     const t = state.clock.elapsedTime
