@@ -8,6 +8,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
     const [isComplete, setIsComplete] = useState(false)
     const [mounted, setMounted] = useState(false)
     const canvasRef = useRef<HTMLCanvasElement>(null)
+    const isCompleteRef = useRef(false) // ← ADDED
 
     useEffect(() => {
         setMounted(true)
@@ -20,6 +21,7 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
                 if (prev >= 100) {
                     clearInterval(interval)
                     setTimeout(() => {
+                        isCompleteRef.current = true // ← ADDED: stops canvas loop
                         setIsComplete(true)
                         onComplete?.()
                     }, 500)
@@ -42,6 +44,9 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
 
         let w: number, h: number, points: any[] = []
         let animationId: number
+        let grid: any[][] = []
+        let gridW: number, gridH: number
+        const cellSize = 150
 
         const init = () => {
             w = canvas.width = window.innerWidth
@@ -55,17 +60,22 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
                     vy: (Math.random() - 0.5) * 0.5
                 })
             }
+            
+            gridW = Math.ceil(w / cellSize)
+            gridH = Math.ceil(h / cellSize)
+            grid = Array.from({ length: gridW * gridH }, () => [])
         }
 
         const draw = () => {
+            if (isCompleteRef.current) return // ← ADDED: kills loop when done
+
             ctx.clearRect(0,0,w,h)
             ctx.fillStyle = "var(--white-subtle)"
             
-            // 1. Grid-based spatial partitioning to avoid O(n²)
-            const cellSize = 150
-            const gridW = Math.ceil(w / cellSize)
-            const gridH = Math.ceil(h / cellSize)
-            const grid: any[][] = Array.from({ length: gridW * gridH }, () => [])
+            // Optimization: Clear existing arrays instead of re-allocating
+            for (let i = 0; i < grid.length; i++) {
+                grid[i].length = 0
+            }
 
             points.forEach((p) => {
                 p.x += p.vx; p.y += p.vy
@@ -151,4 +161,3 @@ export default function Preloader({ onComplete }: { onComplete?: () => void }) {
         </div>
     )
 }
-

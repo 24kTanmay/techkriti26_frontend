@@ -2,14 +2,14 @@
 
 import React, { Suspense, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Environment, Preload } from '@react-three/drei'
+import { Environment } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import { Head } from './Head/Head'
-import { Dna } from './Dna/Dna'
+const Head = React.lazy(() => import('./Head/Head').then(module => ({ default: module.Head })))
+const Dna = React.lazy(() => import('./Dna/Dna').then(module => ({ default: module.Dna })))
 import { Nebula } from './nebula/Nebula'
 
 import {
@@ -106,20 +106,24 @@ function CameraController() {
 
 /* ----------------- SCENE ----------------- */
 
-// Detect mobile once at module level to avoid per-render checks
-const IS_MOBILE = typeof window !== 'undefined' && window.innerWidth <= 768
+// Detect mobile at component level to allow resize updates
 
 function SceneContent() {
 
   const progressRef = useScrollProgress()
 
   const [mounted, setMounted] = React.useState(false)
+  const [isMobile, setIsMobile] = React.useState(false)
 
 
 
   useEffect(() => {
 
     setMounted(true)
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
 
   }, [])
 
@@ -201,7 +205,7 @@ function SceneContent() {
       }}
 
 
-      dpr={IS_MOBILE ? [1, 1] : [1, 1.5]}
+      dpr={isMobile ? [1, 1] : [1, 1.5]}
 
       style={{ background: '#050505' }}
 
@@ -242,10 +246,10 @@ function SceneContent() {
 
 
       <Suspense fallback={null}>
-        <Head isMobile={IS_MOBILE} />
+        <Head isMobile={isMobile} />
         <Dna />
         <Nebula />
-        {!IS_MOBILE && (
+        {!isMobile && (
           <Environment
             preset="city"
             background={false}
@@ -254,18 +258,20 @@ function SceneContent() {
       </Suspense>
 
       {/* Bloom disabled on mobile — saves a full-screen shader pass */}
-      {!IS_MOBILE && (
+      {!isMobile && (
         <EffectComposer multisampling={0}>
           <Bloom
             luminanceThreshold={0.9}
             luminanceSmoothing={0.2}
             intensity={0.15}
+            mipmapBlur
+            resolutionX={256}
+            resolutionY={256}
           />
         </EffectComposer>
       )}
 
 
-      <Preload all />
 
 
     </Canvas>

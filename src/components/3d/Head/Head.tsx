@@ -41,7 +41,7 @@ const GLASS_CONFIG = {
   attenuationColor: '#ffffff',
   color: '#ffffff',
   samples: 1,     // Reduced from 3 — eliminates 2 extra render passes per frame
-  resolution: 128, // Reduced from 256 — 4x fewer pixels per FBO pass
+  resolution: 64, // Reduced from 128 to 64 for aggressive performance optimization
 }
 
 function createGlowTexture() {
@@ -71,7 +71,7 @@ export function Head({ isMobile = false }: { isMobile?: boolean }) {
   const progressRef = useScrollProgress()
   const headGroupRef = useRef<THREE.Group>(null!)
   const dprRef = useRef(Math.min(typeof window !== 'undefined' ? window.devicePixelRatio : 1, 2))
-  const { scene } = useGLTF('/models/human-maya-edits-v1-optimize.glb')
+  const { scene } = useGLTF('/models/human-draco.glb', '/draco/')
   const glowTexture = useMemo(() => createGlowTexture(), [])
 
   // 1. Merge all meshes into a single Geometry for performance

@@ -43,21 +43,22 @@ export const Nebula = () => {
   const groupRef = useRef<THREE.Group>(null!)
   const meshRef = useRef<THREE.Points>(null!)
   const progressRef = useScrollProgress()
-  
+  const rafPending = useRef(false) // ← ADDED: throttle flag
+
   // ─── Manual Orbit State (mimics OrbitControls behavior) ───
-const orbitState = useRef({
-  theta: -0.2680,
-  phi: 0.3762,
+  const orbitState = useRef({
+    theta: -0.2680,
+    phi: 0.3762,
 
-  targetTheta: -0.2680,
-  targetPhi: 0.3762,
+    targetTheta: -0.2680,
+    targetPhi: 0.3762,
 
-  prevX: 0,
-  prevY: 0,
+    prevX: 0,
+    prevY: 0,
 
-  velocityTheta: 0,
-  velocityPhi: 0,
-})
+    velocityTheta: 0,
+    velocityPhi: 0,
+  })
 
   const geometry = useMemo(() => new GalaxyGeometry(NEBULA_CONFIG.totalStars), [])
   
@@ -71,8 +72,13 @@ const orbitState = useRef({
 
   // ─── Mouse Event Handlers ───
   const onPointerMove = useCallback((e: PointerEvent) => {
+    // ← Throttle first — skip all work during rapid mouse movement
+    if (rafPending.current) return
+    rafPending.current = true
+    requestAnimationFrame(() => { rafPending.current = false })
+
     const p = progressRef.current
-    // Early exit if nebula is not yet visible (saves CPU/calculations on every mouse move)
+    // Early exit if nebula is not yet visible
     if (p < 0.43) return
 
     const state = orbitState.current
@@ -87,17 +93,13 @@ const orbitState = useRef({
     const deltaX = e.clientX - state.prevX
     const deltaY = e.clientY - state.prevY
 
-    // Sensitivity adjustment for hover (usually feels better slightly slower than drag)
     const hoverScale = 0.05
 
-    // Update target angles
     state.targetTheta -= deltaX * ORBIT_CONFIG.rotateSpeed * hoverScale
     state.targetPhi -= deltaY * ORBIT_CONFIG.rotateSpeed * hoverScale
 
-    // Clamp target phi to prevent flipping
     state.targetPhi = Math.max(ORBIT_CONFIG.minPhi, Math.min(ORBIT_CONFIG.maxPhi, state.targetPhi))
 
-    // Store velocity for inertia
     state.velocityTheta = -deltaX * ORBIT_CONFIG.rotateSpeed * hoverScale
     state.velocityPhi = -deltaY * ORBIT_CONFIG.rotateSpeed * hoverScale
 
@@ -108,40 +110,36 @@ const orbitState = useRef({
   const onPointerLeave = useCallback(() => {
     if (progressRef.current < 0.43) return
 
-    // Reset previous coordinates so we don't jump when re-entering
     const state = orbitState.current
     state.prevX = 0
     state.prevY = 0
   }, [])
 
-  // ─── Attach listeners to the Canvas DOM element ───
+  // ─── Attach listeners to canvas element instead of window ← CHANGED ───
   useEffect(() => {
-    window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('pointerleave', onPointerLeave)
+    const canvas = gl.domElement // ← CHANGED: scoped to canvas, not window
+
+    canvas.addEventListener('pointermove', onPointerMove)
+    canvas.addEventListener('pointerleave', onPointerLeave)
 
     return () => {
-      window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('pointerleave', onPointerLeave)
+      canvas.removeEventListener('pointermove', onPointerMove)
+      canvas.removeEventListener('pointerleave', onPointerLeave)
     }
-  }, [onPointerMove, onPointerLeave])
+  }, [onPointerMove, onPointerLeave, gl])
 
   // ─── Render Loop ───
   useFrame((state) => {
     const p = progressRef.current;
     const os = orbitState.current;
     
-    // Visibility Culling: skip all logic if far before appearance
-    // Nebula appears at 0.48
     const isVisible = p > 0.43
     if (groupRef.current) groupRef.current.visible = isVisible
     if (!isVisible) return
 
-    // --- Shader Updates ---
     if (material.uniforms) {
       material.uniforms.u_time.value = state.clock.getElapsedTime() * 0.05
-      // ─── Optimization: resolution only set in useEffect on size change, not every frame
       
-      // Combined opacity logic: Appearance (Fade In) then Vanish (Fade Out)
       const appearance = THREE.MathUtils.smoothstep(p, NEBULA_CONFIG.appearanceStart, NEBULA_CONFIG.appearanceEnd)
       const disappearance = 1.0 - THREE.MathUtils.smoothstep(p, NEBULA_CONFIG.vanishStart, NEBULA_CONFIG.vanishEnd)
       const nebulaOpacity = appearance * disappearance
@@ -149,34 +147,25 @@ const orbitState = useRef({
       material.uniforms.u_colorIntensity.value = NEBULA_CONFIG.colorIntensity * nebulaOpacity
     }
 
-    // --- Manual Orbit: Inertia (apply velocity) ---
     os.targetTheta += os.velocityTheta
     os.targetPhi += os.velocityPhi
 
-    // Clamp phi
     os.targetPhi = Math.max(ORBIT_CONFIG.minPhi, Math.min(ORBIT_CONFIG.maxPhi, os.targetPhi))
 
-    // Decay velocity (inertia slowdown)
     os.velocityTheta *= ORBIT_CONFIG.inertiaDecay
     os.velocityPhi *= ORBIT_CONFIG.inertiaDecay
 
-    // Kill micro-velocity
     if (Math.abs(os.velocityTheta) < 0.00001) os.velocityTheta = 0
     if (Math.abs(os.velocityPhi) < 0.00001) os.velocityPhi = 0
 
-    // --- Manual Orbit: Damping (smooth interpolation toward target) ---
     os.theta += (os.targetTheta - os.theta) * ORBIT_CONFIG.dampingFactor
     os.phi += (os.targetPhi - os.phi) * ORBIT_CONFIG.dampingFactor
 
-    // --- Apply Rotation to Group ---
     if (groupRef.current) {
-      // Convert spherical angles to Euler rotation on the group
-      // This mimics OrbitControls orbiting around the Nebula's center
       groupRef.current.rotation.y = os.theta
-      groupRef.current.rotation.x = os.phi - Math.PI / 2 // Offset so phi=PI/2 means "equator" (no tilt)
+      groupRef.current.rotation.x = os.phi - Math.PI / 2
     }
 
-    // --- Subtle auto-rotation for ambient motion ---
     if (meshRef.current) {
       meshRef.current.rotation.z += 0.0002
     }

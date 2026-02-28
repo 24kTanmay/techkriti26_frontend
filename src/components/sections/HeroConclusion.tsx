@@ -1,10 +1,8 @@
-"use client"
-
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Timer from './Timer'
-import { ArrowRightIcon, LinkedInIcon, InstagramIcon, YouTubeIcon, WhatsAppIcon } from '../common/Icons'
+import { ArrowRightIcon, LinkedInIcon, InstagramIcon, WhatsAppIcon, FacebookIcon } from '../common/Icons'
 import './HeroConclusion.css'
 
 export default function HeroConclusion() {
@@ -69,7 +67,7 @@ export default function HeroConclusion() {
           <div className="h-1 md:hidden" />
 
           {/* Left: Branding */}
-          <div className="md:flex-1 flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center md:justify-start pl-4 md:pl-8">
+          <div className="md:flex-1 flex flex-col md:flex-row items-center gap-4 md:gap-6 justify-center md:justify-start px-6 md:px-10">
             <div className="relative w-[36px] h-[36px] md:w-[48px] md:h-[48px] flex items-center justify-center">
               <Image 
                 src="/TechKriti_logo.svg" 
@@ -101,17 +99,17 @@ export default function HeroConclusion() {
 
           {/* Right: Socials */}
           <div className="md:flex-1 flex gap-10 md:gap-10 items-center justify-center">
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
+            <a href="https://www.linkedin.com/school/techkriti-iitk/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
               <LinkedInIcon size={20} />
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
+            <a href="https://www.instagram.com/techkriti.iitk/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
               <InstagramIcon size={20} />
             </a>
-            <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
-              <YouTubeIcon size={20} />
-            </a>
-            <a href="https://wa.me/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
+            <a href="https://www.whatsapp.com/channel/0029Vay74G1I1rciyKefK13E" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
               <WhatsAppIcon size={20} />
+            </a>
+            <a href="https://www.facebook.com/techkriti.iitk/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-400 hover:text-white hover:scale-125 transition-all duration-300">
+              <FacebookIcon size={20} />
             </a>
           </div>
 

@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import Image from 'next/image'
 import './PastPerformers.css'
 
 const performers = [
@@ -8,35 +9,36 @@ const performers = [
         year: "2023", 
         name: "Amit Trivedi", 
         role: "Soul Fusion", 
-        img: "https://images.unsplash.com/photo-1514525253344-f814d074e015?auto=format&fit=crop&w=800&q=80" 
+        img: "https://images.unsplash.com/photo-1514525253344-f814d074e015?auto=format&fit=crop&w=400&q=80&fm=webp" 
     },
     { 
         year: "2021", 
         name: "Nucleya", 
         role: "Bass Theory", 
-        img: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=800&q=80" 
+        img: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=400&q=80&fm=webp" 
     },
     { 
         year: "2022", 
         name: "Zakir Khan", 
         role: "Narrative Sync", 
-        img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" 
+        img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=400&q=80&fm=webp" 
     },
     { 
         year: "2020", 
         name: "Ritviz", 
         role: "Indie Harmonic", 
-        img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80" 
+        img: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=400&q=80&fm=webp" 
     },
     { 
         year: "2019", 
         name: "Kailash Kher", 
         role: "Sufi Resonance", 
-        img: "https://images.unsplash.com/photo-1459749411177-042180ce673c?auto=format&fit=crop&w=800&q=80" 
+        img: "https://images.unsplash.com/photo-1459749411177-042180ce673c?auto=format&fit=crop&w=400&q=80&fm=webp" 
     },
 ]
 
 export default function PastPerformers() {
+    const containerRef = useRef<HTMLDivElement>(null)
     const previewRef = useRef<HTMLDivElement>(null)
     const previewImgRef = useRef<HTMLImageElement>(null)
     const [activeImg, setActiveImg] = useState<string | null>(null)
@@ -46,15 +48,20 @@ export default function PastPerformers() {
     const previewPos = useRef({ x: 0, y: 0 })
 
     useEffect(() => {
+        let animationId: number | null = null
+        let isVisible = false
+
         const handleMouseMove = (e: MouseEvent) => {
+            if (!isVisible) return
             mousePos.current = { x: e.clientX, y: e.clientY }
         }
 
-        window.addEventListener('mousemove', handleMouseMove)
-
-        let animationId: number
-
         const animate = () => {
+            if (!isVisible) {
+                animationId = null
+                return
+            }
+
             // Adjust offsets so the photo appears next to the cursor
             const targetX = mousePos.current.x + 50
             const targetY = mousePos.current.y - 250
@@ -71,16 +78,37 @@ export default function PastPerformers() {
             animationId = requestAnimationFrame(animate)
         }
 
-        animationId = requestAnimationFrame(animate)
+        const observer = new IntersectionObserver(([entry]) => {
+            isVisible = entry.isIntersecting
+            if (isVisible) {
+                // Restart animation loop if not currently running
+                if (animationId === null) {
+                    animationId = requestAnimationFrame(animate)
+                }
+            } else {
+                // Stop the loop completely
+                if (animationId !== null) {
+                    cancelAnimationFrame(animationId)
+                    animationId = null
+                }
+            }
+        }, { threshold: 0.0 })
+
+        if (containerRef.current) {
+            observer.observe(containerRef.current)
+        }
+
+        window.addEventListener('mousemove', handleMouseMove, { passive: true })
 
         return () => {
+            if (containerRef.current) observer.unobserve(containerRef.current)
             window.removeEventListener('mousemove', handleMouseMove)
-            cancelAnimationFrame(animationId)
+            if (animationId !== null) cancelAnimationFrame(animationId)
         }
     }, [])
 
     return (
-        <div id="performers" className="performer-archive-container">
+        <div id="performers" ref={containerRef} className="performer-archive-container">
 
             {/* The Floating Preview Slab */}
             <div 
@@ -89,11 +117,13 @@ export default function PastPerformers() {
             >
                 <div className="preview-scan-performer"></div>
                 {activeImg && (
-                    <img 
+                    <Image 
                         src={activeImg} 
                         alt="Preview" 
                         className="preview-img-performer" 
                         ref={previewImgRef} 
+                        fill
+                        sizes="350px"
                     />
                 )}
             </div>
