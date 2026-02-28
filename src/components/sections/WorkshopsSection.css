@@ -1,0 +1,471 @@
+:root {
+    --ws-bg-base: var(--bg-primary);
+    --ws-text-main: var(--text-primary);
+    --ws-text-muted: var(--text-secondary);
+    --ws-accent: var(--color-copper);
+
+    --ws-card-surface: var(--white-subtle);
+    --ws-card-border: var(--border-subtle);
+
+    --ws-sub-bg: var(--bg-secondary);
+    --ws-sub-border: var(--border-subtle);
+    --ws-btn-bg: var(--copper-normal);
+    --ws-btn-text: var(--color-copper);
+
+    --ws-font-ui: var(--font-space-grotesk), sans-serif;
+    --ws-font-body: 'Space Grotesk', sans-serif;
+    --ws-font-display: var(--font-playfair), serif;
+
+    --ws-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#workshops {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.workshops-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10rem 2rem 6rem;
+    position: relative;
+    z-index: 10;
+}
+
+.ws-hero-text {
+    text-align: center;
+    margin-bottom: 5rem;
+    opacity: 0;
+    animation: wsFadeUp 1.5s var(--ws-ease-out-expo) forwards;
+}
+
+.ws-tagline {
+    font-family: var(--ws-font-ui);
+    color: var(--ws-accent);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.ws-section-title {
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    color: var(--ws-text-main);
+}
+
+.ws-section-title i {
+    font-family: var(--font-playfair), serif;
+    font-style: italic;
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.ws-subtitle {
+    max-width: 520px;
+    margin: 0 auto;
+    color: var(--ws-text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-weight: 300;
+}
+
+@keyframes wsFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- ACCORDION LIST --- */
+.ws-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.ws-group {
+    transition: opacity 0.5s var(--ws-ease-out-expo);
+}
+
+/* Focus Effect: dim other groups when one is active */
+.ws-list-has-active .ws-group:not(.is-active) {
+    opacity: 0.3;
+    pointer-events: none;
+    filter: blur(2px);
+}
+
+/* Parent Category Card */
+.ws-main-card {
+    position: relative;
+    background: var(--ws-card-surface);
+    border: 1px solid var(--ws-card-border);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 3rem;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.5s var(--ws-ease-out-expo);
+}
+
+/* Dynamic Spotlight Hover */
+.ws-main-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--white-normal), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ws-main-card:hover::before {
+    opacity: 1;
+}
+
+.ws-main-card:hover {
+    border-color: var(--border-normal);
+    background: var(--white-subtle);
+    transform: scale(1.005);
+}
+
+/* Active State */
+.ws-group.is-active .ws-main-card {
+    border-color: var(--copper-strong);
+    background: var(--copper-subtle);
+}
+
+.ws-card-info {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    min-width: 0;
+    margin-right: 1.5rem;
+    overflow: hidden;
+}
+
+.ws-list .ws-card-title {
+    font-family: var(--font-ui);
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.ws-card-subtitle {
+    color: var(--ws-text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.ws-expand-icon {
+    position: relative;
+    z-index: 2;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--white-normal);
+    background: var(--white-subtle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s var(--ws-ease-out-expo);
+    font-size: 1.7rem;
+    line-height: 1;
+    box-shadow: 0 0 20px rgba(var(--color-black-rgb), 0.2);
+}
+
+.ws-main-card:hover .ws-expand-icon {
+    border-color: var(--ws-text-main);
+    background: var(--ws-text-main);
+    color: var(--ws-bg-base);
+    box-shadow: 0 5px 15px rgba(var(--color-white-rgb), 0.2);
+}
+
+.ws-group.is-active .ws-expand-icon {
+    transform: rotate(180deg);
+    background: var(--ws-accent);
+    border-color: var(--ws-accent);
+    color: var(--ws-bg-base);
+    box-shadow: 0 5px 15px rgba(var(--color-copper-rgb), 0.3);
+}
+
+.ws-main-card:active .ws-expand-icon {
+    transform: scale(0.85);
+    background: var(--color-white);
+    color: var(--color-black);
+}
+
+.ws-group.is-active .ws-main-card:active .ws-expand-icon {
+    transform: rotate(180deg) scale(0.85);
+    background: var(--ws-accent);
+}
+
+/* --- SUB-GRID --- */
+.ws-sub-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.7s var(--ws-ease-out-expo);
+}
+
+.ws-group.is-active .ws-sub-wrapper {
+    grid-template-rows: 1fr;
+}
+
+.ws-sub-inner {
+    overflow: hidden;
+    padding-top: 0;
+    transition: padding 0.7s var(--ws-ease-out-expo);
+}
+
+.ws-group.is-active .ws-sub-inner {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+}
+
+.ws-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    perspective: 1000px;
+}
+
+/* 3D Tilt Card */
+.ws-tilt-card {
+    background: var(--ws-sub-bg);
+    border: 1px solid var(--ws-sub-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: border-color 0.4s, transform 0.1s;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.ws-group.is-active .ws-tilt-card {
+    animation: wsStaggerIn 0.8s var(--ws-ease-out-expo) forwards;
+}
+
+@keyframes wsStaggerIn {
+    to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0) rotateY(0);
+    }
+}
+
+/* Card Gloss/Lighting Effect */
+.ws-tilt-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: radial-gradient(circle at var(--mouseX, 50%) var(--mouseY, 50%), var(--white-normal), transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.ws-tilt-card:hover::before {
+    opacity: 1;
+}
+
+.ws-tilt-card:hover {
+    border-color: var(--white-normal);
+    box-shadow: 0 20px 40px rgba(var(--color-black-rgb), 0.5);
+    z-index: 10;
+}
+
+/* Inner content pushed to Z-axis for parallax */
+.ws-tilt-card>* {
+    transform: translateZ(30px);
+    position: relative;
+    z-index: 2;
+}
+
+.ws-sub-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ws-sub-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    border: 1px solid var(--white-normal);
+}
+
+.ws-sub-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+    color: var(--ws-text-main);
+}
+
+.ws-sub-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
+/* --- RESPONSIVE OVERRIDES --- */
+@media (max-width: 1024px) {
+    .workshops-container {
+        padding: 8rem 2rem 4rem;
+    }
+
+    .ws-main-card {
+        padding: 2rem 2.5rem;
+    }
+
+    .ws-card-title {
+        font-size: 1.75rem;
+    }
+
+    .ws-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .workshops-container {
+        padding: 6rem 1.5rem 3rem;
+    }
+
+    .ws-hero-text {
+        margin-bottom: 3.5rem;
+    }
+
+    .ws-section-title {
+        font-size: clamp(1.4rem, 6vw, 2rem);
+        margin-bottom: 0.75rem;
+    }
+
+    .ws-subtitle {
+        font-size: 0.9rem;
+        max-width: 90%;
+        line-height: 1.5;
+    }
+
+    .ws-main-card {
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--radius-lg);
+    }
+
+    .ws-card-title {
+        font-size: clamp(1rem, 4vw, 1.25rem);
+        letter-spacing: 0.05em;
+    }
+
+    .ws-card-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .ws-expand-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.5rem;
+    }
+
+    .ws-sub-inner {
+        padding-bottom: 1.5rem;
+    }
+
+    .ws-tilt-card {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .ws-sub-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .ws-sub-title {
+        font-size: 1.15rem;
+    }
+
+    .ws-sub-desc {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .ws-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-main-card {
+        padding: 1rem 1.1rem;
+    }
+
+    .ws-card-info {
+        margin-right: 0.75rem;
+    }
+
+    .ws-card-title {
+        font-size: clamp(0.8rem, 4.2vw, 0.95rem);
+        letter-spacing: 0.01em;
+    }
+
+    .ws-expand-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 1rem;
+    }
+
+    .ws-hero-text {
+        margin-bottom: 2.5rem;
+    }
+
+    .ws-section-title {
+        font-size: 1.75rem;
+    }
+
+    .ws-tagline {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+    }
+
+    .ws-subtitle {
+        font-size: 0.85rem;
+    }
+}
