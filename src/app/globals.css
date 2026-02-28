@@ -134,6 +134,13 @@ body::after {
     opacity: 0.04;
     pointer-events: none;
     z-index: 1;
+    will-change: transform;
+}
+
+@media (max-width: 768px) {
+    body::after {
+        display: none;
+    }
 }
 
 /* Global Copper Ambient Light */
@@ -147,7 +154,8 @@ body::before {
     background: radial-gradient(ellipse at left center, var(--copper-subtle) 0%, transparent 70%);
     pointer-events: none;
     mix-blend-mode: screen;
-    z-index: 9998;
+    z-index: 2;
+    will-change: transform;
 }
 
 /* --- GLOBAL BUTTON SYSTEM --- */

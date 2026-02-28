@@ -79,21 +79,7 @@ export default function Navbar() {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                   }}
-                  className="nav-pill-link"
-                  style={{
-                    color: (mounted && item.href === pathname) ? 'var(--text-primary)' : 'var(--text-secondary)',
-                    textShadow: (mounted && item.href === pathname) ? '0 0 15px var(--white-strong)' : 'none'
-                  }}
-                  onMouseOver={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    e.currentTarget.style.color = 'var(--text-primary)';
-                    e.currentTarget.style.textShadow = '0 0 15px var(--white-strong)';
-                  }}
-                  onMouseOut={(e: React.MouseEvent<HTMLAnchorElement>) => {
-                    if (!(mounted && item.href === pathname)) {
-                      e.currentTarget.style.color = 'var(--text-secondary)';
-                      e.currentTarget.style.textShadow = 'none';
-                    }
-                  }}
+                  className={`nav-pill-link ${mounted && item.href === pathname ? 'is-active' : ''}`}
                 >
                   {item.name}
                 </Link>

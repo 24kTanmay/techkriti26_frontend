@@ -100,12 +100,15 @@ const MemorySlab = ({ event, index, currentScroll, mouseX, mouseY }: MemorySlabP
 
 export default function ArchivesSection() {
   const [currentScroll, setCurrentScroll] = useState(0)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const sectionRef = useRef<HTMLElement>(null)
-  const requestRef = useRef<number>(null)
+  const renderLoopRef = useRef<number>(null)
+  const particleLoopRef = useRef<number>(null)
   const lastScrollRef = useRef(0)
+  const currentScrollRef = useRef(0)
+  const mousePosRef = useRef({ x: 0, y: 0 })
+  const slabsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   // ── 1. Scroll-Locking PROGRESS (GSAP) ──
   useGSAP(() => {
@@ -130,15 +133,52 @@ export default function ArchivesSection() {
       // Smoothly approach the proxy value
       setCurrentScroll(prev => {
         const diff = proxy.value - prev;
-        if (Math.abs(diff) < 0.0001) return proxy.value;
-        return prev + diff * 0.1;
+        const next = Math.abs(diff) < 0.0001 ? proxy.value : prev + diff * 0.1;
+        currentScrollRef.current = next;
+        return next;
       });
-      requestRef.current = requestAnimationFrame(renderLoop);
+
+      // Update slabs directly to avoid re-renders
+      const currentScrollVal = currentScrollRef.current;
+      const mouseX = mousePosRef.current.x;
+      const mouseY = mousePosRef.current.y;
+
+      slabsRef.current.forEach((slab, index) => {
+        if (!slab) return;
+        
+        const offset = index - currentScrollVal;
+        const zPos = -(offset * Z_SPACING);
+
+        let opacity = 1;
+        let blur = 0;
+
+        if (offset > 0) {
+          opacity = Math.max(0, 1 - offset * 0.3);
+          blur = offset * 4;
+        } else if (offset < 0) {
+          opacity = Math.max(0, 1 + offset * 1.5);
+          blur = Math.abs(offset) * 15;
+        }
+
+        const isActive = Math.abs(offset) < 0.3;
+        const rotateX = -mouseY * 8 * Math.max(0, 1 - Math.abs(offset));
+        const rotateY = mouseX * 8 * Math.max(0, 1 - Math.abs(offset));
+
+        slab.style.transform = `translateZ(${zPos}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        slab.style.opacity = opacity.toString();
+        slab.style.filter = `blur(${blur}px)`;
+        slab.style.display = opacity < 0.01 ? 'none' : 'flex';
+        
+        if (isActive) slab.classList.add('is-active');
+        else slab.classList.remove('is-active');
+      });
+
+      renderLoopRef.current = requestAnimationFrame(renderLoop);
     };
 
     renderLoop();
     return () => {
-      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+      if (renderLoopRef.current) cancelAnimationFrame(renderLoopRef.current);
     };
   }, { scope: sectionRef });
 
@@ -168,8 +208,9 @@ export default function ArchivesSection() {
     const animate = () => {
       ctx.clearRect(0, 0, width, height)
       
-      const velocity = (lastScrollRef.current - currentScroll) * 50
-      lastScrollRef.current = currentScroll
+      const sc = currentScrollRef.current
+      const velocity = (lastScrollRef.current - sc) * 50
+      lastScrollRef.current = sc
       
       const baseSpeed = 2
 
@@ -194,7 +235,7 @@ export default function ArchivesSection() {
         ctx.fill()
       })
 
-      requestRef.current = requestAnimationFrame(animate)
+      particleLoopRef.current = requestAnimationFrame(animate)
     }
 
     window.addEventListener('resize', init)
@@ -203,21 +244,21 @@ export default function ArchivesSection() {
 
     return () => {
       window.removeEventListener('resize', init)
-      if (requestRef.current) cancelAnimationFrame(requestRef.current)
+      if (particleLoopRef.current) cancelAnimationFrame(particleLoopRef.current)
     }
-  }, [currentScroll])
+  }, [])
 
   // ── 3. Mouse Interaction ──
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({
+      mousePosRef.current = {
         x: (e.clientX / window.innerWidth - 0.5) * 2,
         y: (e.clientY / window.innerHeight - 0.5) * 2
-      })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+      };
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   return (
     <section ref={sectionRef} className="archives-section">
@@ -246,14 +287,17 @@ export default function ArchivesSection() {
       <div className="archive-viewport">
         <div className="archive-camera">
           {ARCHIVE_EVENTS.map((event, i) => (
-            <MemorySlab
-              key={event.year}
-              event={event}
-              index={i}
-              currentScroll={currentScroll}
-              mouseX={mousePos.x}
-              mouseY={mousePos.y}
-            />
+            <div 
+              key={event.year} 
+              ref={el => { slabsRef.current[i] = el; }}
+              className="memory-slab"
+            >
+              <div className="slab-grid" />
+              <div className="slab-year">{event.year}</div>
+              <div className="slab-meta">System Log<br />Seq_{i + 1}</div>
+              <div className="slab-title">{event.title}</div>
+              <div className="slab-subtitle">{event.desc}</div>
+            </div>
           ))}
         </div>
       </div>

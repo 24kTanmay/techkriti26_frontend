@@ -53,7 +53,11 @@ const WheelContent = React.memo(({ data, ticks, itemsRef }: { data: string[], ti
 
 WheelContent.displayName = 'WheelContent';
 
-export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: WheelProps) {
+export interface WheelHandle {
+    setScrollDrive: (progress: number) => void;
+}
+
+const Wheel = React.forwardRef<WheelHandle, WheelProps>(({ data = DEFAULT_DATA, onSelect }, ref) => {
     const sceneRef = useRef<HTMLDivElement>(null);
     const dialContainerRef = useRef<HTMLDivElement>(null);
     const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
@@ -68,6 +72,20 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
         step: 20,
         max: (data.length - 1) * 20
     });
+
+    // Expose imperative API to parent
+    React.useImperativeHandle(ref, () => ({
+        setScrollDrive: (progress: number) => {
+            state.current.target = progress * state.current.max;
+            
+            // Only notify parent if index actually changes to prevent render cascades
+            const index = Math.round(state.current.target / state.current.step);
+            if (index >= 0 && index < data.length && index !== lastSelectedIndex.current) {
+                lastSelectedIndex.current = index;
+                if (onSelect) onSelect(index);
+            }
+        }
+    }));
 
     // Generate tick data once
     const ticks = useMemo(() => {
@@ -86,20 +104,6 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
         window.addEventListener('resize', updateMobile);
         return () => window.removeEventListener('resize', updateMobile);
     }, []);
-
-    // 1. Update target from scroll drive - NO RE-RENDERING LOOP
-    useEffect(() => {
-        if (scrollDrive !== undefined) {
-            state.current.target = scrollDrive * state.current.max;
-            
-            // Only notify parent if index actually changes to prevent render cascades
-            const index = Math.round(state.current.target / state.current.step);
-            if (index >= 0 && index < data.length && index !== lastSelectedIndex.current) {
-                lastSelectedIndex.current = index;
-                if (onSelect) onSelect(index);
-            }
-        }
-    }, [scrollDrive, onSelect, data.length]);
 
     // 2. Persistent Animation Loop - Gated by visibility
     useEffect(() => {
@@ -213,4 +217,7 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
             </div>
         </div>
     )
-}
+});
+
+Wheel.displayName = 'Wheel';
+export default Wheel;

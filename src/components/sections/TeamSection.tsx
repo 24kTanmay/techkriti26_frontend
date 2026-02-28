@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import Image from 'next/image'
 import './TeamSection.css'
 
 if (typeof window !== 'undefined') {
@@ -63,12 +64,17 @@ export default function TeamSection() {
         viewport.addEventListener('mousedown', handleMouseDown)
         window.addEventListener('mousemove', handleMouseMove)
         window.addEventListener('mouseup', handleMouseUp)
-        window.addEventListener('wheel', handleWheel, { passive: false })
+        window.addEventListener('wheel', handleWheel, { passive: true })
         
         let animationId: number
+        const isVisible = { current: false }
+        const observer = new IntersectionObserver(([entry]) => {
+            isVisible.current = entry.isIntersecting
+        }, { threshold: 0.01 })
+        observer.observe(viewport)
 
         const update = () => {
-            if (window.innerWidth > 1024) {
+            if (isVisible.current && window.innerWidth > 1024) {
                 displayX.current += (targetX.current - displayX.current) * 0.08
                 const maxScroll = track.offsetWidth - window.innerWidth + (window.innerWidth * 0.2)
                 if (targetX.current > 0) targetX.current = 0
@@ -92,6 +98,7 @@ export default function TeamSection() {
             window.removeEventListener('mouseup', handleMouseUp)
             window.removeEventListener('wheel', handleWheel)
             cancelAnimationFrame(animationId)
+            observer.disconnect()
         }
     }, [])
 
@@ -176,6 +183,10 @@ export default function TeamSection() {
 
         let w: number, h: number, dots: any[] = []
         let animationId: number
+        const isVisible = { current: false }
+        const observer = new IntersectionObserver(([entry]) => {
+            isVisible.current = entry.isIntersecting
+        }, { threshold: 0.01 })
 
         const init = () => {
             w = canvas.width = window.innerWidth
@@ -188,25 +199,30 @@ export default function TeamSection() {
 
         const draw = () => {
             if (!ctx) return
-            ctx.clearRect(0, 0, w, h)
-            ctx.fillStyle = "rgba(203, 163, 129, 0.2)"
-            dots.forEach(d => {
-                ctx.beginPath()
-                ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2)
-                ctx.fill()
-                d.y -= 0.2
-                if (d.y < 0) d.y = h
-            })
+            
+            if (isVisible.current) {
+                ctx.clearRect(0, 0, w, h)
+                ctx.fillStyle = "rgba(203, 163, 129, 0.2)"
+                dots.forEach(d => {
+                    ctx.beginPath()
+                    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2)
+                    ctx.fill()
+                    d.y -= 0.2
+                    if (d.y < 0) d.y = h
+                })
+            }
             animationId = requestAnimationFrame(draw)
         }
 
         window.addEventListener('resize', init)
+        observer.observe(canvas)
         init()
         draw()
 
         return () => {
             window.removeEventListener('resize', init)
             cancelAnimationFrame(animationId)
+            observer.disconnect()
         }
     }, [])
 
@@ -226,11 +242,13 @@ export default function TeamSection() {
                         {team.map((member, i) => (
                             <div className="team-node" key={i}>
                                 <div className="scan-line-team"></div>
-                                <div className="image-container-team">
-                                    <img 
+                                <div className="image-container-team relative w-full h-full">
+                                    <Image 
                                         src={`https://images.unsplash.com/photo-${1500648767791 - (i * 1000)}?auto=format&fit=crop&w=800&q=80`} 
-                                        className="team-image" 
+                                        className="team-image object-cover" 
                                         alt={member.name} 
+                                        fill
+                                        sizes="(max-width: 1024px) 70vw, 30vw"
                                     />
                                 </div>
                                 <div className="node-info-team">

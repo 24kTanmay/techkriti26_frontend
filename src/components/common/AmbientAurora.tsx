@@ -7,17 +7,25 @@ export default function AmbientAurora() {
     const nodeMainRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
+        let rafId: number
         const handleMouseMove = (e: MouseEvent) => {
             if (!nodeMainRef.current) return
-            const x = (e.clientX / window.innerWidth) - 0.5
-            const y = (e.clientY / window.innerHeight) - 0.5
             
-            // Subtle shift of the side aurora node based on mouse
-            nodeMainRef.current.style.transform = `translate(${x * 50}px, ${y * 50}px)`
+            cancelAnimationFrame(rafId)
+            rafId = requestAnimationFrame(() => {
+                const x = (e.clientX / window.innerWidth) - 0.5
+                const y = (e.clientY / window.innerHeight) - 0.5
+                if (nodeMainRef.current) {
+                    nodeMainRef.current.style.transform = `translate(${x * 50}px, ${y * 50}px)`
+                }
+            })
         }
 
         window.addEventListener('mousemove', handleMouseMove, { passive: true })
-        return () => window.removeEventListener('mousemove', handleMouseMove)
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove)
+            cancelAnimationFrame(rafId)
+        }
     }, [])
 
     return (

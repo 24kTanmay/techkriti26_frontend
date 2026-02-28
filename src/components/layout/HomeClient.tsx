@@ -11,7 +11,7 @@ import AboutSection from '@/components/sections/AboutSection'
 import HeroConclusion from '@/components/sections/HeroConclusion'
 import AmbientAurora from '@/components/common/AmbientAurora'
 import Preloader from '@/components/common/Preloader'
-import Wheel from '@/components/ui/Wheel'
+import Wheel, { type WheelHandle } from '@/components/ui/Wheel'
 import PerformanceStats from '@/components/ui/PerformanceStats'
 
 if (typeof window !== 'undefined') {
@@ -33,8 +33,10 @@ export default function HomeClient({
 }: HomeClientProps) {
   const [mounted, setMounted] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [wheelProgress, setWheelProgress] = useState(0)
   const [currentSummit, setCurrentSummit] = useState(0)
+  const wheelRef = useRef<WheelHandle>(null)
+  const previewRef = useRef<HTMLDivElement>(null)
+  const cardVisibleRef = useRef(false)
   const wheelSectionRef = useRef<HTMLDivElement>(null)
   const lenisRef = useRef<Lenis | null>(null)
   const phaseRef = useRef(0)
@@ -107,7 +109,28 @@ export default function HomeClient({
       pin: true,
       scrub: 1,
       onUpdate: (self) => {
-        setWheelProgress(self.progress)
+        if (wheelRef.current) {
+          wheelRef.current.setScrollDrive(self.progress)
+        }
+
+        // Direct DOM update for preview visibility to avoid re-renders
+        if (previewRef.current) {
+          const isVisible = self.progress > 0.01
+          if (isVisible !== cardVisibleRef.current) {
+            cardVisibleRef.current = isVisible
+            if (isVisible) {
+              previewRef.current.classList.replace('opacity-0', 'opacity-100')
+              previewRef.current.classList.replace('translate-y-12', 'translate-y-0')
+              previewRef.current.classList.replace('scale-95', 'scale-100')
+              previewRef.current.classList.remove('pointer-events-none')
+            } else {
+              previewRef.current.classList.replace('opacity-100', 'opacity-0')
+              previewRef.current.classList.replace('translate-y-0', 'translate-y-12')
+              previewRef.current.classList.replace('scale-100', 'scale-95')
+              previewRef.current.classList.add('pointer-events-none')
+            }
+          }
+        }
       }
     })
 
@@ -145,12 +168,10 @@ export default function HomeClient({
         
         {/* Summit Visual Preview */}
         <div 
-          className={`absolute right-1/2 translate-x-1/2 lg:right-[6%] lg:translate-x-0 top-[15%] lg:top-1/2 lg:-translate-y-1/2 w-[85vw] lg:w-[28vw] lg:max-w-[520px] lg:min-w-[420px] h-[35vh] lg:h-auto lg:aspect-[4/5] rounded-[30px] lg:rounded-[48px] overflow-hidden border border-white/10 z-20 shadow-[0_40px_100px_rgba(var(--color-black-rgb),0.7)] transition-all duration-1000 ease-out ${
-            wheelProgress > 0.01 ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-12 scale-95'
-          }`}
+          ref={previewRef}
+          className="absolute right-1/2 translate-x-1/2 lg:right-[6%] lg:translate-x-0 top-[15%] lg:top-1/2 lg:-translate-y-1/2 w-[85vw] lg:w-[28vw] lg:max-w-[520px] lg:min-w-[420px] h-[35vh] lg:h-auto lg:aspect-[4/5] rounded-[30px] lg:rounded-[48px] overflow-hidden border border-white/10 z-20 shadow-[0_40px_100px_rgba(var(--color-black-rgb),0.7)] transition-all duration-1000 ease-out opacity-0 translate-y-12 scale-95 pointer-events-none"
         >
            <Image 
-             key={`img-${currentSummit}`}
              src={summitImages[currentSummit] || summitImages[0]}
              alt={summitNames[currentSummit]}
              fill
@@ -180,7 +201,7 @@ export default function HomeClient({
 
         <div className="w-full h-full mt-[30vh] lg:mt-0 flex items-center justify-center">
           <Wheel 
-            scrollDrive={wheelProgress} 
+            ref={wheelRef}
             onSelect={handleSummitSelect}
           />
         </div>
