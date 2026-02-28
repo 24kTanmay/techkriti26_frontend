@@ -101,14 +101,31 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
         }
     }, [scrollDrive, onSelect, data.length]);
 
-    // 2. Persistent Animation Loop - Runs once on mount
+    // 2. Persistent Animation Loop - Gated by visibility
     useEffect(() => {
         if (!mounted) return;
 
         const lerp = (a: number, b: number, f: number) => a + (b - a) * f;
         let animationId: number;
+        const isVisible = { current: false };
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                isVisible.current = entry.isIntersecting;
+            },
+            { threshold: 0.1 }
+        );
+
+        if (sceneRef.current) {
+            observer.observe(sceneRef.current);
+        }
 
         const loop = () => {
+            if (!isVisible.current) {
+                animationId = requestAnimationFrame(loop);
+                return;
+            }
+
             state.current.current = lerp(state.current.current, state.current.target, 0.08);
             
             // Apply rotations directly to DOM for 60fps performance
@@ -172,7 +189,10 @@ export default function Wheel({ data = DEFAULT_DATA, onSelect, scrollDrive }: Wh
         };
 
         loop();
-        return () => cancelAnimationFrame(animationId);
+        return () => {
+            cancelAnimationFrame(animationId);
+            observer.disconnect();
+        };
     }, [mounted]);
 
     if (!mounted) return null;
